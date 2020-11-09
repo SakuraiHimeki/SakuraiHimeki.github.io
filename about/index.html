@@ -722,19 +722,23 @@
 
   <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
   <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-  <div id="gitalk-container"></div>
-  <script type="text/javascript">
-    var gitalk = new Gitalk({
-      clientID: 'a040036b8e5ab6a9838d',
-      clientSecret: '7b9006697fe7a78e56f22a025caf2deb03e14ea8',
-      repo: 'BlogComment',
-      owner: 'SakuraiHimeki',
-      admin: ['SakuraiHimeki'],
-      id: location.pathname,
-      distractionFreeMode: 'false'
-    })
-    gitalk.render('gitalk-container')
-  </script>
+
+  <script src="/js/src/md5.min.js"></script>
+
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '',
+          clientSecret: '',
+          repo: 'BlogComment',
+          owner: '',
+          admin: [''],
+
+          id: md5(location.pathname),
+
+          distractionFreeMode: 'false'
+        })
+        gitalk.render('gitalk-container')
+    </script>
 
   
 

