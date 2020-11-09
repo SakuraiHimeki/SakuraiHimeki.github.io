@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C/C++,题解,Leetcode,Java,Python,多线程," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="arttnba3's blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="0x00.绪论虽然说很久以前已经“学过了“多线程的内容，但是其实还是一知半解XD（其实是一点都不懂多线程（虽然说写过几个简单的多线程的应用小程序（👈那只是Java作业的程度啊喂（👈没有用心学习的屑 思来想去还是得靠leetcode来巩固基础知识啊（x  虽然说题目挺少……不过也凑合凑合刷刷 其实盯上的就是题目少的题库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【OJ-0x0006-Leetcode】多线程部分write up by arttnba3">
+<meta property="og:url" content="http://archive.next.arttnba3.cn/2020/10/02/%E3%80%90OJ-0x0006-Leetcode%E3%80%91/index.html">
+<meta property="og:site_name" content="arttnba3&#39;s blog">
+<meta property="og:description" content="0x00.绪论虽然说很久以前已经“学过了“多线程的内容，但是其实还是一知半解XD（其实是一点都不懂多线程（虽然说写过几个简单的多线程的应用小程序（👈那只是Java作业的程度啊喂（👈没有用心学习的屑 思来想去还是得靠leetcode来巩固基础知识啊（x  虽然说题目挺少……不过也凑合凑合刷刷 其实盯上的就是题目少的题库">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/10/02/ywsX3tVlv1M8zGO.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/02/jZB2YJQikrSmGs6.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/02/d5j9Aw8FbolXHZ1.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/02/I92dekCg5LE14Wm.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/02/IKUN2ePcZErvWkh.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/02/n9yMJ8Bks5OFhYp.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/02/DLtsGHlIywMAgWi.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/04/8IYZ7FcrdK4LQlw.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/04/TN1IJ3p8zvYfQV9.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/04/Vkl13wLKMpEgH98.png">
+<meta property="article:published_time" content="2020-10-01T17:23:31.000Z">
+<meta property="article:modified_time" content="2020-10-03T18:38:54.128Z">
+<meta property="article:author" content="arttnba3">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta property="article:tag" content="题解">
+<meta property="article:tag" content="Leetcode">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="多线程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/10/02/ywsX3tVlv1M8zGO.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://archive.next.arttnba3.cn/2020/10/02/【OJ-0x0006-Leetcode】/"/>
+
+
+
+
+
+  <title>【OJ-0x0006-Leetcode】多线程部分write up by arttnba3 | arttnba3's blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <a href="https://github.com/arttnba3" target="_blank" rel="noopener" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">arttnba3's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">- arttnba3的隐秘小窝 -</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://archive.next.arttnba3.cn/2020/10/02/%E3%80%90OJ-0x0006-Leetcode%E3%80%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="arttnba3">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="arttnba3's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【OJ-0x0006-Leetcode】多线程部分write up by arttnba3</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-10-02T01:23:31+08:00">
+                2020-10-02
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-10-04T02:38:54+08:00">
+                2020-10-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Online-Judge/" itemprop="url" rel="index">
+                    <span itemprop="name">Online Judge</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  2,411 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="0x00-绪论"><a href="#0x00-绪论" class="headerlink" title="0x00.绪论"></a>0x00.绪论</h1><p>虽然说很久以前已经“学过了“多线程的内容，但是其实还是一知半解XD（其实是一点都不懂多线程（虽然说写过几个简单的多线程的应用小程序（👈那只是Java作业的程度啊喂（👈没有用心学习的屑</p>
+<p>思来想去还是得靠leetcode来巩固基础知识啊（x</p>
+<blockquote>
+<p>虽然说题目挺少……<del>不过也凑合凑合刷刷</del></p>
+<p><del>其实盯上的就是题目少的题库</del></p>
+</blockquote>
+<a id="more"></a>
+
+<p>（偷偷在这里说一句为了巩固代码力决定各种语言的写法都学一遍（</p>
+<h1 id="0x01-简单"><a href="#0x01-简单" class="headerlink" title="0x01.简单"></a>0x01.简单</h1><h2 id="0x00-按序打印"><a href="#0x00-按序打印" class="headerlink" title="0x00. 按序打印"></a>0x00.<a href="https://leetcode-cn.com/problems/print-in-order/" target="_blank" rel="noopener"> 按序打印</a></h2><blockquote>
+<p>我们提供了一个类：</p>
+<p>public class Foo {<br>  public void first() { print(“first”); }<br>  public void second() { print(“second”); }<br>  public void third() { print(“third”); }<br>}<br>三个不同的线程将会共用一个 Foo 实例。</p>
+<p>线程 A 将会调用 first() 方法<br>线程 B 将会调用 second() 方法<br>线程 C 将会调用 third() 方法<br>请设计修改程序，以确保 second() 方法在 first() 方法之后被执行，third() 方法在 second() 方法之后被执行。</p>
+<p>示例 1:</p>
+<p>输入: [1,2,3]<br>输出: “firstsecondthird”<br>解释:<br>有三个线程会被异步启动。<br>输入 [1,2,3] 表示线程 A 将会调用 first() 方法，线程 B 将会调用 second() 方法，线程 C 将会调用 third() 方法。<br>正确的输出是 “firstsecondthird”。<br>示例 2:</p>
+<p>输入: [1,3,2]<br>输出: “firstsecondthird”<br>解释:<br>输入 [1,3,2] 表示线程 A 将会调用 first() 方法，线程 B 将会调用 third() 方法，线程 C 将会调用 second() 方法。<br>正确的输出是 “firstsecondthird”。</p>
+<p>提示：</p>
+<p>尽管输入中的数字似乎暗示了顺序，但是我们并不保证线程在操作系统中的调度顺序。<br>你看到的输入格式主要是为了确保测试的全面性。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/print-in-order" target="_blank" rel="noopener">https://leetcode-cn.com/problems/print-in-order</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+</blockquote>
+<p>【简单】难度的唯一一道题，<del>看来题库也才刚刚建设起来呐</del></p>
+<h3 id="解法一：信号量"><a href="#解法一：信号量" class="headerlink" title="解法一：信号量"></a>解法一：信号量</h3><p>使用自带锁的<strong>信号量</strong>（<strong>Semaphore</strong>）可以很方便地实现我们的功能，各大语言的标准库都提供有自己的标准信号量的实现</p>
+<p>因为只需要保证<code>second()</code>和<code>third()</code>方法在<code>first()</code>方法之后执行即可，故不需要为<code>first()</code>方法上锁</p>
+<p>大致执行过程如下：</p>
+<ul>
+<li>为<code>second()</code>和<code>third()</code>设置两个信号量s2，s3，置为0</li>
+<li>执行<code>first()</code>方法时解锁s2</li>
+<li>执行<code>second()</code>方法时先等待s2解锁，在最后锁上s2并解锁s3</li>
+<li>执行<code>third()</code>方法时先等待s3解锁，在最后锁上s3</li>
+</ul>
+<p>构造代码如下：</p>
+<h4 id="C-版"><a href="#C-版" class="headerlink" title="C++版"></a>C++版</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;semaphore.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">sem_t</span> sem_pthread_2, sem_pthread_3;</span><br><span class="line">    Foo() </span><br><span class="line">    &#123;</span><br><span class="line">        sem_init(&amp;sem_pthread_2,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">        sem_init(&amp;sem_pthread_3,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">first</span><span class="params">(function&lt;<span class="keyword">void</span>()&gt; printFirst)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;    </span><br><span class="line">        <span class="comment">// printFirst() outputs "first". Do not change or remove this line.</span></span><br><span class="line">        printFirst();</span><br><span class="line">        sem_post(&amp;sem_pthread_2);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">second</span><span class="params">(function&lt;<span class="keyword">void</span>()&gt; printSecond)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        sem_wait(&amp;sem_pthread_2);    </span><br><span class="line">        <span class="comment">// printSecond() outputs "second". Do not change or remove this line.</span></span><br><span class="line">        printSecond();</span><br><span class="line">        sem_post(&amp;sem_pthread_3);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">third</span><span class="params">(function&lt;<span class="keyword">void</span>()&gt; printThird)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        sem_wait(&amp;sem_pthread_3);    </span><br><span class="line">        <span class="comment">// printThird() outputs "third". Do not change or remove this line.</span></span><br><span class="line">        printThird();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/10/02/ywsX3tVlv1M8zGO.png" alt="image.png"></p>
+<h4 id="Java版"><a href="#Java版" class="headerlink" title="Java版"></a>Java版</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    Semaphore sem_thread_2,sem_thread_3;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Foo</span><span class="params">()</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        sem_thread_2 = <span class="keyword">new</span> Semaphore(<span class="number">0</span>);</span><br><span class="line">        sem_thread_3 = <span class="keyword">new</span> Semaphore(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">first</span><span class="params">(Runnable printFirst)</span> <span class="keyword">throws</span> InterruptedException </span></span><br><span class="line"><span class="function">    </span>&#123;        </span><br><span class="line">        <span class="comment">// printFirst.run() outputs "first". Do not change or remove this line.</span></span><br><span class="line">        printFirst.run();</span><br><span class="line">        sem_thread_2.release();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">second</span><span class="params">(Runnable printSecond)</span> <span class="keyword">throws</span> InterruptedException </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        sem_thread_2.acquire();</span><br><span class="line">        <span class="comment">// printSecond.run() outputs "second". Do not change or remove this line.</span></span><br><span class="line">        printSecond.run();</span><br><span class="line">        sem_thread_3.release();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">third</span><span class="params">(Runnable printThird)</span> <span class="keyword">throws</span> InterruptedException </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        sem_thread_3.acquire();    </span><br><span class="line">        <span class="comment">// printThird.run() outputs "third". Do not change or remove this line.</span></span><br><span class="line">        printThird.run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/10/02/jZB2YJQikrSmGs6.png" alt="image.png"></p>
+<blockquote>
+<p>在多线程上Java的速度似乎比C++快好多呢</p>
+</blockquote>
+<h4 id="Python版"><a href="#Python版" class="headerlink" title="Python版"></a>Python版</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Semaphore</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.sem_thread_s2 = Semaphore(<span class="number">0</span>)</span><br><span class="line">        self.sem_thread_s3 = Semaphore(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">first</span><span class="params">(self, printFirst: <span class="string">'Callable[[], None]'</span>)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        <span class="comment"># printFirst() outputs "first". Do not change or remove this line.</span></span><br><span class="line">        printFirst()</span><br><span class="line">        self.sem_thread_s2.release()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">second</span><span class="params">(self, printSecond: <span class="string">'Callable[[], None]'</span>)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        self.sem_thread_s2.acquire()</span><br><span class="line">        <span class="comment"># printSecond() outputs "second". Do not change or remove this line.</span></span><br><span class="line">        printSecond()</span><br><span class="line">        self.sem_thread_s3.release()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">third</span><span class="params">(self, printThird: <span class="string">'Callable[[], None]'</span>)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        self.sem_thread_s3.acquire()</span><br><span class="line">        <span class="comment"># printThird() outputs "third". Do not change or remove this line.</span></span><br><span class="line">        printThird()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/10/02/d5j9Aw8FbolXHZ1.png" alt="image.png"></p>
+<h3 id="解法二：互斥锁"><a href="#解法二：互斥锁" class="headerlink" title="解法二：互斥锁"></a>解法二：互斥锁</h3><p>和解法一的思路其实是类似的</p>
+<p>构造代码如下：</p>
+<h4 id="C-版-1"><a href="#C-版-1" class="headerlink" title="C++版"></a>C++版</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mutex&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">std</span>::mutex lock_2, lock_3;</span><br><span class="line">    Foo() </span><br><span class="line">    &#123;</span><br><span class="line">        lock_2.lock();</span><br><span class="line">        lock_3.lock();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">first</span><span class="params">(function&lt;<span class="keyword">void</span>()&gt; printFirst)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;    </span><br><span class="line">        <span class="comment">// printFirst() outputs "first". Do not change or remove this line.</span></span><br><span class="line">        printFirst();</span><br><span class="line">        lock_2.unlock();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">second</span><span class="params">(function&lt;<span class="keyword">void</span>()&gt; printSecond)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        lock_2.lock();    </span><br><span class="line">        <span class="comment">// printSecond() outputs "second". Do not change or remove this line.</span></span><br><span class="line">        printSecond();</span><br><span class="line">        lock_3.unlock();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">third</span><span class="params">(function&lt;<span class="keyword">void</span>()&gt; printThird)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        lock_3.lock();</span><br><span class="line">        <span class="comment">// printThird() outputs "third". Do not change or remove this line.</span></span><br><span class="line">        printThird();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/10/02/I92dekCg5LE14Wm.png" alt="image.png"></p>
+<h4 id="Java版-1"><a href="#Java版-1" class="headerlink" title="Java版"></a>Java版</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span> first_finished, second_finished;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Foo</span><span class="params">()</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        first_finished = <span class="keyword">false</span>;</span><br><span class="line">        second_finished = <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">first</span><span class="params">(Runnable printFirst)</span> <span class="keyword">throws</span> InterruptedException </span></span><br><span class="line"><span class="function">    </span>&#123;        </span><br><span class="line">        <span class="comment">// printFirst.run() outputs "first". Do not change or remove this line.</span></span><br><span class="line">        <span class="keyword">synchronized</span>(<span class="keyword">this</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            printFirst.run();</span><br><span class="line">            first_finished = <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">this</span>.notifyAll();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">second</span><span class="params">(Runnable printSecond)</span> <span class="keyword">throws</span> InterruptedException </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span>(<span class="keyword">this</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">while</span>(!first_finished)</span><br><span class="line">                <span class="keyword">this</span>.wait();</span><br><span class="line">            first_finished = <span class="keyword">false</span>;</span><br><span class="line">            printSecond.run();</span><br><span class="line">            second_finished = <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">this</span>.notifyAll();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// printSecond.run() outputs "second". Do not change or remove this line.</span></span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">third</span><span class="params">(Runnable printThird)</span> <span class="keyword">throws</span> InterruptedException </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span>(<span class="keyword">this</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">while</span>(!second_finished)</span><br><span class="line">                wait();</span><br><span class="line">            second_finished = <span class="keyword">false</span>;</span><br><span class="line">            printThird.run();</span><br><span class="line">            notifyAll();</span><br><span class="line">        &#125;   </span><br><span class="line">        <span class="comment">// printThird.run() outputs "third". Do not change or remove this line.</span></span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/10/02/IKUN2ePcZErvWkh.png" alt="image.png"></p>
+<h4 id="Python版-1"><a href="#Python版-1" class="headerlink" title="Python版"></a>Python版</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Lock</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.lock_s2 = Lock()</span><br><span class="line">        self.lock_s3 = Lock()</span><br><span class="line">        self.lock_s2.acquire()</span><br><span class="line">        self.lock_s3.acquire()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">first</span><span class="params">(self, printFirst: <span class="string">'Callable[[], None]'</span>)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        <span class="comment"># printFirst() outputs "first". Do not change or remove this line.</span></span><br><span class="line">        printFirst()</span><br><span class="line">        self.lock_s2.release()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">second</span><span class="params">(self, printSecond: <span class="string">'Callable[[], None]'</span>)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        self.lock_s2.acquire()</span><br><span class="line">        <span class="comment"># printSecond() outputs "second". Do not change or remove this line.</span></span><br><span class="line">        printSecond()</span><br><span class="line">        self.lock_s3.release()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">third</span><span class="params">(self, printThird: <span class="string">'Callable[[], None]'</span>)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        self.lock_s3.acquire()</span><br><span class="line">        <span class="comment"># printThird() outputs "third". Do not change or remove this line.</span></span><br><span class="line">        printThird()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/10/02/n9yMJ8Bks5OFhYp.png" alt="GUBN_FI1CF7RB06CDLJLJV2.png"></p>
+<h1 id="0x01-中等"><a href="#0x01-中等" class="headerlink" title="0x01.中等"></a>0x01.中等</h1><h2 id="0x00-打印零与奇偶数"><a href="#0x00-打印零与奇偶数" class="headerlink" title="0x00.打印零与奇偶数"></a>0x00.<a href="https://leetcode-cn.com/problems/print-zero-even-odd/" target="_blank" rel="noopener">打印零与奇偶数</a></h2><blockquote>
+<p>假设有这么一个类：</p>
+<p>class ZeroEvenOdd {<br>  public ZeroEvenOdd(int n) { … }      // 构造函数<br>  public void zero(printNumber) { … }  // 仅打印出 0<br>  public void even(printNumber) { … }  // 仅打印出 偶数<br>  public void odd(printNumber) { … }   // 仅打印出 奇数<br>}<br>相同的一个 ZeroEvenOdd 类实例将会传递给三个不同的线程：</p>
+<p>线程 A 将调用 zero()，它只输出 0 。<br>线程 B 将调用 even()，它只输出偶数。<br>线程 C 将调用 odd()，它只输出奇数。<br>每个线程都有一个 printNumber 方法来输出一个整数。请修改给出的代码以输出整数序列 010203040506… ，其中序列的长度必须为 2n。</p>
+<p>示例 1：</p>
+<p>输入：n = 2<br>输出：”0102”<br>说明：三条线程异步执行，其中一个调用 zero()，另一个线程调用 even()，最后一个线程调用odd()。正确的输出为 “0102”。<br>示例 2：</p>
+<p>输入：n = 5<br>输出：”0102030405”</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/print-zero-even-odd" target="_blank" rel="noopener">https://leetcode-cn.com/problems/print-zero-even-odd</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+</blockquote>
+<h3 id="解法一：信号量-1"><a href="#解法一：信号量-1" class="headerlink" title="解法一：信号量"></a>解法一：信号量</h3><p>依然可以使用信号量来解决这个问题</p>
+<p>需要注意的是数字<code>0</code>是需要第一个被打印的，故打印<code>0</code>的线程的<strong>初始信号量应当设为1</strong></p>
+<h4 id="C-版-2"><a href="#C-版-2" class="headerlink" title="C++版"></a>C++版</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#include &lt;semaphore.h&gt;</span><br><span class="line">class ZeroEvenOdd </span><br><span class="line">&#123;</span><br><span class="line">private:</span><br><span class="line">    int n, count &#x3D; 0;</span><br><span class="line">    sem_t sem_zero, sem_even, sem_odd;</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">    ZeroEvenOdd(int n) </span><br><span class="line">    &#123;</span><br><span class="line">        this-&gt;n &#x3D; n;</span><br><span class="line">        sem_init(&amp;sem_zero,0,1);</span><br><span class="line">        sem_init(&amp;sem_even,0,0);</span><br><span class="line">        sem_init(&amp;sem_odd,0,0);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; printNumber(x) outputs &quot;x&quot;, where x is an integer.</span><br><span class="line">    void zero(function&lt;void(int)&gt; printNumber) </span><br><span class="line">    &#123;</span><br><span class="line">        for(int i&#x3D;0;i&lt;n;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            sem_wait(&amp;sem_zero);</span><br><span class="line">            printNumber(0);</span><br><span class="line">            if(i % 2)</span><br><span class="line">                sem_post(&amp;sem_even);</span><br><span class="line">            else</span><br><span class="line">                sem_post(&amp;sem_odd);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void even(function&lt;void(int)&gt; printNumber) </span><br><span class="line">    &#123;</span><br><span class="line">        for(int i&#x3D;2;i&lt;&#x3D;n;i+&#x3D;2)</span><br><span class="line">        &#123;</span><br><span class="line">            sem_wait(&amp;sem_even);</span><br><span class="line">            printNumber(i);</span><br><span class="line">            sem_post(&amp;sem_zero);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void odd(function&lt;void(int)&gt; printNumber) </span><br><span class="line">    &#123;</span><br><span class="line">        for(int i&#x3D;1;i&lt;&#x3D;n;i+&#x3D;2)</span><br><span class="line">        &#123;</span><br><span class="line">            sem_wait(&amp;sem_odd);</span><br><span class="line">            printNumber(i);</span><br><span class="line">            sem_post(&amp;sem_zero);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/10/02/DLtsGHlIywMAgWi.png" alt="image.png"></p>
+<h4 id="Java版-2"><a href="#Java版-2" class="headerlink" title="Java版"></a>Java版</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.concurrent.Semaphore;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ZeroEvenOdd</span> </span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    Semaphore sem_even, sem_odd, sem_zero;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ZeroEvenOdd</span><span class="params">(<span class="keyword">int</span> n)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        sem_zero = <span class="keyword">new</span> Semaphore(<span class="number">1</span>);</span><br><span class="line">        sem_even = <span class="keyword">new</span> Semaphore(<span class="number">0</span>);</span><br><span class="line">        sem_odd = <span class="keyword">new</span> Semaphore(<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">this</span>.n = n;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// printNumber.accept(x) outputs "x", where x is an integer.</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">zero</span><span class="params">(IntConsumer printNumber)</span> <span class="keyword">throws</span> InterruptedException </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            sem_zero.acquire();</span><br><span class="line">            printNumber.accept(<span class="number">0</span>);</span><br><span class="line">            <span class="keyword">if</span>(i%<span class="number">2</span> != <span class="number">0</span>)</span><br><span class="line">                sem_even.release();</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                sem_odd.release();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">even</span><span class="params">(IntConsumer printNumber)</span> <span class="keyword">throws</span> InterruptedException </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i+=<span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            sem_even.acquire();</span><br><span class="line">            printNumber.accept(i);</span><br><span class="line">            sem_zero.release();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">odd</span><span class="params">(IntConsumer printNumber)</span> <span class="keyword">throws</span> InterruptedException </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i+=<span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            sem_odd.acquire();</span><br><span class="line">            printNumber.accept(i);</span><br><span class="line">            sem_zero.release();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/10/04/8IYZ7FcrdK4LQlw.png" alt="image.png"></p>
+<h4 id="Python版-2"><a href="#Python版-2" class="headerlink" title="Python版"></a>Python版</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Semaphore</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ZeroEvenOdd</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, n)</span>:</span></span><br><span class="line">        self.n = n</span><br><span class="line">        self.sem_zero = Semaphore(<span class="number">1</span>)</span><br><span class="line">        self.sem_odd = Semaphore(<span class="number">0</span>)</span><br><span class="line">        self.sem_even = Semaphore(<span class="number">0</span>)</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">	<span class="comment"># printNumber(x) outputs "x", where x is an integer.</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">zero</span><span class="params">(self, printNumber: <span class="string">'Callable[[int], None]'</span>)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,self.n):</span><br><span class="line">            self.sem_zero.acquire()</span><br><span class="line">            printNumber(<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">if</span> i%<span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">                self.sem_odd.release()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                self.sem_even.release()</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">even</span><span class="params">(self, printNumber: <span class="string">'Callable[[int], None]'</span>)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>,self.n+<span class="number">1</span>,<span class="number">2</span>):</span><br><span class="line">            self.sem_even.acquire()</span><br><span class="line">            printNumber(i)</span><br><span class="line">            self.sem_zero.release()</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">odd</span><span class="params">(self, printNumber: <span class="string">'Callable[[int], None]'</span>)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,self.n+<span class="number">1</span>,<span class="number">2</span>):</span><br><span class="line">            self.sem_odd.acquire()</span><br><span class="line">            printNumber(i)</span><br><span class="line">            self.sem_zero.release()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/10/04/TN1IJ3p8zvYfQV9.png" alt="image.png"></p>
+<h3 id="解法二：互斥锁-1"><a href="#解法二：互斥锁-1" class="headerlink" title="解法二：互斥锁"></a>解法二：互斥锁</h3><p>依然可以用互斥锁来解决这个问题</p>
+<p>构造代码如下：</p>
+<h4 id="C-版-3"><a href="#C-版-3" class="headerlink" title="C++版"></a>C++版</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mutex&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ZeroEvenOdd</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">std</span>::mutex lock_zero, lock_odd, lock_even;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    ZeroEvenOdd(<span class="keyword">int</span> n) </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;n = n;</span><br><span class="line">        lock_zero.unlock();</span><br><span class="line">        lock_odd.lock();</span><br><span class="line">        lock_even.lock();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// printNumber(x) outputs "x", where x is an integer.</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">zero</span><span class="params">(function&lt;<span class="keyword">void</span>(<span class="keyword">int</span>)&gt; printNumber)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            lock_zero.lock();</span><br><span class="line">            printNumber(<span class="number">0</span>);</span><br><span class="line">            <span class="keyword">if</span>(i % <span class="number">2</span>)</span><br><span class="line">                lock_even.unlock();</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                lock_odd.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">even</span><span class="params">(function&lt;<span class="keyword">void</span>(<span class="keyword">int</span>)&gt; printNumber)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i+=<span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            lock_even.lock();</span><br><span class="line">            printNumber(i);</span><br><span class="line">            lock_zero.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">odd</span><span class="params">(function&lt;<span class="keyword">void</span>(<span class="keyword">int</span>)&gt; printNumber)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i+=<span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            lock_odd.unlock();</span><br><span class="line">            printNumber(i);</span><br><span class="line">            lock_zero.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/10/04/Vkl13wLKMpEgH98.png" alt="image.png"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    arttnba3
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://archive.next.arttnba3.cn/2020/10/02/%E3%80%90OJ-0x0006-Leetcode%E3%80%91/" title="【OJ-0x0006-Leetcode】多线程部分write up by arttnba3">http://archive.next.arttnba3.cn/2020/10/02/%E3%80%90OJ-0x0006-Leetcode%E3%80%91/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C-C/" <i class="fa fa-tag"></i> C/C++</a>
+          
+            <a href="/tags/%E9%A2%98%E8%A7%A3/" <i class="fa fa-tag"></i> 题解</a>
+          
+            <a href="/tags/Leetcode/" <i class="fa fa-tag"></i> Leetcode</a>
+          
+            <a href="/tags/Java/" <i class="fa fa-tag"></i> Java</a>
+          
+            <a href="/tags/Python/" <i class="fa fa-tag"></i> Python</a>
+          
+            <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" <i class="fa fa-tag"></i> 多线程</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/09/19/%E3%80%90CTF%E9%A2%98%E8%A7%A3-0x05%E3%80%91/" rel="next" title="【CTF题解-0x05】MSSCTF2020-write-up-by-arttnb3">
+                <i class="fa fa-chevron-left"></i> 【CTF题解-0x05】MSSCTF2020-write-up-by-arttnb3
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/10/06/%E3%80%90%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81-0x01%E3%80%91/" rel="prev" title="【电子取证-0x01】美亚杯第四届全国电子取证竞赛资格赛write up by arttnba3">
+                【电子取证-0x01】美亚杯第四届全国电子取证竞赛资格赛write up by arttnba3 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+  
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="arttnba3" />
+            
+              <p class="site-author-name" itemprop="name">arttnba3</p>
+              <p class="site-description motion-element" itemprop="description">- 想成为你心目中的第一啊 -</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/arttnba3" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1543127579@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://wpa.qq.com/msgrd?v=3&uin=1543127579&site=qq&menu=yes" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/arttnba3" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com/users/13389180/arttnba3" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/arttnba" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Friends' Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.wootec.top" title="Reverier" target="_blank">Reverier</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://luoq1an.github.io" title="luoqian" target="_blank">luoqian</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ll1ng.github.io" title="ling" target="_blank">ling</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://shal10w.github.io" title="shallow" target="_blank">shallow</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://eqqie.cn" title="eqqie" target="_blank">eqqie</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cor1e.cn" title="cor1e" target="_blank">cor1e</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://yunq1ao.com" title="yunqiao" target="_blank">yunqiao</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mercer5.github.io" title="mercer" target="_blank">mercer</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-绪论"><span class="nav-number">1.</span> <span class="nav-text">0x00.绪论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-简单"><span class="nav-number">2.</span> <span class="nav-text">0x01.简单</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-按序打印"><span class="nav-number">2.1.</span> <span class="nav-text">0x00. 按序打印</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解法一：信号量"><span class="nav-number">2.1.1.</span> <span class="nav-text">解法一：信号量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#C-版"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">C++版</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java版"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">Java版</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python版"><span class="nav-number">2.1.1.3.</span> <span class="nav-text">Python版</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解法二：互斥锁"><span class="nav-number">2.1.2.</span> <span class="nav-text">解法二：互斥锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#C-版-1"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">C++版</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java版-1"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">Java版</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python版-1"><span class="nav-number">2.1.2.3.</span> <span class="nav-text">Python版</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-中等"><span class="nav-number">3.</span> <span class="nav-text">0x01.中等</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-打印零与奇偶数"><span class="nav-number">3.1.</span> <span class="nav-text">0x00.打印零与奇偶数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解法一：信号量-1"><span class="nav-number">3.1.1.</span> <span class="nav-text">解法一：信号量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#C-版-2"><span class="nav-number">3.1.1.1.</span> <span class="nav-text">C++版</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java版-2"><span class="nav-number">3.1.1.2.</span> <span class="nav-text">Java版</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python版-2"><span class="nav-number">3.1.1.3.</span> <span class="nav-text">Python版</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解法二：互斥锁-1"><span class="nav-number">3.1.2.</span> <span class="nav-text">解法二：互斥锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#C-版-3"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">C++版</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">arttnba3</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">90.1k</span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: 'a040036b8e5ab6a9838d',
+      clientSecret: '7b9006697fe7a78e56f22a025caf2deb03e14ea8',
+      repo: 'BlogComment',
+      owner: 'SakuraiHimeki',
+      admin: ['SakuraiHimeki'],
+      id: location.pathname,
+      distractionFreeMode: 'false'
+    })
+    gitalk.render('gitalk-container')
+  </script>
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

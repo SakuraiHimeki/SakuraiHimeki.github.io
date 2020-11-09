@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="算法,C/C++,图论," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="arttnba3's blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="0x00.绪论Dijkstra算法算是图论当中最为基础的算法之一，也是各类信息学竞赛（ Olympiad in Informatics ）当中各大图论算法的基础，碰巧今天的离散数学课刚好讲到了Dijkstra算法，所以作为一名蒟蒻·前OIer，今天就来简单讲讲什么是Dijkstra算法XD 不过我当年打OI的时候基本没怎么研究过图论，所以没出过啥成绩XD">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【算法浅析-0x02】Dijkstra算法浅析 by arttnba3">
+<meta property="og:url" content="http://archive.next.arttnba3.cn/2020/04/23/%E3%80%90%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90-0x02%E3%80%91/index.html">
+<meta property="og:site_name" content="arttnba3&#39;s blog">
+<meta property="og:description" content="0x00.绪论Dijkstra算法算是图论当中最为基础的算法之一，也是各类信息学竞赛（ Olympiad in Informatics ）当中各大图论算法的基础，碰巧今天的离散数学课刚好讲到了Dijkstra算法，所以作为一名蒟蒻·前OIer，今天就来简单讲讲什么是Dijkstra算法XD 不过我当年打OI的时候基本没怎么研究过图论，所以没出过啥成绩XD">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/04/24/JWPcZNTaX6YwMqn.gif">
+<meta property="og:image" content="https://i.loli.net/2020/04/24/wKzZXiFSe4sguGT.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/24/M68ixjKznLBceu4.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/25/JhyW6Nu4ectDsRK.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/25/qKbsZpIBvrW1mC3.png">
+<meta property="article:published_time" content="2020-04-23T03:51:52.000Z">
+<meta property="article:modified_time" content="2020-08-29T08:20:22.930Z">
+<meta property="article:author" content="arttnba3">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta property="article:tag" content="图论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/04/24/JWPcZNTaX6YwMqn.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://archive.next.arttnba3.cn/2020/04/23/【算法浅析-0x02】/"/>
+
+
+
+
+
+  <title>【算法浅析-0x02】Dijkstra算法浅析 by arttnba3 | arttnba3's blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <a href="https://github.com/arttnba3" target="_blank" rel="noopener" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">arttnba3's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">- arttnba3的隐秘小窝 -</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://archive.next.arttnba3.cn/2020/04/23/%E3%80%90%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90-0x02%E3%80%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="arttnba3">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="arttnba3's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【算法浅析-0x02】Dijkstra算法浅析 by arttnba3</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-04-23T11:51:52+08:00">
+                2020-04-23
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-08-29T16:20:22+08:00">
+                2020-08-29
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90/" itemprop="url" rel="index">
+                    <span itemprop="name">算法浅析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  2,165 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="0x00-绪论"><a href="#0x00-绪论" class="headerlink" title="0x00.绪论"></a>0x00.绪论</h1><p><strong>Dijkstra算法</strong>算是图论当中最为基础的算法之一，也是各类信息学竞赛（ Olympiad in Informatics ）当中各大图论算法的基础，碰巧今天的离散数学课刚好讲到了Dijkstra算法，所以作为一名蒟蒻·前OIer，今天就来简单讲讲什么是Dijkstra算法XD</p>
+<p><del>不过我当年打OI的时候基本没怎么研究过图论，所以没出过啥成绩XD</del></p>
+<a id="more"></a>
+
+<h1 id="0x01-什么是Dijkstra算法？"><a href="#0x01-什么是Dijkstra算法？" class="headerlink" title="0x01.什么是Dijkstra算法？"></a>0x01.什么是Dijkstra算法？</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><blockquote>
+<p>迪杰斯特拉算法(Dijkstra)是由荷兰计算机科学家<a href="https://baike.baidu.com/item/狄克斯特拉/2828872" target="_blank" rel="noopener">狄克斯特拉</a>于1959 年提出的，因此又叫<a href="https://baike.baidu.com/item/狄克斯特拉算法/6764865" target="_blank" rel="noopener">狄克斯特拉算法</a>。是从一个顶点到其余各顶点的<a href="https://baike.baidu.com/item/最短路径" target="_blank" rel="noopener">最短路径</a>算法，解决的是有权图中最短路径问题。迪杰斯特拉算法主要特点是从起始点开始，采用<a href="https://baike.baidu.com/item/贪心算法/5411800" target="_blank" rel="noopener">贪心算法</a>的策略，每次遍历到始点距离最近且未访问过的顶点的邻接节点，直到扩展到终点为止。 </p>
+<p><a href="https://baike.baidu.com/item/迪克斯特拉算法" target="_blank" rel="noopener">百度百科：Dijkstra算法</a></p>
+<p>戴克斯特拉算法设置了一顶点集合<strong>S</strong>，在集合中所有的顶点与源点<strong>s</strong>之间的最终最短路径权值均已确定。算法反复选择最短路径估计最小的点<strong>u∈V-S</strong>并将加入中。该算法常用于路由其他图算法的一个子模块 </p>
+<p><a href="https://zh.wikipedia.org/wiki/戴克斯特拉算法" target="_blank" rel="noopener">维基百科：戴克斯特拉算法</a></p>
+</blockquote>
+<p>简单地说，Dijkstra算法就是：<strong>在正权图中使用贪心算法不断进行搜索从而求出最短路径的搜索算法</strong></p>
+<h2 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h2><p>在维基百科上有这样一张很经典的动图，很好地向我们演示了什么是Dijkstra算法：</p>
+<p><img src="https://i.loli.net/2020/04/24/JWPcZNTaX6YwMqn.gif" alt="c43291221c382a277596d38654993caf_Dijkstra_Animation.gif"></p>
+<p>从上面我们不难看出Dijkstra算法的整个过程：</p>
+<ul>
+<li><p><strong>将每个点的权值（即起始点到达该点的距离）设置为∞</strong></p>
+</li>
+<li><p><strong>从起始点出发，搜索距离其最近的点，将之纳入点集S</strong></p>
+</li>
+<li><p><strong>搜索该最近点所能到达的所有未被占用点，对比【未被占用点原权值】与【该最近点权值+边权值】的大小，若后者较小则改写该未被占用点权值并记录路径</strong></p>
+</li>
+<li><p><strong>不断重复第二、三步，直到所有点都被纳入点集S（即V-S= Ø，V为该图所有点的点集 ）即可得到出发点距离结束点的最短路径与最短距离</strong></p>
+</li>
+</ul>
+<blockquote>
+<p><strong>注意：第二步的第一次搜索恒为起始点本身，即将起始点纳入点集</strong></p>
+</blockquote>
+<p>以上即为基本的Dijkstra算法的整个过程，我们不难看出这一种不断搜索最短距离的过程其实是一种类似于贪心算法的思想，同时<strong>这样的一种路径结果记录的方法也有一定的动态规划的思想在内——到达被纳入点的最短路径已经是最优状态，无后效性，具有最优子结构</strong></p>
+<h2 id="基本概念：图的表示"><a href="#基本概念：图的表示" class="headerlink" title="基本概念：图的表示"></a>基本概念：图的表示</h2><p>在图论当中我们常用一个二维矩阵来表示一个图，比如说上面动图中的那一张图:</p>
+<p><img src="https://i.loli.net/2020/04/24/wKzZXiFSe4sguGT.png" alt="image.png"></p>
+<p>我们可以使用下面这样的一个矩阵来表示（无向图）：<br><img src="https://i.loli.net/2020/04/24/M68ixjKznLBceu4.png" alt="image.png"></p>
+<p>对于无向图而言，他的邻接矩阵一定会是对称的，<del>在离散数学课上已经讲过，这里就不再多说了</del></p>
+<p>我们不难看出，这样一个矩阵很像一个二维数组，因此我们可以使用一个<strong>二维数组（邻接矩阵）</strong>表示一张图：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> <span class="built_in">map</span>[MAX][MAX];</span><br></pre></td></tr></table></figure>
+
+<p>但是毫无疑问地，随着图的越来越大，二维数组所占用的空间也会爆炸式增长（尤其是像OI那样动不动就10^8、10^9的），因此我们还需要更好的方法来表示一张图</p>
+<p>对于图<strong>G=(V,E)</strong>(其中V为点集，E为边集)，我们也可以使用<strong>邻接表</strong>来表示一张有向图：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">define edge pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;<span class="comment">//始点到终点，可用于表示有向图</span></span><br><span class="line"><span class="built_in">vector</span> &lt; pair &lt; <span class="keyword">int</span>, edge &gt; &gt; <span class="built_in">map</span>;<span class="comment">//点集与边集</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>当图为稀疏图、顶点较多，即图结构比较大时，更适宜选择邻接表作为存储结构。当图为稠密图、顶点较少时，或者不需要记录图中边的权值时，使用邻接矩阵作为存储结构较为合适。</strong> </p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="邻接矩阵版"><a href="#邻接矩阵版" class="headerlink" title="邻接矩阵版"></a>邻接矩阵版</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX 10000</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dijkstra</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pathOut</span><span class="params">(<span class="keyword">int</span> node)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> <span class="built_in">map</span>[MAX][MAX]=&#123;<span class="number">0</span>&#125;;<span class="comment">//储存邻接矩阵</span></span><br><span class="line"><span class="keyword">int</span> node, start;<span class="comment">//点数与起始点</span></span><br><span class="line"><span class="keyword">int</span> dist[MAX]=&#123;<span class="number">0</span>&#125;;<span class="comment">//起始点到各点最短距离</span></span><br><span class="line"><span class="keyword">int</span> path[MAX]=&#123;<span class="number">0</span>&#125;;<span class="comment">//到各点的最短路径，其中每个元素储存的是在到达该点的最短路径上该点的上一个点</span></span><br><span class="line"><span class="keyword">bool</span> visited[MAX]=&#123;<span class="number">0</span>&#125;;<span class="comment">//占用点的集合</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//freopen("input.txt","r",stdin);</span></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"Please enter the number of the nodes"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;node;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"please enter this maps\'s Adjacency Matrix"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=node;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=node;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">cin</span>&gt;&gt;<span class="built_in">map</span>[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"Please enter the start node: "</span>;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;start;</span><br><span class="line">    dijkstra();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;=node;i++)</span><br><span class="line">    &#123;    </span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>&lt;&lt;<span class="string">"distance to node "</span>&lt;&lt;i&lt;&lt;<span class="string">" is "</span>&lt;&lt;dist[i]&lt;&lt;<span class="string">" . The path is: "</span>;</span><br><span class="line">        pathOut(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dijkstra</span><span class="params">(<span class="keyword">void</span>)</span><span class="comment">//核心函数：Dijkstra，搜索出发点到各点的最短路径</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//初始化</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=node;i++)</span><br><span class="line">    &#123;    </span><br><span class="line">        dist[i] = MAX;<span class="comment">//到各点距离设为∞</span></span><br><span class="line">        visited[i] = <span class="literal">false</span>;<span class="comment">//清空点集合</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//将起始点纳入</span></span><br><span class="line">    dist[start] = <span class="number">0</span>;</span><br><span class="line">    visited[start] = <span class="literal">true</span>;</span><br><span class="line">    path[start] = start;</span><br><span class="line">    <span class="keyword">int</span> best = start;</span><br><span class="line">    <span class="comment">//遍历各点</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=node;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> <span class="built_in">min</span> = MAX;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>;j&lt;=node;j++)<span class="comment">//寻找【距离起始点最近的点】</span></span><br><span class="line">            <span class="keyword">if</span>(!visited[j]&amp;&amp;dist[j]&lt;<span class="built_in">min</span>)<span class="comment">//若该点未被占用且权值小于已知最近点权值</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">min</span> = dist[j];<span class="comment">//更新已知最近点距离</span></span><br><span class="line">                best = j;<span class="comment">//更新最近点</span></span><br><span class="line">            &#125;</span><br><span class="line">        visited[best] = <span class="literal">true</span>;<span class="comment">//将该点纳入集合</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=node;j++)<span class="comment">//遍历各点</span></span><br><span class="line">            <span class="comment">/*若</span></span><br><span class="line"><span class="comment">            * 该最近点能够到达j点</span></span><br><span class="line"><span class="comment">            * j点未被占用</span></span><br><span class="line"><span class="comment">            * 起始点到j点的距离 &gt; 起始点到该最近点的距离 + 该最近点到j点的距离</span></span><br><span class="line"><span class="comment">            * 更新起始点到j点的距离 为 起始点到该最近点的距离 + 该最近点到j点的距离</span></span><br><span class="line"><span class="comment">            */</span></span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">map</span>[best][j]!=<span class="number">0</span>&amp;&amp;!visited[j]&amp;&amp;dist[j]&gt;dist[best]+<span class="built_in">map</span>[best][j])</span><br><span class="line">            &#123;    </span><br><span class="line">                dist[j] = dist[best]+<span class="built_in">map</span>[best][j];</span><br><span class="line">                path[j] = best;</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pathOut</span><span class="params">(<span class="keyword">int</span> node)</span><span class="comment">//用来递归打印最短路径的函数</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(path[node] != node)</span><br><span class="line">    &#123;</span><br><span class="line">        pathOut(path[node]);</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">" -&gt; "</span>&lt;&lt;node;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;node;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们以基本概念中的图作为输入样例，选取点2为出发点：</p>
+<p><img src="https://i.loli.net/2020/04/25/JhyW6Nu4ectDsRK.png" alt="image.png"></p>
+<p>得到如下结果：</p>
+<p><img src="https://i.loli.net/2020/04/25/qKbsZpIBvrW1mC3.png" alt="image.png"></p>
+<p>对比原图，我们不难看出我们所得出的结果是正确的</p>
+<h3 id="邻接表"><a href="#邻接表" class="headerlink" title="邻接表"></a>邻接表</h3><p>方便起见，我们假设起始点恒为点1</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//假设起始点为1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> edge pair <span class="meta-string">&lt; int, int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> infinite 1145141919</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span> &lt; pair &lt; <span class="keyword">int</span>, edge &gt; &gt; G;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; key, rel;<span class="comment">// 起始点到各点距离，到各点最短路径上该点的上一点</span></span><br><span class="line"><span class="keyword">int</span> node, edg;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init_keys</span><span class="params">()</span><span class="comment">//初始化各点权值为infinite</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	key.resize(node);</span><br><span class="line">	key[<span class="number">0</span>]=<span class="number">0</span>;<span class="comment">//初始化起始点权值为0</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;node; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		key[i]=infinite;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dijkstra</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	rel.resize(node);</span><br><span class="line">	<span class="keyword">int</span> count=<span class="number">0</span>;</span><br><span class="line">	sort(G.<span class="built_in">begin</span>(), G.<span class="built_in">end</span>());<span class="comment">//将各点按照点1（起始点）~末点进行排序</span></span><br><span class="line">	<span class="keyword">while</span>(count&lt;edg)<span class="comment">//遍历每一条边</span></span><br><span class="line">	&#123;</span><br><span class="line">        <span class="comment">//若【[起始点]到[[边count]上的起点]的权值 + 该边权值】 &lt; 【[起始点]到[[边count]的终点]的权值】</span></span><br><span class="line">		<span class="keyword">if</span>((key[G[count].first]+G[count].second.second)&lt;key[G[count].second.first])</span><br><span class="line">		&#123;</span><br><span class="line">            <span class="comment">//设 [起始点] 到[[边count]的终点] 的 最短路径上 [[边count]的终点] 的 [上一点] 为 [[边count]的起点]</span></span><br><span class="line">			rel[G[count].second.first]=G[count].first;</span><br><span class="line">            <span class="comment">//设 【[起始点] 到[[边count]的终点] 的 权值】 为 【[起始点]到[[边count]的起点]的权值 + [边count]的权值】</span></span><br><span class="line">			key[G[count].second.first]=key[G[count].first]+G[count].second.second;			</span><br><span class="line">		&#125;</span><br><span class="line">		count++;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//freopen("input2.txt","r",stdin);</span></span><br><span class="line">    <span class="keyword">int</span> x, y, cost;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;node&gt;&gt;edg;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;edg; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cin</span>&gt;&gt;x&gt;&gt;y&gt;&gt;cost;</span><br><span class="line">        G.push_back(pair &lt;<span class="keyword">int</span>, edge&gt;(x<span class="number">-1</span>, edge(y<span class="number">-1</span>, cost)));</span><br><span class="line">    &#125;</span><br><span class="line">    init_keys();</span><br><span class="line">    dijkstra();</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"Shortest path: \n 1 is ROOT\n"</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;node; i++)</span><br><span class="line">    &#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"( "</span>&lt;&lt;i+<span class="number">1</span>&lt;&lt;<span class="string">", "</span>&lt;&lt;rel[i]+<span class="number">1</span>&lt;&lt;<span class="string">" )\n"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"Shortest path for? : "</span>;</span><br><span class="line">	<span class="built_in">cin</span>&gt;&gt;x;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"\nShortest path from 1 to "</span>&lt;&lt;x&lt;&lt;<span class="string">" is "</span>&lt;&lt;key[x<span class="number">-1</span>];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="优化：堆优化"><a href="#优化：堆优化" class="headerlink" title="优化：堆优化"></a>优化：堆优化</h2><blockquote>
+<p>咕了，下次再补</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    arttnba3
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://archive.next.arttnba3.cn/2020/04/23/%E3%80%90%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90-0x02%E3%80%91/" title="【算法浅析-0x02】Dijkstra算法浅析 by arttnba3">http://archive.next.arttnba3.cn/2020/04/23/%E3%80%90%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90-0x02%E3%80%91/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E7%AE%97%E6%B3%95/" <i class="fa fa-tag"></i> 算法</a>
+          
+            <a href="/tags/C-C/" <i class="fa fa-tag"></i> C/C++</a>
+          
+            <a href="/tags/%E5%9B%BE%E8%AE%BA/" <i class="fa fa-tag"></i> 图论</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/21/%E3%80%90%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90-0x01%E3%80%91/" rel="next" title="【算法浅析-0x01】动态规划算法浅析by arttnba3">
+                <i class="fa fa-chevron-left"></i> 【算法浅析-0x01】动态规划算法浅析by arttnba3
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/11/%E3%80%90CTF%E9%A2%98%E8%A7%A3-0x01%E3%80%91/" rel="prev" title="【CTF题解-0x01】mini-LCTF 2020 write up by arttnba3">
+                【CTF题解-0x01】mini-LCTF 2020 write up by arttnba3 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+  
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="arttnba3" />
+            
+              <p class="site-author-name" itemprop="name">arttnba3</p>
+              <p class="site-description motion-element" itemprop="description">- 想成为你心目中的第一啊 -</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/arttnba3" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1543127579@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://wpa.qq.com/msgrd?v=3&uin=1543127579&site=qq&menu=yes" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/arttnba3" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com/users/13389180/arttnba3" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/arttnba" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Friends' Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.wootec.top" title="Reverier" target="_blank">Reverier</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://luoq1an.github.io" title="luoqian" target="_blank">luoqian</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ll1ng.github.io" title="ling" target="_blank">ling</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://shal10w.github.io" title="shallow" target="_blank">shallow</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://eqqie.cn" title="eqqie" target="_blank">eqqie</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cor1e.cn" title="cor1e" target="_blank">cor1e</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://yunq1ao.com" title="yunqiao" target="_blank">yunqiao</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mercer5.github.io" title="mercer" target="_blank">mercer</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-绪论"><span class="nav-number">1.</span> <span class="nav-text">0x00.绪论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-什么是Dijkstra算法？"><span class="nav-number">2.</span> <span class="nav-text">0x01.什么是Dijkstra算法？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体过程"><span class="nav-number">2.2.</span> <span class="nav-text">具体过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念：图的表示"><span class="nav-number">2.3.</span> <span class="nav-text">基本概念：图的表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现"><span class="nav-number">2.4.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#邻接矩阵版"><span class="nav-number">2.4.1.</span> <span class="nav-text">邻接矩阵版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#邻接表"><span class="nav-number">2.4.2.</span> <span class="nav-text">邻接表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化：堆优化"><span class="nav-number">2.5.</span> <span class="nav-text">优化：堆优化</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">arttnba3</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">90.1k</span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: 'a040036b8e5ab6a9838d',
+      clientSecret: '7b9006697fe7a78e56f22a025caf2deb03e14ea8',
+      repo: 'BlogComment',
+      owner: 'SakuraiHimeki',
+      admin: ['SakuraiHimeki'],
+      id: location.pathname,
+      distractionFreeMode: 'false'
+    })
+    gitalk.render('gitalk-container')
+  </script>
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
