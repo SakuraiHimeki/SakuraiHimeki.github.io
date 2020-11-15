@@ -60,8 +60,12 @@
 <meta property="og:image" content="https://i.loli.net/2020/10/13/wptrfo1kUVDMFW6.png">
 <meta property="og:image" content="https://i.loli.net/2020/10/13/h4TKcsqDNS8ibFH.png">
 <meta property="og:image" content="https://i.loli.net/2020/10/13/X4A7mZvcDypoznQ.png">
+<meta property="og:image" content="https://i.loli.net/2020/11/15/biBCsTKHSuj4l9f.png">
+<meta property="og:image" content="https://i.loli.net/2020/11/15/sFaTZAYb5oqDU3I.png">
+<meta property="og:image" content="https://i.loli.net/2020/11/15/Ua3OnZdlLFswe48.png">
+<meta property="og:image" content="https://i.loli.net/2020/11/15/yF7H8SBxf9mJcAb.png">
 <meta property="article:published_time" content="2020-05-10T17:27:16.000Z">
-<meta property="article:modified_time" content="2020-10-13T18:11:16.854Z">
+<meta property="article:modified_time" content="2020-11-15T09:46:28.125Z">
 <meta property="article:author" content="arttnba3">
 <meta property="article:tag" content="信息安全">
 <meta property="article:tag" content="PWN">
@@ -243,7 +247,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-14 02:11:16" itemprop="dateModified" datetime="2020-10-14T02:11:16+08:00">2020-10-14</time>
+                <time title="Modified: 2020-11-15 17:46:28" itemprop="dateModified" datetime="2020-11-15T17:46:28+08:00">2020-11-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -443,7 +447,7 @@
 <p>先简单运行看一下，有新建、编辑、删除的简单计划程序，这种十分规范的模式让人感觉的出来应该是一道堆题（<del>说好的只出栈呢</del></p>
 <p><img src="https://i.loli.net/2020/09/01/JKcL64lqDZRCVtX.png" alt="image.png"></p>
 <p>拖入IDA进行分析：（以下部分函数及变量经重命名<br><img src="https://i.loli.net/2020/10/12/ryTpm7ONMEoJZRi.png" alt="image.png"></p>
-<p>该程序有着<strong>分配、修改、释放堆块</strong>的功能，<strong>少了个打印堆块内容的功能</strong>，<del>一看就是一道很难的堆题</del></p>
+<p>该程序有着<strong>分配、修改、释放堆块</strong>的功能，<del>一看就是一道很难的堆题</del></p>
 <p>我们发现在用以读入输入的<code>sub_400896()</code>函数中存在整数溢出漏洞：当我们输入的长度为0时，由于其会先减一再转换成unsigned int类型，发生整数溢出，导致我们可以输入较长的内容到堆块上</p>
 <p><img src="https://i.loli.net/2020/10/13/wptrfo1kUVDMFW6.png" alt="image.png"></p>
 <p>同时我们发现存在白给的后门函数`:<br><img src="https://i.loli.net/2020/10/13/h4TKcsqDNS8ibFH.png" alt="image.png"></p>
@@ -454,10 +458,31 @@
 
 <p>运行脚本即可getshell</p>
 <p><img src="https://i.loli.net/2020/10/13/X4A7mZvcDypoznQ.png" alt="image.png"></p>
-<h2 id="heap-master"><a href="#heap-master" class="headerlink" title="heap_master"></a>heap_master</h2><p> <a href="/download/minil/pwn/pwn"点击此处下载原题"">点击下载-pwn</a> </p>
+<h2 id="heap-master-Double-Free-Unsorted-bin-Attack-orw"><a href="#heap-master-Double-Free-Unsorted-bin-Attack-orw" class="headerlink" title="heap_master - Double Free + Unsorted bin Attack + orw"></a>heap_master - Double Free + Unsorted bin Attack + orw</h2><p> <a href="/download/minil/pwn/pwn"点击此处下载原题"">点击下载-pwn</a> </p>
 <blockquote>
-<p>我暂且被蒙在鼓里…</p>
+<p>遭到了sad师傅的暴击Or2</p>
 </blockquote>
+<blockquote>
+<p>（某种程度上算是minil的压轴题…？<del>虽然说当时我连看都没看</del>（←摸鱼划水人士，小朋友别学他</p>
+</blockquote>
+<p>惯例的<code>checksec</code>，发现除了地址随机化以外都开上了</p>
+<p><img src="https://i.loli.net/2020/11/15/biBCsTKHSuj4l9f.png" alt="image.png"></p>
+<p>拖入IDA进行分析</p>
+<p><img src="https://i.loli.net/2020/11/15/sFaTZAYb5oqDU3I.png" alt="image.png"></p>
+<p>程序本身有着分配堆块、释放堆块、输出堆块内容的功能</p>
+<p>我们发现在<code>delete()</code>函数中<code>free()</code>后<strong>并没有将相应堆块指针置0</strong></p>
+<p><img src="https://i.loli.net/2020/11/15/Ua3OnZdlLFswe48.png" alt="image.png"></p>
+<p>题目提示libc可能是2.23也可能是2.27，尝试直接进行double free，发现程序没有崩溃，故可知是没有double free检查的2.27的tcache</p>
+<blockquote>
+<p>libc2.29后tcache加入double free检查</p>
+</blockquote>
+<p><img src="https://i.loli.net/2020/11/15/yF7H8SBxf9mJcAb.png" alt="image.png"></p>
+<p>构造payload如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
 <h2 id="jail"><a href="#jail" class="headerlink" title="jail"></a>jail</h2><p> <a href="/download/minil/pwn/chroot"点击此处下载原题"">点击下载-chroot</a> </p>
 <blockquote>
 <p>我暂且被蒙在鼓里…</p>
@@ -556,7 +581,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-绪论"><span class="nav-number">1.</span> <span class="nav-text">0x00.绪论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-Sign-in"><span class="nav-number">2.</span> <span class="nav-text">0x01.Sign in</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Starting-Point"><span class="nav-number">2.1.</span> <span class="nav-text">Starting Point</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-PWN"><span class="nav-number">3.</span> <span class="nav-text">0x02.PWN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hello-ret2shellcode"><span class="nav-number">3.1.</span> <span class="nav-text">hello - ret2shellcode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#高阶解法：栈迁移"><span class="nav-number">3.1.1.</span> <span class="nav-text">高阶解法：栈迁移</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ezsc-Alphanumeric-Shellcode"><span class="nav-number">3.2.</span> <span class="nav-text">ezsc - Alphanumeric Shellcode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序分析"><span class="nav-number">3.2.1.</span> <span class="nav-text">程序分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Alphanumeric-Shelllcode"><span class="nav-number">3.2.2.</span> <span class="nav-text">Alphanumeric Shelllcode</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#easycpp-UAF"><span class="nav-number">3.3.</span> <span class="nav-text">easycpp - UAF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序分析-1"><span class="nav-number">3.3.1.</span> <span class="nav-text">程序分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Use-After-Free"><span class="nav-number">3.3.2.</span> <span class="nav-text">Use After Free</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#noleak-Heap-Overflow-Integer-Overflow-Fastbin-Attack"><span class="nav-number">3.4.</span> <span class="nav-text">noleak - Heap Overflow + Integer Overflow + Fastbin Attack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#heap-master"><span class="nav-number">3.5.</span> <span class="nav-text">heap_master</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jail"><span class="nav-number">3.6.</span> <span class="nav-text">jail</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-绪论"><span class="nav-number">1.</span> <span class="nav-text">0x00.绪论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-Sign-in"><span class="nav-number">2.</span> <span class="nav-text">0x01.Sign in</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Starting-Point"><span class="nav-number">2.1.</span> <span class="nav-text">Starting Point</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-PWN"><span class="nav-number">3.</span> <span class="nav-text">0x02.PWN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hello-ret2shellcode"><span class="nav-number">3.1.</span> <span class="nav-text">hello - ret2shellcode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#高阶解法：栈迁移"><span class="nav-number">3.1.1.</span> <span class="nav-text">高阶解法：栈迁移</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ezsc-Alphanumeric-Shellcode"><span class="nav-number">3.2.</span> <span class="nav-text">ezsc - Alphanumeric Shellcode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序分析"><span class="nav-number">3.2.1.</span> <span class="nav-text">程序分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Alphanumeric-Shelllcode"><span class="nav-number">3.2.2.</span> <span class="nav-text">Alphanumeric Shelllcode</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#easycpp-UAF"><span class="nav-number">3.3.</span> <span class="nav-text">easycpp - UAF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序分析-1"><span class="nav-number">3.3.1.</span> <span class="nav-text">程序分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Use-After-Free"><span class="nav-number">3.3.2.</span> <span class="nav-text">Use After Free</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#noleak-Heap-Overflow-Integer-Overflow-Fastbin-Attack"><span class="nav-number">3.4.</span> <span class="nav-text">noleak - Heap Overflow + Integer Overflow + Fastbin Attack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#heap-master-Double-Free-Unsorted-bin-Attack-orw"><span class="nav-number">3.5.</span> <span class="nav-text">heap_master - Double Free + Unsorted bin Attack + orw</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jail"><span class="nav-number">3.6.</span> <span class="nav-text">jail</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
