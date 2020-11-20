@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"archive.next.arttnba3.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="0x00 绪论众所周知，快速排序是所有的排序算法当中速度较快的一种，手撕快排也成为了每一位OIer的必备技能（实际上大部分人都会直接用STL的sort函数XD）刚好今天ACM选修课布置的课后作业有一道题就是快排模板，所以作为一名不合格的OIer今天来简单讲讲什么是快速排序算法2333  注：这篇文章写于2020.06，今年从CSDN上搬到这里来23333  0x01 基本概念快速排序（Quick">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【算法浅析-0X04】快速排序算法浅析 by arttnba3">
+<meta property="og:url" content="http://archive.next.arttnba3.cn/2020/11/20/%E3%80%90%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90-0X04%E3%80%91%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90-by-arttnba3/index.html">
+<meta property="og:site_name" content="arttnba3&#39;s blog">
+<meta property="og:description" content="0x00 绪论众所周知，快速排序是所有的排序算法当中速度较快的一种，手撕快排也成为了每一位OIer的必备技能（实际上大部分人都会直接用STL的sort函数XD）刚好今天ACM选修课布置的课后作业有一道题就是快排模板，所以作为一名不合格的OIer今天来简单讲讲什么是快速排序算法2333  注：这篇文章写于2020.06，今年从CSDN上搬到这里来23333  0x01 基本概念快速排序（Quick">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191008110757588.gif">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200615152749700.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FydHRuYmEz,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWctbXkuY3Nkbi5uZXQvdXBsb2Fkcy8yMDEyMDcvMjgvMTM0MzQ4MzI5N18yNDE1LmpwZw?x-oss-process=image/format,png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200615155557204.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FydHRuYmEz,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2020-11-20T05:40:05.000Z">
+<meta property="article:modified_time" content="2020-11-20T05:41:21.295Z">
+<meta property="article:author" content="arttnba3">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta property="article:tag" content="图论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191008110757588.gif">
+
+<link rel="canonical" href="http://archive.next.arttnba3.cn/2020/11/20/%E3%80%90%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90-0X04%E3%80%91%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90-by-arttnba3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>【算法浅析-0X04】快速排序算法浅析 by arttnba3 | arttnba3's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">arttnba3's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">- arttnba3的隐秘小窝 -</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/arttnba3" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://archive.next.arttnba3.cn/2020/11/20/%E3%80%90%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90-0X04%E3%80%91%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90-by-arttnba3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="arttnba3">
+      <meta itemprop="description" content="- 做了关于你的梦，所以不愿醒来呢 -">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="arttnba3's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【算法浅析-0X04】快速排序算法浅析 by arttnba3
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-11-20 13:40:05 / Modified: 13:41:21" itemprop="dateCreated datePublished" datetime="2020-11-20T13:40:05+08:00">2020-11-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">算法浅析</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="0x00-绪论"><a href="#0x00-绪论" class="headerlink" title="0x00 绪论"></a>0x00 绪论</h1><p>众所周知，快速排序是所有的排序算法当中速度较快的一种，手撕快排也成为了每一位OIer的必备技能（<del>实际上大部分人都会直接用STL的sort函数XD）</del><br>刚好今天ACM选修课布置的课后作业有一道题就是快排模板，所以作为一名不合格的OIer今天来简单讲讲什么是快速排序算法2333</p>
+<blockquote>
+<p>注：这篇文章写于2020.06，今年从CSDN上搬到这里来23333</p>
+</blockquote>
+<h1 id="0x01-基本概念"><a href="#0x01-基本概念" class="headerlink" title="0x01 基本概念"></a>0x01 基本概念</h1><p><strong>快速排序（Quick Sort）</strong>，顾名思义就是很快的排序（大雾），是基于冒泡排序的一种改进的排序算法。</p>
+<blockquote>
+<h2 id="pre-冒泡排序（Bubble-Sort）"><a href="#pre-冒泡排序（Bubble-Sort）" class="headerlink" title="pre.冒泡排序（Bubble Sort）"></a>pre.冒泡排序（Bubble Sort）</h2><p>没学过冒泡排序的可以简单地看一下，学过的直接跳过就行了<br>顾名思义，数据会“像泡泡一样一个一个冒出水面”，故得名冒泡排序<br>冒泡排序要对数组进行n-1趟遍历，故时间复杂度为O(N^2)<br>简单的冒泡排序代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="function"><span class="keyword">void</span> <span class="title">a3_sort</span><span class="params">(<span class="keyword">int</span> * <span class="built_in">array</span>, <span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function">&gt;</span>&#123;</span><br><span class="line">&gt;<span class="keyword">int</span> temp;</span><br><span class="line">&gt;<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n<span class="number">-1</span>;i++)</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n<span class="number">-1</span>-i;j++)</span><br><span class="line">       <span class="keyword">if</span>(<span class="built_in">array</span>[j]&gt;<span class="built_in">array</span>[j+<span class="number">1</span>])</span><br><span class="line">       &#123;</span><br><span class="line">           temp = <span class="built_in">array</span>[j];</span><br><span class="line">           <span class="built_in">array</span>[j] = <span class="built_in">array</span>[j+<span class="number">1</span>];</span><br><span class="line">           <span class="built_in">array</span>[j+<span class="number">1</span>] = temp;</span><br><span class="line">       &#125;</span><br><span class="line">&gt;&#125;</span><br></pre></td></tr></table></figure>
+<p>基于冒泡排序的思想，C. A. R. Hoare在1960年提出了快速排序算法。</p>
+</blockquote>
+<p>快速排序的基本思想是：通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列。</p>
+<h1 id="0x02-原理浅析"><a href="#0x02-原理浅析" class="headerlink" title="0x02 原理浅析"></a>0x02 原理浅析</h1><p>快速排序大致可以分为以下几个步骤</p>
+<h2 id="step1：选取基准值"><a href="#step1：选取基准值" class="headerlink" title="step1：选取基准值"></a>step1：选取基准值</h2><p>在要排序的数组当中选取一个值作为基准值，通常我们可以选array[0]作为基准值，保存在变量key当中</p>
+<p>接下来我们需要分别从后向前、从前向后对整个数组进行遍历，故建立变量i=left，j=right（数组始索引与末索引）</p>
+<h2 id="step2：从后向前遍历"><a href="#step2：从后向前遍历" class="headerlink" title="step2：从后向前遍历"></a>step2：从后向前遍历</h2><p>寻找第一个比key小的值，并将之存在array[i]中</p>
+<h2 id="step3：从前向后遍历"><a href="#step3：从前向后遍历" class="headerlink" title="step3：从前向后遍历"></a>step3：从前向后遍历</h2><p>寻找第一个比key大的值，并将之存在array[j]中</p>
+<h2 id="step4：重复step2、3"><a href="#step4：重复step2、3" class="headerlink" title="step4：重复step2、3"></a>step4：重复step2、3</h2><p>直到i&gt;=j，此时整个数组已经被遍历过一遍</p>
+<blockquote>
+<p>要注意的是在step2与step3中已经蕴含了【交换】的过程，故不需要添加而外的交换的语句<br>也可以理解为step2、3分别找出第一个比key大、小的值，将之进行交换</p>
+</blockquote>
+<h2 id="step5：基准值回归数组，再对其左、右部分进行快排"><a href="#step5：基准值回归数组，再对其左、右部分进行快排" class="headerlink" title="step5：基准值回归数组，再对其左、右部分进行快排"></a>step5：基准值回归数组，再对其左、右部分进行快排</h2><p>将数组无限细分下去，一直到所有数据都被排序完毕</p>
+<blockquote>
+<p>想不明白的可以看一看下面的动图<img src="https://img-blog.csdnimg.cn/20191008110757588.gif" alt="img"></p>
+</blockquote>
+<h1 id="0x03-代码实现"><a href="#0x03-代码实现" class="headerlink" title="0x03 代码实现"></a>0x03 代码实现</h1><p>最基础的快速排序的代码实现如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">a3_qsort</span><span class="params">(<span class="keyword">int</span>* <span class="built_in">array</span>, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(left&gt;=right)</span><br><span class="line">        <span class="keyword">return</span> ;</span><br><span class="line">    <span class="keyword">int</span> i = left;</span><br><span class="line">    <span class="keyword">int</span> j = right;</span><br><span class="line">    <span class="keyword">int</span> key = <span class="built_in">array</span>[left];</span><br><span class="line">    <span class="keyword">while</span>(i&lt;j)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>(i &lt; j &amp;&amp; key &lt;= <span class="built_in">array</span>[j])<span class="comment">//从后向前找比key小的</span></span><br><span class="line">            j--;</span><br><span class="line">        <span class="keyword">if</span>(i &lt; j)</span><br><span class="line">            <span class="built_in">array</span>[i++] = <span class="built_in">array</span>[j];<span class="comment">//进行一次交换</span></span><br><span class="line">        <span class="keyword">while</span>(i &lt; j &amp;&amp; key &gt;= <span class="built_in">array</span>[i])<span class="comment">//从前向后找比key大的</span></span><br><span class="line">            i++;</span><br><span class="line">        <span class="keyword">if</span>(i &lt; j)</span><br><span class="line">            <span class="built_in">array</span>[j--] = <span class="built_in">array</span>[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">array</span>[i] = key;<span class="comment">//中间数的回归</span></span><br><span class="line">    a3_qsort(<span class="built_in">array</span>, left, i<span class="number">-1</span>);</span><br><span class="line">    a3_qsort(<span class="built_in">array</span>, i+<span class="number">1</span>, right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="0x04-简单优化"><a href="#0x04-简单优化" class="headerlink" title="0x04 简单优化"></a>0x04 简单优化</h1><blockquote>
+<p>“太好🌶，看完以后👴立马就学会了快排”<br>——“真的🐎？”</p>
+</blockquote>
+<p><strong>实⭐战⭐演⭐练</strong>环节不请自来</p>
+<blockquote>
+<p>题目描述<br>利用快速排序算法将读入的 <strong>N</strong> 个数从小到大排序后输出。</p>
+<p>快速排序是信息学竞赛的必备算法之一。对于快速排序不是很了解的同学可以自行上网查询相关资料，掌握后独立完成。（C++ 选手请不要试图使用STL，虽然你可以使用 sort 一遍过，但是你并没有掌握快速排序算法的精髓。）</p>
+<p>输入格式<br>第1行为一个正整数 N，第2 行包含 N个空格隔开的正整数 a<del>i</del>，为你需要进行排序的数，数据保证了 A<del>i</del>     不超过 10^9  。</p>
+<p>输出格式<br>将给定的 N个数从小到大输出，数之间空格隔开，行末换行且无空格。</p>
+<p>输入输出样例<br>输入 #1<br><code>5 4 2 4 5 1</code><br>输出 #1<br><code>1 2 4 4 5</code><br>说明/提示<br>对于 20%的数据，有<br>N≤10^3  ；<br>对于100% 的数据，有N≤10^5  。<br><a href="https://www.luogu.com.cn/problem/P1177" target="_blank" rel="noopener">洛谷P1177【模板】快速排序</a></p>
+</blockquote>
+<p>当你满怀欣喜地将上面的代码复制粘贴进去时，你会发现TLE不请自来…<br><img src="https://img-blog.csdnimg.cn/20200615152749700.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FydHRuYmEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>那么我们的问题出在哪呢？（<del>因为写这段代码的人太菜le）</del></p>
+<p>上面的标准化的代码选取的基准是数组的第一个值，在遇到较坏情况时时间复杂度很容易大幅度提高，尤其是在数组有序时，这样的一种分割方式会使快速排序退化为冒泡排序，时间复杂度飙升至O(N^2)</p>
+<p>那么最简单的优化方法便是遍历时<strong>取位于数组中间的值作为基准值</strong></p>
+<blockquote>
+<p>来自<a href="https://blog.csdn.net/insistgogo/article/details/7785038" target="_blank" rel="noopener">某位大佬的测试结果</a><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWctbXkuY3Nkbi5uZXQvdXBsb2Fkcy8yMDEyMDcvMjgvMTM0MzQ4MzI5N18yNDE1LmpwZw?x-oss-process=image/format,png" alt="img"><br>最佳的划分是将待排序的序列分成等长的子序列，最佳的状态我们可以使用序列的中间的值，也就是第N/2个数。可是，这很难算出来，并且会明显减慢快速排序的速度。这样的中值的估计可以通过随机选取三个元素并用它们的中值作为枢纽元而得到。事实上，随机性并没有多大的帮助，因此一般的做法是使用左端、右端和中心位置上的三个元素的中值作为枢纽元。显然使用三数中值分割法消除了预排序输入的不好情形，并且减少快排大约14%的比较次数</p>
+</blockquote>
+<p>优化后的代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">a3_qsort</span><span class="params">(<span class="keyword">int</span>* <span class="built_in">array</span>, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> mid = <span class="built_in">array</span>[(left+right)/<span class="number">2</span>];<span class="comment">//固定以中间的数为基准</span></span><br><span class="line">    <span class="keyword">int</span> i = left;</span><br><span class="line">    <span class="keyword">int</span> j = right;</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>(<span class="built_in">array</span>[i]&lt;=mid)i++;<span class="comment">//从前向后找第一个比mid大的数</span></span><br><span class="line">        <span class="keyword">while</span>(<span class="built_in">array</span>[j]&gt;=mid)j--;<span class="comment">//从后向前找第一个比mid小的数</span></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * 交换这两个数的位置，使比mid小的数都在mid前面，比mid大的数都在mid后面</span></span><br><span class="line"><span class="comment">         * 注意：在交换过程中mid的位置也是有可能会移动的</span></span><br><span class="line"><span class="comment">         * */</span></span><br><span class="line">        <span class="keyword">if</span>(i&lt;=j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> temp = <span class="built_in">array</span>[i];</span><br><span class="line">            <span class="built_in">array</span>[i] = <span class="built_in">array</span>[j];</span><br><span class="line">            <span class="built_in">array</span>[j] = temp;</span><br><span class="line">            i++;</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">while</span> (i&lt;=j);<span class="comment">//i&gt;j时说明已经遍历过一趟了</span></span><br><span class="line">    <span class="keyword">if</span>(left &lt; j)</span><br><span class="line">        a3_qsort(<span class="built_in">array</span>,left,j);<span class="comment">//对j左边的部分进行快排</span></span><br><span class="line">    <span class="keyword">if</span>(right &gt; i)</span><br><span class="line">        a3_qsort(<span class="built_in">array</span>,right,i);<span class="comment">//对i右边的部分进行快排</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果如下：<br><img src="https://img-blog.csdnimg.cn/20200615155557204.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FydHRuYmEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h1 id="0x05-高级优化"><a href="#0x05-高级优化" class="headerlink" title="0x05 高级优化"></a>0x05 高级优化</h1><blockquote>
+<p>“老师，还有没有更给力点的啊”<br>——“给👴爪巴”</p>
+</blockquote>
+<p>我们可以看到，上面的这样一种优化虽然可以一定程度上提高快排的效率，但是对于一些糟糕的数据（如很小以及部分有序数组），快排的时间复杂度仍然会飙升</p>
+<p>针对这样的情况，我们可以<strong>先对数据进行分析，再决定采用什么样的排序方式，多种排序方式混合使用</strong></p>
+<p>当然这样子就已经不是纯粹的快排了，<del>但是是不是快排已经无所谓了（误</del> </p>
+<blockquote>
+<p>咕了🕊，后面再把优化补上（<del>👈这个人还在研究STL源码</del> </p>
+</blockquote>
+<blockquote>
+<p><strong>注：这也是STL中sort()源码的做法</strong></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
+              <a href="/tags/C-C/" rel="tag"># C/C++</a>
+              <a href="/tags/%E5%9B%BE%E8%AE%BA/" rel="tag"># 图论</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/08/%E3%80%90%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81-0x02%E3%80%91/" rel="prev" title="【电子取证-0x02】美亚杯第五届全国电子取证竞赛资格赛write up by arttnba3">
+      <i class="fa fa-chevron-left"></i> 【电子取证-0x02】美亚杯第五届全国电子取证竞赛资格赛write up by arttnba3
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-绪论"><span class="nav-number">1.</span> <span class="nav-text">0x00 绪论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-基本概念"><span class="nav-number">2.</span> <span class="nav-text">0x01 基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pre-冒泡排序（Bubble-Sort）"><span class="nav-number">2.1.</span> <span class="nav-text">pre.冒泡排序（Bubble Sort）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-原理浅析"><span class="nav-number">3.</span> <span class="nav-text">0x02 原理浅析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#step1：选取基准值"><span class="nav-number">3.1.</span> <span class="nav-text">step1：选取基准值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step2：从后向前遍历"><span class="nav-number">3.2.</span> <span class="nav-text">step2：从后向前遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step3：从前向后遍历"><span class="nav-number">3.3.</span> <span class="nav-text">step3：从前向后遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step4：重复step2、3"><span class="nav-number">3.4.</span> <span class="nav-text">step4：重复step2、3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step5：基准值回归数组，再对其左、右部分进行快排"><span class="nav-number">3.5.</span> <span class="nav-text">step5：基准值回归数组，再对其左、右部分进行快排</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03-代码实现"><span class="nav-number">4.</span> <span class="nav-text">0x03 代码实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x04-简单优化"><span class="nav-number">5.</span> <span class="nav-text">0x04 简单优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x05-高级优化"><span class="nav-number">6.</span> <span class="nav-text">0x05 高级优化</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="arttnba3"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">arttnba3</p>
+  <div class="site-description" itemprop="description">- 做了关于你的梦，所以不愿醒来呢 -</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/arttnba3" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;arttnba3" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1543127579@qq.com" title="E-Mail → mailto:1543127579@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/7518681149" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;7518681149" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/arttnba3" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;arttnba3" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Friends' Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.wootec.top/" title="https:&#x2F;&#x2F;www.wootec.top" rel="noopener" target="_blank">Reverier</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://luoq1an.github.io/" title="https:&#x2F;&#x2F;luoq1an.github.io" rel="noopener" target="_blank">luoqian</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ll1ng.github.io/" title="https:&#x2F;&#x2F;ll1ng.github.io" rel="noopener" target="_blank">ling</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://shal10w.github.io/" title="https:&#x2F;&#x2F;shal10w.github.io" rel="noopener" target="_blank">shallow</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://eqqie.cn/" title="https:&#x2F;&#x2F;eqqie.cn" rel="noopener" target="_blank">eqqie</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://cor1e.cn/" title="https:&#x2F;&#x2F;cor1e.cn" rel="noopener" target="_blank">cor1e</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://yunq1ao.com/" title="https:&#x2F;&#x2F;yunq1ao.com" rel="noopener" target="_blank">yunqiao</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://mercer5.github.io/" title="https:&#x2F;&#x2F;mercer5.github.io" rel="noopener" target="_blank">mercer</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">arttnba3</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'a040036b8e5ab6a9838d',
+      clientSecret: '7b9006697fe7a78e56f22a025caf2deb03e14ea8',
+      repo        : 'BlogComment',
+      owner       : 'SakuraiHimeki',
+      admin       : ['SakuraiHimeki'],
+      id          : 'a2ebe9703b4934fcf72ed9a85a6fc61b',
+        language: '',
+      distractionFreeMode: false
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
