@@ -30,12 +30,26 @@
 <meta property="og:image" content="https://i.loli.net/2020/10/09/feVgh943dJCawl2.png">
 <meta property="og:image" content="https://i.loli.net/2020/10/09/XEvUVFzTgMCedk2.png">
 <meta property="og:image" content="https://i.loli.net/2020/10/09/jGMscx5D7PLImuU.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/01/tfOhcsRFU5dJZwW.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/01/xn2mXQ4hSOJGRpc.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/01/SYAMrylVujwUsx2.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/01/6shVrWOb4eo57ml.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/01/mf56nyOzsKcq1lB.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/01/ovdKZlGnibcYCBX.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/01/B8ifYJoSXZ1n7GK.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/01/4thVcrYI1ZzTCDm.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/01/JunMCrOFymwdGP4.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/01/geUBkJ4Stym6ZH7.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/01/LCGYVdiuzOEWlpw.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/01/xKH4aj7i3cdzETm.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/01/wDduBRyQn9eCj8q.png">
 <meta property="article:published_time" content="2020-10-09T06:15:13.000Z">
-<meta property="article:modified_time" content="2020-11-25T19:56:36.308Z">
+<meta property="article:modified_time" content="2020-12-01T15:44:14.926Z">
 <meta property="article:author" content="arttnba3">
 <meta property="article:tag" content="信息安全">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="逆向工程">
+<meta property="article:tag" content="UPX">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.loli.net/2020/10/09/feVgh943dJCawl2.png">
 
@@ -205,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-26 03:56:36" itemprop="dateModified" datetime="2020-11-26T03:56:36+08:00">2020-11-26</time>
+                <time title="Modified: 2020-12-01 23:44:14" itemprop="dateModified" datetime="2020-12-01T23:44:14+08:00">2020-12-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -261,6 +275,59 @@
 <p>故得flag</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;hell0_w0rld&#125;</span><br></pre></td></tr></table></figure>
 
+<h1 id="0x003-reverse2"><a href="#0x003-reverse2" class="headerlink" title="0x003.reverse2"></a>0x003.reverse2</h1><p>拖入IDA进行分析</p>
+<p>有个可疑字符串<code>{hacking_for_fun}</code></p>
+<p><img src="https://i.loli.net/2020/12/01/tfOhcsRFU5dJZwW.png" alt="image.png"></p>
+<p>main函数中会进行置换，将<code>i</code>和<code>r</code>都换成<code>1</code></p>
+<p><img src="https://i.loli.net/2020/12/01/xn2mXQ4hSOJGRpc.png" alt="image.png"></p>
+<p>故得flag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;hack1ng_fo1_fun&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="0x004-内涵的软件"><a href="#0x004-内涵的软件" class="headerlink" title="0x004.内涵的软件"></a>0x004.内涵的软件</h1><p>拖入IDA就有flag</p>
+<p><img src="https://i.loli.net/2020/12/01/SYAMrylVujwUsx2.png" alt="image.png"></p>
+<p>需要注意的是把<code>DBAPP</code>换成<code>flag</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;49d3c93df25caad81232130f3d2ebfad&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="0x005-新年快乐-UPX"><a href="#0x005-新年快乐-UPX" class="headerlink" title="0x005.新年快乐 - UPX"></a>0x005.新年快乐 - UPX</h1><p>惯例的拖入IDA，发现<strong>啥都没有</strong>，推测是加了壳</p>
+<p><img src="https://i.loli.net/2020/12/01/6shVrWOb4eo57ml.png" alt="image.png"></p>
+<p>脱壳以后就可以在IDA中直接得到flag了</p>
+<p><img src="https://i.loli.net/2020/12/01/mf56nyOzsKcq1lB.png" alt="image.png"></p>
+<p><img src="https://i.loli.net/2020/12/01/ovdKZlGnibcYCBX.png" alt="image.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;HappyNewYear!&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="0x006-BJDCTF-2nd-guessgame"><a href="#0x006-BJDCTF-2nd-guessgame" class="headerlink" title="0x006.[BJDCTF 2nd]guessgame"></a>0x006.[BJDCTF 2nd]guessgame</h1><p>拖入IDA中就有flag了</p>
+<p><img src="https://i.loli.net/2020/12/01/B8ifYJoSXZ1n7GK.png" alt="image.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;S1mple_ReV3r5e_W1th_0D_0r_IDA&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="0x007-helloworld"><a href="#0x007-helloworld" class="headerlink" title="0x007.helloworld"></a>0x007.helloworld</h1><p>拖入jadx中就有flag了</p>
+<p><img src="https://i.loli.net/2020/12/01/4thVcrYI1ZzTCDm.png" alt="image.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;7631a988259a00816deda84afb29430a&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="0x008-xor-异或"><a href="#0x008-xor-异或" class="headerlink" title="0x008.xor - 异或"></a>0x008.xor - 异或</h1><p>拖入IDA进行分析，发现储存了异或加密后的flag</p>
+<p><img src="https://i.loli.net/2020/12/01/JunMCrOFymwdGP4.png" alt="image.png"></p>
+<p>写个脚本解密即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">flag = <span class="string">b'f\nk\fw&amp;O.@\x11x\rZ;U\x11p\x19F\x1Fv\"M#D\x0Eg\x06h\x0FG2O'</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">33</span>):</span><br><span class="line">    print(chr(flag[i] ^ flag[i<span class="number">-1</span>]),end = <span class="string">''</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/12/01/geUBkJ4Stym6ZH7.png" alt="image.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;QianQiuWanDai_YiTongJiangHu&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="0x009-reverse3-base64"><a href="#0x009-reverse3-base64" class="headerlink" title="0x009.reverse3 - base64"></a>0x009.reverse3 - base64</h1><p>拖入IDA进行分析</p>
+<p>这个是加密函数</p>
+<p><img src="https://i.loli.net/2020/12/01/LCGYVdiuzOEWlpw.png" alt="image.png"></p>
+<p>存在base64码表，推测应该是base64</p>
+<p><img src="https://i.loli.net/2020/12/01/xKH4aj7i3cdzETm.png" alt="image.png"></p>
+<p>base64加密后还有一个简单的赋值操作</p>
+<p>故构造解密脚本如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> base64 <span class="keyword">import</span> *</span><br><span class="line">ciphertext = <span class="string">'e3nifIH9b_C@n@dH'</span></span><br><span class="line">flag = <span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(ciphertext)):</span><br><span class="line">    flag += chr(ord(ciphertext[i])-i)</span><br><span class="line">print(b64decode(flag))</span><br></pre></td></tr></table></figure>
+
+<p>得到flag</p>
+<p><img src="https://i.loli.net/2020/12/01/wDduBRyQn9eCj8q.png" alt="image.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;i_l0ve_you&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="0x00A-不一样的flag"><a href="#0x00A-不一样的flag" class="headerlink" title="0x00A.不一样的flag"></a>0x00A.不一样的flag</h1><p>拖入IDA进行分析</p>
+<p>得到flag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;222441144222&#125;</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -273,6 +340,7 @@
               <a href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" rel="tag"># 信息安全</a>
               <a href="/tags/CTF/" rel="tag"># CTF</a>
               <a href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/" rel="tag"># 逆向工程</a>
+              <a href="/tags/UPX/" rel="tag"># UPX</a>
           </div>
 
         
@@ -347,7 +415,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x000-绪论"><span class="nav-number">1.</span> <span class="nav-text">0x000.绪论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x001-easyre"><span class="nav-number">2.</span> <span class="nav-text">0x001.easyre</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x002-reverse1"><span class="nav-number">3.</span> <span class="nav-text">0x002.reverse1</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x000-绪论"><span class="nav-number">1.</span> <span class="nav-text">0x000.绪论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x001-easyre"><span class="nav-number">2.</span> <span class="nav-text">0x001.easyre</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x002-reverse1"><span class="nav-number">3.</span> <span class="nav-text">0x002.reverse1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x003-reverse2"><span class="nav-number">4.</span> <span class="nav-text">0x003.reverse2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x004-内涵的软件"><span class="nav-number">5.</span> <span class="nav-text">0x004.内涵的软件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x005-新年快乐-UPX"><span class="nav-number">6.</span> <span class="nav-text">0x005.新年快乐 - UPX</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x006-BJDCTF-2nd-guessgame"><span class="nav-number">7.</span> <span class="nav-text">0x006.[BJDCTF 2nd]guessgame</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x007-helloworld"><span class="nav-number">8.</span> <span class="nav-text">0x007.helloworld</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x008-xor-异或"><span class="nav-number">9.</span> <span class="nav-text">0x008.xor - 异或</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x009-reverse3-base64"><span class="nav-number">10.</span> <span class="nav-text">0x009.reverse3 - base64</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00A-不一样的flag"><span class="nav-number">11.</span> <span class="nav-text">0x00A.不一样的flag</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -376,7 +444,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
