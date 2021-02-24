@@ -135,7 +135,7 @@
 <meta property="og:image" content="https://i.loli.net/2021/01/31/HItF2WqQlb6kyTZ.png">
 <meta property="og:image" content="https://i.loli.net/2021/01/30/x3I8sHJpvRqmajM.png">
 <meta property="article:published_time" content="2021-02-23T19:56:56.000Z">
-<meta property="article:modified_time" content="2021-02-24T05:22:31.595Z">
+<meta property="article:modified_time" content="2021-02-24T05:23:28.808Z">
 <meta property="article:author" content="arttnba3">
 <meta property="article:tag" content="信息安全">
 <meta property="article:tag" content="PWN">
@@ -312,7 +312,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-02-24 03:56:56 / Modified: 13:22:31" itemprop="dateCreated datePublished" datetime="2021-02-24T03:56:56+08:00">2021-02-24</time>
+              <time title="Created: 2021-02-24 03:56:56 / Modified: 13:23:28" itemprop="dateCreated datePublished" datetime="2021-02-24T03:56:56+08:00">2021-02-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -742,7 +742,7 @@
 <h3 id="七、IO-FILE"><a href="#七、IO-FILE" class="headerlink" title="七、IO_FILE"></a>七、IO_FILE</h3><p>对于FILE结构体的利用也是CTF中的大热门之一，通过修改FILE结构体或是劫持vtable表等方式可以令攻击者十分方便地控制程序执行流</p>
 <p>对于FILE结构体的相关定义见<a href="https://ctf-wiki.org/pwn/linux/io_file/introduction/" target="_blank" rel="noopener">CTF WIKI</a></p>
 <h4 id="vtable-hijack"><a href="#vtable-hijack" class="headerlink" title="vtable hijack"></a>vtable hijack</h4><p>对于每一个FILE结构体，其都有一个虚函数表，在通过FILE结构体实现各种输入输出功能时往往会调用其中的函数指针，那么我们不难想到，只要我们能够控制该虚函数表，就能通过FILE结构体相关的函数调用流程控制程序执行流</p>
-<h5 id="例题：-V-amp-N2020-公开赛-easyTHeap-Use-After-Free-tcache-hijact-tcache-poisoning-one-gadget"><a href="#例题：-V-amp-N2020-公开赛-easyTHeap-Use-After-Free-tcache-hijact-tcache-poisoning-one-gadget" class="headerlink" title="例题：[V&amp;N2020 公开赛]easyTHeap - Use After Free + tcache hijact + tcache poisoning + one_gadget"></a>例题：[V&amp;N2020 公开赛]easyTHeap - Use After Free + tcache hijact + tcache poisoning + one_gadget</h5><p>惯例的<code>checksec</code>，保护全开，不出意外又是一道堆题<del>看名字也知道是一道堆题</del></p>
+<h5 id="例题：-V-amp-N2020-公开赛-easyTHeap-Use-After-Free-tcache-hijact-tcache-poisoning-one-gadget"><a href="#例题：-V-amp-N2020-公开赛-easyTHeap-Use-After-Free-tcache-hijact-tcache-poisoning-one-gadget" class="headerlink" title="例题：[V&amp;N2020 公开赛]easyTHeap - Use After Free + tcache hijact + tcache poisoning + one_gadget"></a>例题：[V&amp;N2020 公开赛]easyTHeap - Use After Free + tcache hijact + tcache poisoning + one_gadget</h5><p>惯例的<code>checksec</code>，保护全开</p>
 <p><img src="https://i.loli.net/2021/01/25/3ApsgBYDW1kPvZq.png" alt=""></p>
 <p>拖入IDA进行分析</p>
 <p><img src="https://i.loli.net/2021/01/25/VvSMXr1gkjswG8F.png" alt=""></p>
