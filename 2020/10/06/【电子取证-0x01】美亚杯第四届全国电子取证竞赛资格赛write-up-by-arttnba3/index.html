@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 6.3.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -24,7 +24,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="【电子取证-0x01】美亚杯第四届全国电子取证竞赛资格赛write up by arttnba3">
 <meta property="og:url" content="http://archive.next.arttnba3.cn/2020/10/06/%E3%80%90%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81-0x01%E3%80%91%E7%BE%8E%E4%BA%9A%E6%9D%AF%E7%AC%AC%E5%9B%9B%E5%B1%8A%E5%85%A8%E5%9B%BD%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81%E7%AB%9E%E8%B5%9B%E8%B5%84%E6%A0%BC%E8%B5%9Bwrite-up-by-arttnba3/index.html">
-<meta property="og:site_name" content="arttnba3&#39;s blog">
+<meta property="og:site_name" content="arttnba3&#39;s old blog">
 <meta property="og:description" content="0x00.绪论“美亚杯”中国电子数据取证大赛是由中国刑事警察学院主办、厦门美亚柏科承办的中国电子数据取证大赛，也是国内较为有名的数据取证比赛 作为网安专业的小萌新去年对此毫不知情（知情了我可能也过不了资格赛），于是今年想要去玩玩（指划水），所以打算趁时间还够把过去的几次比赛的真题给刷一刷XD">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i.loli.net/2020/10/06/PRyuzoVedDlEBbw.png">
@@ -74,7 +74,7 @@
   };
 </script>
 
-  <title>【电子取证-0x01】美亚杯第四届全国电子取证竞赛资格赛write up by arttnba3 | arttnba3's blog</title>
+  <title>【电子取证-0x01】美亚杯第四届全国电子取证竞赛资格赛write up by arttnba3 | arttnba3's old blog</title>
   
 
 
@@ -105,7 +105,7 @@
   </style>
 </noscript>
 
-<link rel="alternate" href="/atom.xml" title="arttnba3's blog" type="application/atom+xml">
+<link rel="alternate" href="/atom.xml" title="arttnba3's old blog" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -126,10 +126,10 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">arttnba3's blog</h1>
+      <h1 class="site-title">arttnba3's old blog</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
-      <p class="site-subtitle" itemprop="description">- arttnba3的隐秘小窝 -</p>
+      <p class="site-subtitle" itemprop="description">- arttnba3的垃圾堆积处 -</p>
   </div>
 
   <div class="site-nav-right">
@@ -203,11 +203,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="arttnba3">
-      <meta itemprop="description" content="- 做了关于你的梦，所以不愿醒来呢 -">
+      <meta itemprop="description" content="此页面已废弃，新博客: arttnba3.cn">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="arttnba3's blog">
+      <meta itemprop="name" content="arttnba3's old blog">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -258,9 +258,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="0x00-绪论"><a href="#0x00-绪论" class="headerlink" title="0x00.绪论"></a>0x00.绪论</h1><p><a href="http://meiyacup.com" target="_blank" rel="noopener">“美亚杯”中国电子数据取证大赛</a>是由<strong>中国刑事警察学院主办、厦门美亚柏科承办的中国电子数据取证大赛</strong>，也是国内较为有名的数据取证比赛</p>
+        <h1 id="0x00-绪论"><a href="#0x00-绪论" class="headerlink" title="0x00.绪论"></a>0x00.绪论</h1><p><a target="_blank" rel="noopener" href="http://meiyacup.com/">“美亚杯”中国电子数据取证大赛</a>是由<strong>中国刑事警察学院主办、厦门美亚柏科承办的中国电子数据取证大赛</strong>，也是国内较为有名的数据取证比赛</p>
 <p>作为网安专业的小萌新去年对此毫不知情（<del>知情了我可能也过不了资格赛</del>），于是今年想要去玩玩（<del>指划水</del>），所以打算趁时间还够把过去的几次比赛的真题给刷一刷XD</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <blockquote>
 <p>注：本人感觉取证比赛就是熟练运用各种工具的比赛…（<del>取证软件公司的硬广</del></p>
@@ -331,7 +331,7 @@
 <p>于是我们可以计算出系统盘的物理大小应为<strong>32,210,157,568 Bytes</strong></p>
 <blockquote>
 <p>可以使用python辅助计算（计算器当然也行XD只不过我第一时间想起来的就是python（👈把这个天天说废话的人拖出去打死</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PS C:\WINDOWS\system32&gt; python</span><br><span class="line">Python <span class="number">3.7</span>.<span class="number">4</span> (tags/v3.<span class="number">7.4</span>:e09359112e, Jul  <span class="number">8</span> <span class="number">2019</span>, <span class="number">19</span>:<span class="number">29</span>:<span class="number">22</span>) [<span class="type">MSC</span> <span class="type">v.1916</span> <span class="number">32</span> <span class="type">bit</span> (<span class="built_in">Int</span><span class="type">el</span>)] on win32</span><br><span class="line">Type <span class="string">"help"</span>, <span class="string">"copyright"</span>, <span class="string">"credits"</span> or <span class="string">"license"</span> <span class="keyword">for</span> more information.</span><br><span class="line">&gt;&gt;&gt; <span class="number">512</span>*<span class="number">62910464</span></span><br><span class="line"><span class="number">32210157568</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\WINDOWS\system32&gt; python</span><br><span class="line">Python <span class="number">3.7</span>.<span class="number">4</span> (tags/v3.<span class="number">7.4</span>:e09359112e, Jul  <span class="number">8</span> <span class="number">2019</span>, <span class="number">19</span>:<span class="number">29</span>:<span class="number">22</span>) [<span class="type">MSC</span> <span class="type">v.1916</span> <span class="number">32</span> <span class="type">bit</span> (<span class="built_in">Int</span><span class="type">el</span>)] on win32</span><br><span class="line"><span class="built_in">Type</span> <span class="string">&quot;help&quot;</span>, <span class="string">&quot;copyright&quot;</span>, <span class="string">&quot;credits&quot;</span> or <span class="string">&quot;license&quot;</span> <span class="keyword">for</span> more information.</span><br><span class="line">&gt;&gt;&gt; <span class="number">512</span>*<span class="number">62910464</span></span><br><span class="line"><span class="number">32210157568</span></span><br></pre></td></tr></table></figure>
 </blockquote>
 <blockquote>
 <p>当我把摘要往下翻才发现原来摘要里就有…好气啊…</p>
@@ -358,7 +358,7 @@
 <p><img src="https://i.loli.net/2020/10/06/aHURQw1P38ktSmK.png" alt="image.png"></p>
 <p>然后使用<strong>DiskGenius</strong>查看分区可知<strong>簇大小为4096 Byte</strong></p>
 <p><img src="https://i.loli.net/2020/10/06/foJDFj5dOrMi6sB.png" alt="image.png"></p>
-<p>前面我们已知单个扇区为<strong>512 Byte</strong>，故每个簇包含 4096 / 512 = *<em>8 *</em> 个扇区</p>
+<p>前面我们已知单个扇区为<strong>512 Byte</strong>，故每个簇包含 4096 &#x2F; 512 &#x3D; **8 ** 个扇区</p>
 <h2 id="7-在操作系统分区内，-MFT的物理起始扇区位置-Starting-physical-sector-是什么"><a href="#7-在操作系统分区内，-MFT的物理起始扇区位置-Starting-physical-sector-是什么" class="headerlink" title="7.在操作系统分区内，$MFT的物理起始扇区位置(Starting physical sector)是什么?"></a>7.在操作系统分区内，$MFT的物理起始扇区位置(Starting physical sector)是什么?</h2><blockquote>
 <p>A. 62,919,936</p>
 <p>B. 67,086,648</p>
@@ -605,7 +605,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-绪论"><span class="nav-number">1.</span> <span class="nav-text">0x00.绪论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-工具"><span class="nav-number">2.</span> <span class="nav-text">0x01.工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-资格赛-案情介绍"><span class="nav-number">3.</span> <span class="nav-text">0x02.资格赛 - 案情介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03-资格赛-单项选择题"><span class="nav-number">4.</span> <span class="nav-text">0x03.资格赛 - 单项选择题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Victor的笔记本电脑己成功取证并制作成法证映像档-Forensic-Image-，下列哪个是其MD5哈希值"><span class="nav-number">4.1.</span> <span class="nav-text">1.Victor的笔记本电脑己成功取证并制作成法证映像档 (Forensic Image)，下列哪个是其MD5哈希值?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-根据法证映像档-Forensic-Image-，确定原笔记本内有多少个硬盘分区"><span class="nav-number">4.2.</span> <span class="nav-text">2.根据法证映像档 (Forensic Image)，确定原笔记本内有多少个硬盘分区?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-你能找到硬盘操作系统分区内的开始逻辑区块地址（LBA）-答案格式-扇区-Sector"><span class="nav-number">4.3.</span> <span class="nav-text">3.你能找到硬盘操作系统分区内的开始逻辑区块地址（LBA）? (答案格式: 扇区, Sector)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-你能找到硬盘操作系统分区的物理大小吗-字节byte"><span class="nav-number">4.4.</span> <span class="nav-text">4.你能找到硬盘操作系统分区的物理大小吗 (字节byte)?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-操作系统分区的文件系统是哪种"><span class="nav-number">4.5.</span> <span class="nav-text">5.操作系统分区的文件系统是哪种?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-操作系统分区，每个簇-Cluster-包含几个扇区-sectors"><span class="nav-number">4.6.</span> <span class="nav-text">6.操作系统分区，每个簇(Cluster)包含几个扇区(sectors)?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-在操作系统分区内，-MFT的物理起始扇区位置-Starting-physical-sector-是什么"><span class="nav-number">4.7.</span> <span class="nav-text">7.在操作系统分区内，$MFT的物理起始扇区位置(Starting physical sector)是什么?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-请找出系统文件“SOFTWARE＂，请问操作系统的安装日期是-（答案格式-－“世界协调时间＂：YYYY-MM-DD-HH-MM-UTC）"><span class="nav-number">4.8.</span> <span class="nav-text">8.请找出系统文件“SOFTWARE＂，请问操作系统的安装日期是? （答案格式 －“世界协调时间＂：YYYY-MM-DD HH:MM UTC）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-用户“victor＂的唯一标识符-SID-是什么-（答案格式：RID）"><span class="nav-number">4.9.</span> <span class="nav-text">9.用户“victor＂的唯一标识符(SID)是什么?（答案格式：RID）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-用户“Lily＂的唯一标识符-SID-是什么-（答案格式：RID）"><span class="nav-number">4.10.</span> <span class="nav-text">10.用户“Lily＂的唯一标识符(SID)是什么?（答案格式：RID）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-Victor上一次更改系统登入密码是-（答案格式-－“本地时间＂：YYYY-MM-DD-HH-MM-8）"><span class="nav-number">4.11.</span> <span class="nav-text">11.Victor上一次更改系统登入密码是? （答案格式 －“本地时间＂：YYYY-MM-DD HH:MM +8）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-Lily上一次更改系统登入密码是-（答案格式-－“本地时间＂：YYYY-MM-DD-HH-MM-8）"><span class="nav-number">4.12.</span> <span class="nav-text">12.Lily上一次更改系统登入密码是? （答案格式 －“本地时间＂：YYYY-MM-DD HH:MM +8）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-Victor-总共登录系统多少次"><span class="nav-number">4.13.</span> <span class="nav-text">13.Victor 总共登录系统多少次?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-以下哪个帐号已经被禁用"><span class="nav-number">4.14.</span> <span class="nav-text">14.以下哪个帐号已经被禁用?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-以下哪个帐系统权限最低"><span class="nav-number">4.15.</span> <span class="nav-text">15.以下哪个帐系统权限最低?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-以下哪个帐号曾经远端登录系统"><span class="nav-number">4.16.</span> <span class="nav-text">16.以下哪个帐号曾经远端登录系统?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-硬盘操作系统的版本"><span class="nav-number">4.17.</span> <span class="nav-text">17.硬盘操作系统的版本?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-操作系统的最新服务包-Service-Pack-版本号是什么"><span class="nav-number">4.18.</span> <span class="nav-text">18.操作系统的最新服务包(Service Pack)版本号是什么?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-下列哪个是victor的默认打印机"><span class="nav-number">4.19.</span> <span class="nav-text">19.下列哪个是victor的默认打印机?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-在2018-10-31-08-29-32-8时间-账号simon曾经使用以下哪个文件"><span class="nav-number">4.20.</span> <span class="nav-text">20.在2018-10-31 08:29:32 +8时间, 账号simon曾经使用以下哪个文件?</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-%E7%BB%AA%E8%AE%BA"><span class="nav-number">1.</span> <span class="nav-text">0x00.绪论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-%E5%B7%A5%E5%85%B7"><span class="nav-number">2.</span> <span class="nav-text">0x01.工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-%E8%B5%84%E6%A0%BC%E8%B5%9B-%E6%A1%88%E6%83%85%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.</span> <span class="nav-text">0x02.资格赛 - 案情介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03-%E8%B5%84%E6%A0%BC%E8%B5%9B-%E5%8D%95%E9%A1%B9%E9%80%89%E6%8B%A9%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">0x03.资格赛 - 单项选择题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Victor%E7%9A%84%E7%AC%94%E8%AE%B0%E6%9C%AC%E7%94%B5%E8%84%91%E5%B7%B1%E6%88%90%E5%8A%9F%E5%8F%96%E8%AF%81%E5%B9%B6%E5%88%B6%E4%BD%9C%E6%88%90%E6%B3%95%E8%AF%81%E6%98%A0%E5%83%8F%E6%A1%A3-Forensic-Image-%EF%BC%8C%E4%B8%8B%E5%88%97%E5%93%AA%E4%B8%AA%E6%98%AF%E5%85%B6MD5%E5%93%88%E5%B8%8C%E5%80%BC"><span class="nav-number">4.1.</span> <span class="nav-text">1.Victor的笔记本电脑己成功取证并制作成法证映像档 (Forensic Image)，下列哪个是其MD5哈希值?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%A0%B9%E6%8D%AE%E6%B3%95%E8%AF%81%E6%98%A0%E5%83%8F%E6%A1%A3-Forensic-Image-%EF%BC%8C%E7%A1%AE%E5%AE%9A%E5%8E%9F%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%86%85%E6%9C%89%E5%A4%9A%E5%B0%91%E4%B8%AA%E7%A1%AC%E7%9B%98%E5%88%86%E5%8C%BA"><span class="nav-number">4.2.</span> <span class="nav-text">2.根据法证映像档 (Forensic Image)，确定原笔记本内有多少个硬盘分区?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%BD%A0%E8%83%BD%E6%89%BE%E5%88%B0%E7%A1%AC%E7%9B%98%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%88%86%E5%8C%BA%E5%86%85%E7%9A%84%E5%BC%80%E5%A7%8B%E9%80%BB%E8%BE%91%E5%8C%BA%E5%9D%97%E5%9C%B0%E5%9D%80%EF%BC%88LBA%EF%BC%89-%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F-%E6%89%87%E5%8C%BA-Sector"><span class="nav-number">4.3.</span> <span class="nav-text">3.你能找到硬盘操作系统分区内的开始逻辑区块地址（LBA）? (答案格式: 扇区, Sector)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%BD%A0%E8%83%BD%E6%89%BE%E5%88%B0%E7%A1%AC%E7%9B%98%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%88%86%E5%8C%BA%E7%9A%84%E7%89%A9%E7%90%86%E5%A4%A7%E5%B0%8F%E5%90%97-%E5%AD%97%E8%8A%82byte"><span class="nav-number">4.4.</span> <span class="nav-text">4.你能找到硬盘操作系统分区的物理大小吗 (字节byte)?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%88%86%E5%8C%BA%E7%9A%84%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%93%AA%E7%A7%8D"><span class="nav-number">4.5.</span> <span class="nav-text">5.操作系统分区的文件系统是哪种?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%88%86%E5%8C%BA%EF%BC%8C%E6%AF%8F%E4%B8%AA%E7%B0%87-Cluster-%E5%8C%85%E5%90%AB%E5%87%A0%E4%B8%AA%E6%89%87%E5%8C%BA-sectors"><span class="nav-number">4.6.</span> <span class="nav-text">6.操作系统分区，每个簇(Cluster)包含几个扇区(sectors)?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%9C%A8%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%88%86%E5%8C%BA%E5%86%85%EF%BC%8C-MFT%E7%9A%84%E7%89%A9%E7%90%86%E8%B5%B7%E5%A7%8B%E6%89%87%E5%8C%BA%E4%BD%8D%E7%BD%AE-Starting-physical-sector-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">4.7.</span> <span class="nav-text">7.在操作系统分区内，$MFT的物理起始扇区位置(Starting physical sector)是什么?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E8%AF%B7%E6%89%BE%E5%87%BA%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6%E2%80%9CSOFTWARE%EF%BC%82%EF%BC%8C%E8%AF%B7%E9%97%AE%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%89%E8%A3%85%E6%97%A5%E6%9C%9F%E6%98%AF-%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F-%EF%BC%8D%E2%80%9C%E4%B8%96%E7%95%8C%E5%8D%8F%E8%B0%83%E6%97%B6%E9%97%B4%EF%BC%82%EF%BC%9AYYYY-MM-DD-HH-MM-UTC%EF%BC%89"><span class="nav-number">4.8.</span> <span class="nav-text">8.请找出系统文件“SOFTWARE＂，请问操作系统的安装日期是? （答案格式 －“世界协调时间＂：YYYY-MM-DD HH:MM UTC）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E7%94%A8%E6%88%B7%E2%80%9Cvictor%EF%BC%82%E7%9A%84%E5%94%AF%E4%B8%80%E6%A0%87%E8%AF%86%E7%AC%A6-SID-%E6%98%AF%E4%BB%80%E4%B9%88-%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9ARID%EF%BC%89"><span class="nav-number">4.9.</span> <span class="nav-text">9.用户“victor＂的唯一标识符(SID)是什么?（答案格式：RID）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E7%94%A8%E6%88%B7%E2%80%9CLily%EF%BC%82%E7%9A%84%E5%94%AF%E4%B8%80%E6%A0%87%E8%AF%86%E7%AC%A6-SID-%E6%98%AF%E4%BB%80%E4%B9%88-%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F%EF%BC%9ARID%EF%BC%89"><span class="nav-number">4.10.</span> <span class="nav-text">10.用户“Lily＂的唯一标识符(SID)是什么?（答案格式：RID）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-Victor%E4%B8%8A%E4%B8%80%E6%AC%A1%E6%9B%B4%E6%94%B9%E7%B3%BB%E7%BB%9F%E7%99%BB%E5%85%A5%E5%AF%86%E7%A0%81%E6%98%AF-%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F-%EF%BC%8D%E2%80%9C%E6%9C%AC%E5%9C%B0%E6%97%B6%E9%97%B4%EF%BC%82%EF%BC%9AYYYY-MM-DD-HH-MM-8%EF%BC%89"><span class="nav-number">4.11.</span> <span class="nav-text">11.Victor上一次更改系统登入密码是? （答案格式 －“本地时间＂：YYYY-MM-DD HH:MM +8）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-Lily%E4%B8%8A%E4%B8%80%E6%AC%A1%E6%9B%B4%E6%94%B9%E7%B3%BB%E7%BB%9F%E7%99%BB%E5%85%A5%E5%AF%86%E7%A0%81%E6%98%AF-%EF%BC%88%E7%AD%94%E6%A1%88%E6%A0%BC%E5%BC%8F-%EF%BC%8D%E2%80%9C%E6%9C%AC%E5%9C%B0%E6%97%B6%E9%97%B4%EF%BC%82%EF%BC%9AYYYY-MM-DD-HH-MM-8%EF%BC%89"><span class="nav-number">4.12.</span> <span class="nav-text">12.Lily上一次更改系统登入密码是? （答案格式 －“本地时间＂：YYYY-MM-DD HH:MM +8）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-Victor-%E6%80%BB%E5%85%B1%E7%99%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E5%A4%9A%E5%B0%91%E6%AC%A1"><span class="nav-number">4.13.</span> <span class="nav-text">13.Victor 总共登录系统多少次?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-%E4%BB%A5%E4%B8%8B%E5%93%AA%E4%B8%AA%E5%B8%90%E5%8F%B7%E5%B7%B2%E7%BB%8F%E8%A2%AB%E7%A6%81%E7%94%A8"><span class="nav-number">4.14.</span> <span class="nav-text">14.以下哪个帐号已经被禁用?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-%E4%BB%A5%E4%B8%8B%E5%93%AA%E4%B8%AA%E5%B8%90%E7%B3%BB%E7%BB%9F%E6%9D%83%E9%99%90%E6%9C%80%E4%BD%8E"><span class="nav-number">4.15.</span> <span class="nav-text">15.以下哪个帐系统权限最低?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-%E4%BB%A5%E4%B8%8B%E5%93%AA%E4%B8%AA%E5%B8%90%E5%8F%B7%E6%9B%BE%E7%BB%8F%E8%BF%9C%E7%AB%AF%E7%99%BB%E5%BD%95%E7%B3%BB%E7%BB%9F"><span class="nav-number">4.16.</span> <span class="nav-text">16.以下哪个帐号曾经远端登录系统?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-%E7%A1%AC%E7%9B%98%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%89%88%E6%9C%AC"><span class="nav-number">4.17.</span> <span class="nav-text">17.硬盘操作系统的版本?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%9C%80%E6%96%B0%E6%9C%8D%E5%8A%A1%E5%8C%85-Service-Pack-%E7%89%88%E6%9C%AC%E5%8F%B7%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">4.18.</span> <span class="nav-text">18.操作系统的最新服务包(Service Pack)版本号是什么?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-%E4%B8%8B%E5%88%97%E5%93%AA%E4%B8%AA%E6%98%AFvictor%E7%9A%84%E9%BB%98%E8%AE%A4%E6%89%93%E5%8D%B0%E6%9C%BA"><span class="nav-number">4.19.</span> <span class="nav-text">19.下列哪个是victor的默认打印机?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-%E5%9C%A82018-10-31-08-29-32-8%E6%97%B6%E9%97%B4-%E8%B4%A6%E5%8F%B7simon%E6%9B%BE%E7%BB%8F%E4%BD%BF%E7%94%A8%E4%BB%A5%E4%B8%8B%E5%93%AA%E4%B8%AA%E6%96%87%E4%BB%B6"><span class="nav-number">4.20.</span> <span class="nav-text">20.在2018-10-31 08:29:32 +8时间, 账号simon曾经使用以下哪个文件?</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -614,14 +614,14 @@
     <img class="site-author-image" itemprop="image" alt="arttnba3"
       src="/images/avatar.png">
   <p class="site-author-name" itemprop="name">arttnba3</p>
-  <div class="site-description" itemprop="description">- 做了关于你的梦，所以不愿醒来呢 -</div>
+  <div class="site-description" itemprop="description">此页面已废弃，新博客: arttnba3.cn</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -706,7 +706,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

